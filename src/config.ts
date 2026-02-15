@@ -9,8 +9,8 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  title: "NUXAR - Parfum Eceran Mahasiswa",
-  description: "NUXAR adalah toko parfum eceran eksklusif khusus untuk mahasiswa President University. Temukan aroma signaturemu dengan harga terjangkau.",
+  title: "NUXAR PERFUMERY - Parfum Eceran Mahasiswa",
+  description: "NUXAR PERFUMERY adalah toko parfum eceran eksklusif khusus untuk mahasiswa President University. Temukan aroma signaturemu dengan harga terjangkau.",
   language: "id",
 };
 
@@ -24,12 +24,20 @@ export interface NavItem {
 }
 
 export interface NavigationConfig {
-  logo: string;
+  logoImage: string;
+  brandName: string;
+  brandTagline: string;
   items: NavItem[];
 }
 
 export const navigationConfig: NavigationConfig = {
-  logo: "NUXAR",
+  // path ke folder PUBLIC (bukan src)
+  logoImage: "/logo-nuxar.png",
+
+  // teks brand
+  brandName: "NUXAR",
+  brandTagline: "PERFUMERY",
+
   items: [
     { label: "Produk", href: "#works" },
     { label: "Katalog Aroma", href: "#katalog" },
@@ -40,6 +48,7 @@ export const navigationConfig: NavigationConfig = {
     { label: "Kontak", href: "#contact" },
   ],
 };
+
 
 // ============================================================================
 // Hero Section Configuration
@@ -58,7 +67,7 @@ export const heroConfig: HeroConfig = {
   subtitle: "Parfum Eceran untuk Mahasiswa President University",
   backgroundImage: "/hero-main.jpg",
   servicesLabel: "Eceran | Original | Terjangkau",
-  copyright: "© 2025 NUXAR",
+  copyright: "© 2026 NUXAR PERFUMERY",
 };
 
 // ============================================================================
@@ -81,13 +90,13 @@ export interface AboutConfig {
 export const aboutConfig: AboutConfig = {
   titleLine1: "Kami hadir untuk membuat parfum berkualitas",
   titleLine2: "terjangkau bagi setiap mahasiswa President University.",
-  description: "NUXAR didirikan dengan visi sederhana: setiap mahasiswa berhak tampil percaya diri dengan aroma yang sesuai kepribadiannya. Kami menyediakan parfum original dalam kemasan eceran dengan harga yang ramah kantong mahasiswa.",
+  description: "NUXAR PERFUMERY didirikan dengan visi sederhana: setiap mahasiswa berhak tampil percaya diri dengan aroma yang sesuai kepribadiannya. Kami menyediakan parfum original dalam kemasan eceran dengan harga yang ramah kantong mahasiswa.",
   image1: "/about-1.jpg",
-  image1Alt: "Koleksi parfum NUXAR",
+  image1Alt: "Koleksi parfum NUXAR PERFUMERY",
   image2: "/about-2.jpg",
   image2Alt: "Botol parfum premium",
   authorImage: "/founder.jpg",
-  authorName: "Tim NUXAR",
+  authorName: "Tim NUXAR PERFUMERY",
   authorBio: "Dari mahasiswa, untuk mahasiswa. Kami memahami kebutuhanmu.",
 };
 
@@ -375,7 +384,7 @@ export const blogConfig: BlogConfig = {
       excerpt: "Temukan aroma yang paling cocok dengan karakter dan gaya hidupmu. Dari floral yang feminin hingga woody yang maskulin.", 
       content: "Memilih parfum yang tepat bisa meningkatkan percaya dirimu. Parfum floral cocok untuk kepribadian feminin dan romantis. Woody dan musk cocok untuk yang maskulin dan tegas. Citrus segar untuk kepribadian ceria. Coba beberapa aroma di NUXAR sebelum memutuskan—kami menyediakan tester gratis.",
       readTime: "5 menit", 
-      date: "10 Feb 2025", 
+      date: "10 Feb 2026", 
       image: "/blog-1.jpg", 
       category: "Tips" 
     },
@@ -477,6 +486,6 @@ export const footerConfig: FooterConfig = {
   ],
   ctaText: "Pesan Sekarang",
   ctaHref: "#contact",
-  copyright: "© 2025 NUXAR. Dibuat dengan untuk mahasiswa President University.",
+  copyright: "© 2026 NUXAR. Dibuat dengan untuk mahasiswa President University.",
   tagline: "Dari Mahasiswa, Untuk Mahasiswa",
 };

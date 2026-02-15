@@ -11,7 +11,8 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  if (!navigationConfig.logo) return null;
+  if (!navigationConfig.logoImage) return null;
+
 
   useEffect(() => {
     const trigger = ScrollTrigger.create({
@@ -46,14 +47,34 @@ export function Navigation() {
         }`}
       >
         <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 flex items-center justify-between">
-          {/* Logo - 24px mobile / 28px desktop */}
-          <a
-            href="#hero"
-            onClick={(e) => handleNavClick(e, '#hero')}
-            className="text-base lg:text-lg font-medium text-white hover:text-highlight transition-colors duration-200"
-          >
-            {navigationConfig.logo}
-          </a>
+<a
+  href="#hero"
+  onClick={(e) => handleNavClick(e, '#hero')}
+  className="flex items-center gap-3 group select-none"
+>
+<img
+  src={navigationConfig.logoImage}
+  alt="NUXAR Perfumery Logo"
+  width="120"
+  height="40"
+  className="h-9 lg:h-11 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+  loading="eager"
+  draggable={false}
+/>
+
+
+  {/* Brand Text */}
+  <div className="flex flex-col leading-none">
+    <span className="text-sm lg:text-base font-semibold tracking-wider text-white group-hover:text-highlight transition-colors">
+      {navigationConfig.brandName}
+    </span>
+
+    <span className="text-[10px] lg:text-xs tracking-[0.25em] text-white/60 uppercase">
+      {navigationConfig.brandTagline}
+    </span>
+  </div>
+</a>
+
 
           {/* Desktop nav - 14px font */}
           <div className="hidden lg:flex items-center gap-8 xl:gap-10">
@@ -94,13 +115,14 @@ export function Navigation() {
             : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navigationConfig.items.map((item, i) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="text-h3 text-white hover:text-highlight transition-colors duration-300"
+<div className="flex flex-col items-center justify-center h-full gap-6 px-6">
+  {navigationConfig.items.map((item, i) => (
+    <a
+      key={item.label}
+      href={item.href}
+      onClick={(e) => handleNavClick(e, item.href)}
+      className="text-lg sm:text-xl font-medium tracking-wide text-white/90 hover:text-highlight transition-all duration-300"
+
               style={{
                 transform: isMobileMenuOpen
                   ? 'translateY(0)'

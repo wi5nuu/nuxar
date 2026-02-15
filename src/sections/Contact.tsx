@@ -71,7 +71,7 @@ export function Contact() {
     const { name, email, whatsapp, product, message } = formData;
     const productLabel = contactConfig.productOptions.find((o) => o.value === product)?.label || product || '-';
     const text = [
-      `*Pesan dari Website NUXAR*`,
+      `*Pesan dari Website NUXAR PERFUMERY*`,
       ``,
       `Nama: ${name}`,
       `Email: ${email}`,

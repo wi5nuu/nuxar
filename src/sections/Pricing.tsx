@@ -40,7 +40,7 @@ export function Pricing() {
   }, []);
 
   const handleOrder = (size: string, tier: string, price: number) => {
-    const msg = encodeURIComponent(`Halo NUXAR, saya ingin pesan parfum:\n- Ukuran: ${size}\n- Tier: ${tier}\n- Harga: Rp ${price.toLocaleString('id-ID')}\n\nTerima kasih!`);
+    const msg = encodeURIComponent(`Halo NUXAR PERFUMERY, saya ingin pesan parfum:\n- Ukuran: ${size}\n- Tier: ${tier}\n- Harga: Rp ${price.toLocaleString('id-ID')}\n\nTerima kasih!`);
     window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank', 'noopener,noreferrer');
   };
 
