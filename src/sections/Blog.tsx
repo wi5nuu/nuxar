@@ -111,7 +111,7 @@ export function Blog() {
       id="blog"
       className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-black overflow-hidden"
     >
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
           <div>
             <h2 ref={titleRef} className="text-h1 lg:text-display-xl text-white font-medium mb-4 opacity-0">

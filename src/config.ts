@@ -9,8 +9,8 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  title: "NUXAR PERFUMERY - Parfum Eceran Mahasiswa",
-  description: "NUXAR PERFUMERY adalah toko parfum eceran eksklusif khusus untuk mahasiswa President University. Temukan aroma signaturemu dengan harga terjangkau.",
+  title: "NUXAR PERFUMERY - Parfum Eceran Premium Mahasiswa & Pekerja",
+  description: "NUXAR PERFUMERY menyediakan parfum original eceran berkualitas tinggi. Aroma mewah yang cocok untuk kuliah, kerja, healing, hingga keluar negeri dengan harga terjangkau.",
   language: "id",
 };
 
@@ -64,9 +64,9 @@ export interface HeroConfig {
 
 export const heroConfig: HeroConfig = {
   title: "NUXAR",
-  subtitle: "Parfum Eceran untuk Mahasiswa President University",
+  subtitle: "Parfum Eceran Premium untuk Setiap Momen Berhargamu",
   backgroundImage: "/hero-main.jpg",
-  servicesLabel: "Eceran | Original | Terjangkau",
+  servicesLabel: "Eceran | Original | Premium",
   copyright: "© 2026 NUXAR PERFUMERY",
 };
 
@@ -88,16 +88,16 @@ export interface AboutConfig {
 }
 
 export const aboutConfig: AboutConfig = {
-  titleLine1: "Kami hadir untuk membuat parfum berkualitas",
-  titleLine2: "terjangkau bagi setiap mahasiswa President University.",
-  description: "NUXAR PERFUMERY didirikan dengan visi sederhana: setiap mahasiswa berhak tampil percaya diri dengan aroma yang sesuai kepribadiannya. Kami menyediakan parfum original dalam kemasan eceran dengan harga yang ramah kantong mahasiswa.",
+  titleLine1: "Aroma Mewah Kini Lebih Dekat",
+  titleLine2: "Untuk Mahasiswa, Pekerja, dan Travelers.",
+  description: "NUXAR PERFUMERY hadir untuk memberikan akses ke aroma mewah tanpa kompromi. Koleksi parfum original eceran kami dirancang untuk menunjang kepercayaan dirimu di kampus, kantor, saat healing ke mall, hingga petualangan ke luar negeri.",
   image1: "/about-1.jpg",
-  image1Alt: "Koleksi parfum NUXAR PERFUMERY",
+  image1Alt: "Koleksi parfum premium NUXAR PERFUMERY",
   image2: "/about-2.jpg",
-  image2Alt: "Botol parfum premium",
+  image2Alt: "Varian parfum original eceran terbaik",
   authorImage: "/founder.jpg",
   authorName: "Tim NUXAR PERFUMERY",
-  authorBio: "Dari mahasiswa, untuk mahasiswa. Kami memahami kebutuhanmu.",
+  authorBio: "Kami kurasi setiap aroma agar sesuai dengan gaya hidup dinamis Anda.",
 };
 
 // ============================================================================
@@ -121,29 +121,29 @@ export const worksConfig: WorksConfig = {
   title: "Koleksi Parfum",
   subtitle: "Pilihan aroma terbaik untuk setiap momen dan kepribadianmu.",
   projects: [
-    { 
-      id: 1, 
-      title: "Rose Elegance", 
-      category: "Floral", 
-      image: "/product-1.jpg" 
+    {
+      id: 1,
+      title: "Rose Elegance",
+      category: "Floral",
+      image: "/product-1.jpg"
     },
-    { 
-      id: 2, 
-      title: "Woody Amber", 
-      category: "Woody", 
-      image: "/product-2.jpg" 
+    {
+      id: 2,
+      title: "Woody Amber",
+      category: "Woody",
+      image: "/product-2.jpg"
     },
-    { 
-      id: 3, 
-      title: "Citrus Fresh", 
-      category: "Citrus", 
-      image: "/product-3.jpg" 
+    {
+      id: 3,
+      title: "Citrus Fresh",
+      category: "Citrus",
+      image: "/product-3.jpg"
     },
-    { 
-      id: 4, 
-      title: "Oriental Oud", 
-      category: "Oriental", 
-      image: "/product-4.jpg" 
+    {
+      id: 4,
+      title: "Oriental Oud",
+      category: "Oriental",
+      image: "/product-4.jpg"
     },
   ],
 };
@@ -169,29 +169,29 @@ export const servicesConfig: ServicesConfig = {
   title: "Layanan Kami",
   subtitle: "Pengalaman berbelanja parfum yang mudah dan menyenangkan.",
   services: [
-    { 
-      id: "01", 
-      title: "Tester Gratis", 
-      description: "Coba aroma sebelum membeli dengan tester gratis di kampus President University", 
-      image: "/service-1.jpg" 
+    {
+      id: "01",
+      title: "Tester Gratis",
+      description: "Coba berbagai aroma sebelum membeli untuk memastikan kecocokan dengan aktivitas harian Anda.",
+      image: "/service-1.jpg"
     },
-    { 
-      id: "02", 
-      title: "Gift Wrapping", 
-      description: "Layanan pembungkus hadiah eksklusif untuk hadiah spesial", 
-      image: "/service-2.jpg" 
+    {
+      id: "02",
+      title: "Gift Wrapping",
+      description: "Layanan pembungkus hadiah eksklusif untuk kado spesial orang tersayang.",
+      image: "/service-2.jpg"
     },
-    { 
-      id: "03", 
-      title: "Konsultasi Aroma", 
-      description: "Tim kami siap membantu menemukan aroma yang paling cocok untukmu", 
-      image: "/service-3.jpg" 
+    {
+      id: "03",
+      title: "Konsultasi Aroma",
+      description: "Tim ahli kami siap membantu mencarikan aroma yang pas untuk kantor, kuliah, atau hangout.",
+      image: "/service-3.jpg"
     },
-    { 
-      id: "04", 
-      title: "Delivery Kampus", 
-      description: "Pengantaran gratis ke area kampus President University", 
-      image: "/service-4.jpg" 
+    {
+      id: "04",
+      title: "Pengiriman Cepat",
+      description: "Layanan pengiriman andalan agar parfum Anda sampai tepat waktu di lokasi manapun.",
+      image: "/service-4.jpg"
     },
   ],
 };
@@ -216,26 +216,26 @@ export interface TestimonialsConfig {
 export const testimonialsConfig: TestimonialsConfig = {
   title: "Kata Mereka",
   testimonials: [
-    { 
-      id: 1, 
-      name: "Dewi Anggraini", 
-      title: "Mahasiswa Teknik", 
-      quote: "NUXAR benar-benar memahami kebutuhan mahasiswa. Parfum original dengan harga yang sangat terjangkau. Sekarang aku bisa tampil percaya diri setiap hari!", 
-      image: "/testimonial-1.jpg" 
+    {
+      id: 1,
+      name: "Dewi Anggraini",
+      title: "Pekerja Kreatif",
+      quote: "NUXAR benar-benar solusi untuk tampil wangi setiap hari. Parfum original dengan harga yang sangat terjangkau. Cocok banget untuk dibawa kerja dan hangout!",
+      image: "/testimonial-1.jpg"
     },
-    { 
-      id: 2, 
-      name: "Ahmad Fauzi", 
-      title: "Mahasiswa Bisnis", 
-      quote: "Pelayanan delivery kampusnya sangat membantu. Tinggal pesan, dan parfum sampai ke kelas. Recommended banget buat teman-teman President University!", 
-      image: "/testimonial-2.jpg" 
+    {
+      id: 2,
+      name: "Ahmad Fauzi",
+      title: "Mahasiswa",
+      quote: "Sangat praktis! Pesanannya cepat sampai dan aromanya benar-benar awet. Recommended banget buat yang mobilitasnya tinggi antara kampus dan mall.",
+      image: "/testimonial-2.jpg"
     },
-    { 
-      id: 3, 
-      name: "Rina Susanti", 
-      title: "Mahasiswa Hukum", 
-      quote: "Tester gratisnya membuatku bisa mencoba berbagai aroma sebelum memutuskan. Pelayanannya ramah dan sangat profesional.", 
-      image: "/testimonial-3.jpg" 
+    {
+      id: 3,
+      name: "Rina Susanti",
+      title: "Traveling Enthusiast",
+      quote: "Kemasan 30ml-nya favorit aku buat dibawa traveling ke luar negeri. Wanginya premium dan botolnya sangat travel-friendly.",
+      image: "/testimonial-3.jpg"
     },
   ],
 };
@@ -247,6 +247,7 @@ export const testimonialsConfig: TestimonialsConfig = {
 export interface PricingTier {
   name: string;
   price: number;
+  originalPrice?: number;
 }
 
 export interface PricingSize {
@@ -254,6 +255,7 @@ export interface PricingSize {
   size: string;
   tagline: string;
   tiers: PricingTier[];
+  isRecommended?: boolean;
 }
 
 export interface PricingConfig {
@@ -265,15 +267,16 @@ export interface PricingConfig {
 
 export const pricingConfig: PricingConfig = {
   title: "Ukuran & Harga",
-  subtitle: "Pilihan ukuran yang sesuai kebutuhan dan budget mahasiswa.",
+  subtitle: "Pilihan ukuran fleksibel sesuai budget harian maupun traveling.",
   ctaButtonText: "Pesan via WhatsApp",
   sizes: [
     {
       id: "30ml",
       size: "30ml",
-      tagline: "Hemat & Praktis",
+      tagline: "Sempurna untuk Traveling & Mall",
+      isRecommended: true,
       tiers: [
-        { name: "Premium", price: 64000 },
+        { name: "Premium", price: 64000, originalPrice: 75000 },
         { name: "Sedang", price: 50000 },
         { name: "Standar", price: 35000 },
       ],
@@ -281,9 +284,9 @@ export const pricingConfig: PricingConfig = {
     {
       id: "50ml",
       size: "50ml",
-      tagline: "Paling Favorit Mahasiswa",
+      tagline: "Pas untuk Kuliah & Kerja",
       tiers: [
-        { name: "Premium", price: 125000 },
+        { name: "Premium", price: 125000, originalPrice: 150000 },
         { name: "Sedang", price: 100000 },
         { name: "Standar", price: 70000 },
       ],
@@ -291,9 +294,9 @@ export const pricingConfig: PricingConfig = {
     {
       id: "100ml",
       size: "100ml",
-      tagline: "Best Value (Lebih Awet)",
+      tagline: "Stok Bulanan Paling Hemat",
       tiers: [
-        { name: "Premium", price: 250000 },
+        { name: "Premium", price: 250000, originalPrice: 300000 },
         { name: "Sedang", price: 200000 },
         { name: "Standar", price: 140000 },
       ],
@@ -318,29 +321,29 @@ export interface FAQConfig {
 export const faqConfig: FAQConfig = {
   title: "Pertanyaan Umum",
   faqs: [
-    { 
-      question: "Apakah parfum di NUXAR original?", 
-      answer: "Ya, semua parfum yang kami jual adalah 100% original. Kami mendapatkan parfum dari distributor resmi dan memecahnya menjadi kemasan eceran yang lebih terjangkau." 
+    {
+      question: "Apakah parfum di NUXAR original?",
+      answer: "Ya, semua parfum yang kami jual adalah 100% original. Kami mendapatkan parfum dari distributor resmi dan memecahnya menjadi kemasan eceran premium yang lebih terjangkau."
     },
-    { 
-      question: "Bagaimana cara memesan parfum?", 
-      answer: "Kamu bisa memesan melalui WhatsApp, Instagram, atau datang langsung ke booth kami di area kampus President University. Kami juga menerima pesanan online dengan delivery ke kampus." 
+    {
+      question: "Bagaimana cara memesan parfum?",
+      answer: "Anda bisa memesan langsung melalui WhatsApp atau Instagram resmi kami. Kami melayani pengiriman ke seluruh Indonesia dengan packing aman."
     },
-    { 
-      question: "Apakah bisa mencoba aroma dulu?", 
-      answer: "Tentu! Kami menyediakan tester gratis untuk semua aroma. Kamu bisa mencoba sebelum memutuskan untuk membeli." 
+    {
+      question: "Apakah bisa mencoba aroma dulu?",
+      answer: "Tentu! Kami menyediakan tester untuk semua aroma agar Anda bisa menemukan yang paling cocok sebelum membeli kemasan yang lebih besar."
     },
-    { 
-      question: "Berapa lama ketahanan parfumnya?", 
-      answer: "Ketahanan parfum bervariasi tergantung jenis aroma dan aktivitas. Umumnya parfum original bisa tahan 4-8 jam. Kami bisa merekomendasikan aroma yang sesuai dengan kebutuhanmu." 
+    {
+      question: "Berapa lama ketahanan parfumnya?",
+      answer: "Ketahanan parfum bervariasi tergantung jenis aroma. Umumnya parfum original kami tahan 6-12 jam, sangat pas untuk menemani aktivitas harian Anda."
     },
-    { 
-      question: "Apakah ada garansi?", 
-      answer: "Kami memberikan garansi kepuasan. Jika kamu tidak puas dengan pembelianmu, hubungi kami dalam 3 hari untuk solusi terbaik." 
+    {
+      question: "Apakah ada garansi?",
+      answer: "Kami memberikan garansi kepuasan pelanggan. Jika ada kendala dengan produk yang Anda terima, silakan hubungi kami dalam 3 hari untuk solusi terbaik."
     },
-    { 
-      question: "Area delivery mencakup mana saja?", 
-      answer: "Kami melayani delivery gratis ke seluruh area kampus President University, termasuk asrama dan area sekitar kampus." 
+    {
+      question: "Area pengiriman mencakup mana saja?",
+      answer: "Kami melayani pengiriman ke seluruh wilayah Indonesia untuk memastikan Anda bisa tetap tampil wangi di mana pun Anda berada."
     },
   ],
 };
@@ -377,27 +380,27 @@ export const blogConfig: BlogConfig = {
   readMoreLabel: "Baca Selengkapnya",
   readTimePrefix: "Baca ",
   posts: [
-    { 
-      id: 1, 
+    {
+      id: 1,
       slug: "cara-memilih-parfum-sesuai-kepribadian",
-      title: "Cara Memilih Parfum Sesuai Kepribadian", 
-      excerpt: "Temukan aroma yang paling cocok dengan karakter dan gaya hidupmu. Dari floral yang feminin hingga woody yang maskulin.", 
+      title: "Cara Memilih Parfum Sesuai Kepribadian",
+      excerpt: "Temukan aroma yang paling cocok dengan karakter dan gaya hidupmu. Dari floral yang feminin hingga woody yang maskulin.",
       content: "Memilih parfum yang tepat bisa meningkatkan percaya dirimu. Parfum floral cocok untuk kepribadian feminin dan romantis. Woody dan musk cocok untuk yang maskulin dan tegas. Citrus segar untuk kepribadian ceria. Coba beberapa aroma di NUXAR sebelum memutuskan—kami menyediakan tester gratis.",
-      readTime: "5 menit", 
-      date: "10 Feb 2026", 
-      image: "/blog-1.jpg", 
-      category: "Tips" 
+      readTime: "5 menit",
+      date: "10 Feb 2026",
+      image: "/blog-1.jpg",
+      category: "Tips"
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       slug: "rahasia-parfum-tahan-lama",
-      title: "Rahasia Membuat Parfum Tahan Lama", 
-      excerpt: "Pelajari teknik spray yang benar dan titik-titik tubuh terbaik untuk memaksimalkan ketahanan aroma parfum favoritmu.", 
+      title: "Rahasia Membuat Parfum Tahan Lama",
+      excerpt: "Pelajari teknik spray yang benar dan titik-titik tubuh terbaik untuk memaksimalkan ketahanan aroma parfum favoritmu.",
       content: "Untuk membuat parfum tahan lama, spray di titik nadi: pergelangan tangan, leher, belakang telinga. Jangan menggosok setelah spray—biarkan meresap. Simpan parfum di tempat sejuk dan jauh dari sinar matahari. Parfum original NUXAR tahan 4-8 jam tergantung aktivitas.",
-      readTime: "4 menit", 
-      date: "5 Feb 2025", 
-      image: "/blog-2.jpg", 
-      category: "Tips" 
+      readTime: "4 menit",
+      date: "5 Feb 2025",
+      image: "/blog-2.jpg",
+      category: "Tips"
     },
   ],
 };
@@ -424,6 +427,7 @@ export interface ContactConfig {
   submitButtonText: string;
   image: string;
   whatsappNumber: string;
+  turnstileSiteKey: string;
 }
 
 export const contactConfig: ContactConfig = {
@@ -444,6 +448,7 @@ export const contactConfig: ContactConfig = {
   submitButtonText: "Kirim ke WhatsApp",
   image: "/contact.jpg",
   whatsappNumber: "6281394882490",
+  turnstileSiteKey: import.meta.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACetik_WhyDkqdOo",
 };
 
 // ============================================================================
@@ -486,6 +491,6 @@ export const footerConfig: FooterConfig = {
   ],
   ctaText: "Pesan Sekarang",
   ctaHref: "#contact",
-  copyright: "© 2026 NUXAR. Dibuat dengan untuk mahasiswa President University.",
-  tagline: "Dari Mahasiswa, Untuk Mahasiswa",
+  copyright: "© 2026 NUXAR. Solusi parfum premium untuk setiap kalangan.",
+  tagline: "Aroma Signature untuk Setiap Momen",
 };

@@ -26,7 +26,7 @@
     --input: 0 0% 15%;
     --ring: 0 72% 51%;
     --radius: 0.5rem;
-    
+
     /* NUXAR Optimization Brief - Color Palette */
     --white: #ffffff;
     --black: #0a0a0a;
@@ -39,18 +39,19 @@
     --light-gray: #f1f1f1;
     --deep-black: #0a0a0a;
     --chrome-white: #f8f8f8;
-    
-    /* Fluid Typography */
-    --hero-title: clamp(2.5rem, 8vw, 6rem);
-    --section-title: clamp(1.75rem, 4vw, 3rem);
-    --body-text: clamp(0.875rem, 1.5vw, 1rem);
-    --small-text: clamp(0.75rem, 1vw, 0.875rem);
-    
+
+    /* Fluid Typography - Refined to be smaller and more professional */
+    --hero-title: clamp(2rem, 6vw, 4.5rem);
+    --section-title: clamp(1.5rem, 3.5vw, 2.5rem);
+    --body-text: clamp(0.8125rem, 1.2vw, 0.9375rem);
+    --small-text: clamp(0.7rem, 0.9vw, 0.8125rem);
+
     /* Spacing (8px grid) */
-    --section-padding: clamp(3rem, 8vw, 8rem);
-    --container-max: 1280px;
-    --grid-gap: clamp(1rem, 3vw, 2.5rem);
-    
+    --section-padding: clamp(4rem, 10vw, 10rem);
+    --container-max: 1536px;
+    --container-tight: 1024px;
+    --grid-gap: clamp(1.5rem, 4vw, 3rem);
+
     /* Animation easings */
     --ease-dramatic: cubic-bezier(0.87, 0, 0.13, 1);
     --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -58,7 +59,7 @@
     --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-expo-in: cubic-bezier(0.7, 0, 0.84, 0);
     --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-    
+
     /* Mouse position for parallax */
     --mouse-x: 0;
     --mouse-y: 0;
@@ -69,12 +70,12 @@
   * {
     @apply border-border;
   }
-  
+
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
-  
+
   body {
     @apply text-white;
     background-color: var(--deep-black);
@@ -85,18 +86,18 @@
     padding-left: env(safe-area-inset-left, 0);
     padding-right: env(safe-area-inset-right, 0);
   }
-  
+
   ::selection {
     background: var(--highlight);
     color: var(--white);
   }
-  
+
   /* Focus visible for accessibility (WCAG 2.1 AA) */
   :focus-visible {
     outline: 2px solid var(--highlight);
     outline-offset: 2px;
   }
-  
+
   /* Skip to content link - visible on focus */
   .skip-link {
     position: absolute;
@@ -111,6 +112,7 @@
     border-radius: 8px;
     transition: top 0.2s ease;
   }
+
   .skip-link:focus {
     top: 16px;
     outline: 2px solid white;
@@ -119,6 +121,7 @@
 }
 
 @layer components {
+
   /* Noise texture overlay */
   .noise-overlay {
     position: fixed;
@@ -132,18 +135,49 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     animation: noise-animation 20s linear infinite;
   }
-  
+
   @keyframes noise-animation {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -5%); }
-    20% { transform: translate(-10%, 5%); }
-    30% { transform: translate(5%, -10%); }
-    40% { transform: translate(-5%, 15%); }
-    50% { transform: translate(-10%, 5%); }
-    60% { transform: translate(15%, 0); }
-    70% { transform: translate(0, 10%); }
-    80% { transform: translate(-15%, 0); }
-    90% { transform: translate(10%, 5%); }
+
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    10% {
+      transform: translate(-5%, -5%);
+    }
+
+    20% {
+      transform: translate(-10%, 5%);
+    }
+
+    30% {
+      transform: translate(5%, -10%);
+    }
+
+    40% {
+      transform: translate(-5%, 15%);
+    }
+
+    50% {
+      transform: translate(-10%, 5%);
+    }
+
+    60% {
+      transform: translate(15%, 0);
+    }
+
+    70% {
+      transform: translate(0, 10%);
+    }
+
+    80% {
+      transform: translate(-15%, 0);
+    }
+
+    90% {
+      transform: translate(10%, 5%);
+    }
   }
 
   /* Custom cursor */
@@ -159,7 +193,7 @@
     transform: translate(-50%, -50%);
     transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
   }
-  
+
   .custom-cursor.hover {
     width: 48px;
     height: 48px;
@@ -169,7 +203,7 @@
   .chromatic-aberration {
     position: relative;
   }
-  
+
   .chromatic-aberration::before,
   .chromatic-aberration::after {
     content: '';
@@ -182,13 +216,13 @@
     background-size: cover;
     pointer-events: none;
   }
-  
+
   .chromatic-aberration::before {
     mix-blend-mode: multiply;
     transform: translate(-1px, 0);
     filter: url('#red-filter');
   }
-  
+
   .chromatic-aberration::after {
     mix-blend-mode: multiply;
     transform: translate(1px, 0);
@@ -201,7 +235,7 @@
     transform: translateY(20px);
     transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
   }
-  
+
   .section-reveal.visible {
     opacity: 1;
     transform: translateY(0);
@@ -213,12 +247,12 @@
     background: var(--highlight);
     animation: pulse-glow 3s ease-in-out infinite;
   }
-  
+
   /* Interactive hover states */
   .hover-lift {
     transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -251,12 +285,12 @@
     overflow: hidden;
     white-space: nowrap;
   }
-  
+
   .marquee-content {
     display: inline-block;
     animation: marquee 25s linear infinite;
   }
-  
+
   .marquee-content:hover {
     animation-play-state: paused;
   }
@@ -265,6 +299,7 @@
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-50%);
     }
@@ -275,7 +310,7 @@
     clip-path: inset(0 100% 0 0);
     animation: clip-reveal 1.2s var(--ease-expo-out) forwards;
   }
-  
+
   @keyframes clip-reveal {
     to {
       clip-path: inset(0 0 0 0);
@@ -283,28 +318,52 @@
   }
 
   /* Stagger animations */
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
-  .stagger-6 { animation-delay: 0.6s; }
-  .stagger-7 { animation-delay: 0.7s; }
-  .stagger-8 { animation-delay: 0.8s; }
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
+
+  .stagger-6 {
+    animation-delay: 0.6s;
+  }
+
+  .stagger-7 {
+    animation-delay: 0.7s;
+  }
+
+  .stagger-8 {
+    animation-delay: 0.8s;
+  }
 }
 
 @layer utilities {
+
   /* Text balance */
   .text-balance {
     text-wrap: balance;
   }
-  
+
   /* Hide scrollbar */
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -313,7 +372,7 @@
   .preserve-3d {
     transform-style: preserve-3d;
   }
-  
+
   .backface-hidden {
     backface-visibility: hidden;
   }
@@ -321,29 +380,48 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .marquee-content {
     animation: none !important;
   }
-  
+
   .noise-overlay {
     animation: none !important;
   }
 }
 
-/* Optimization Brief - Container (max 1280px centered) */
+/* Optimization Brief - Container (max 1536px centered) */
 .container-full {
   width: 100%;
   max-width: var(--container-max);
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1rem, 4vw, 2rem);
-  padding-right: clamp(1rem, 4vw, 2rem);
+  padding-left: clamp(1.5rem, 5vw, 4rem);
+  padding-right: clamp(1.5rem, 5vw, 4rem);
+}
+
+.container-tight {
+  width: 100%;
+  max-width: var(--container-tight);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.5rem, 5vw, 3rem);
+  padding-right: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* For ultra-wide displays */
+@media (min-width: 1921px) {
+  :root {
+    --container-max: 1720px;
+  }
 }
 
 /* Section padding - fluid (clamp 3rem - 8rem) */
@@ -362,7 +440,9 @@
 
 /* Prevent 300ms tap delay on mobile */
 @media (hover: none) and (pointer: coarse) {
-  a, button {
+
+  a,
+  button {
     touch-action: manipulation;
   }
 }
@@ -373,7 +453,7 @@
     --display-xxl: 64px;
     --display-xl: 48px;
   }
-  
+
   .custom-cursor {
     display: none;
   }

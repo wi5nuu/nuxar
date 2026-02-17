@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronUp } from 'lucide-react';
 import { Navigation } from './components/Navigation';
 import { CustomCursor } from './components/CustomCursor';
 import { ParticleField } from './components/ParticleField';
@@ -16,37 +15,10 @@ import { Pricing } from './sections/Pricing';
 import { Blog } from './sections/Blog';
 import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
+import { AIChatBot } from './components/AIChatBot';
 import { siteConfig } from './config';
 
 gsap.registerPlugin(ScrollTrigger);
-
-function BackToTop() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 400);
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  if (!visible) return null;
-
-  return (
-    <button
-      type="button"
-      onClick={scrollToTop}
-      aria-label="Back to top"
-      className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-highlight text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-highlight/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-    >
-      <ChevronUp className="h-6 w-6" />
-    </button>
-  );
-}
 
 function App() {
   useEffect(() => {
@@ -95,7 +67,7 @@ function App() {
         <Contact />
         <Footer />
       </main>
-      <BackToTop />
+      <AIChatBot />
     </div>
   );
 }

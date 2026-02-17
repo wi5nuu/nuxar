@@ -148,7 +148,7 @@ export function Services() {
         )}
       </div>
 
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full">
         {/* Header */}
         <div className="mb-20">
           <h2
@@ -196,15 +196,13 @@ export function Services() {
 
                   {/* Title */}
                   <h3
-                    className={`text-h3 lg:text-h2 text-white font-normal transition-all duration-400 ${
-                      activeIndex !== null && activeIndex !== index
+                    className={`text-h3 lg:text-h2 text-white font-normal transition-all duration-400 ${activeIndex !== null && activeIndex !== index
                         ? 'opacity-30'
                         : 'opacity-100'
-                    } ${
-                      activeIndex === index
+                      } ${activeIndex === index
                         ? 'text-shadow-glow'
                         : ''
-                    }`}
+                      }`}
                     style={{
                       textShadow:
                         activeIndex === index
@@ -218,11 +216,10 @@ export function Services() {
 
                 {/* Description */}
                 <p
-                  className={`hidden lg:block text-body text-white/40 max-w-xs text-right transition-opacity duration-300 ${
-                    activeIndex !== null && activeIndex !== index
+                  className={`hidden lg:block text-body text-white/40 max-w-xs text-right transition-opacity duration-300 ${activeIndex !== null && activeIndex !== index
                       ? 'opacity-30'
                       : 'opacity-100'
-                  }`}
+                    }`}
                 >
                   {service.description}
                 </p>

@@ -65,7 +65,7 @@ export function FAQ() {
       id="faq"
       className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-black overflow-hidden"
     >
-      <div className="w-full max-w-4xl mx-auto">
+      <div className="container-tight relative z-10">
         {/* Section title */}
         <h2
           ref={titleRef}
@@ -82,38 +82,33 @@ export function FAQ() {
               ref={(el) => {
                 itemsRef.current[index] = el;
               }}
-              className={`relative ${
-                index % 2 === 0 ? 'lg:-translate-x-8' : 'lg:translate-x-8'
-              }`}
+              className={`relative ${index % 2 === 0 ? 'lg:-translate-x-8' : 'lg:translate-x-8'
+                }`}
             >
               {/* Question */}
               <button
-                className={`w-full py-6 lg:py-8 flex items-center justify-between text-left border-b transition-all duration-300 ${
-                  openIndex === index
+                className={`w-full py-6 lg:py-8 flex items-center justify-between text-left border-b transition-all duration-300 ${openIndex === index
                     ? 'border-white'
                     : 'border-white/20 hover:border-white/40'
-                } ${
-                  openIndex !== null && openIndex !== index
+                  } ${openIndex !== null && openIndex !== index
                     ? 'opacity-50'
                     : 'opacity-100'
-                }`}
+                  }`}
                 onClick={() => toggleItem(index)}
               >
                 <h3
-                  className={`text-h5 lg:text-h4 text-white pr-8 transition-all duration-200 ${
-                    openIndex === index ? 'font-medium' : 'font-normal'
-                  }`}
+                  className={`text-h5 lg:text-h4 text-white pr-8 transition-all duration-200 ${openIndex === index ? 'font-medium' : 'font-normal'
+                    }`}
                 >
                   {faq.question}
                 </h3>
 
                 {/* Plus icon */}
                 <div
-                  className={`flex-shrink-0 w-10 h-10 rounded-full border border-white/30 flex items-center justify-center transition-all duration-400 ${
-                    openIndex === index
+                  className={`flex-shrink-0 w-10 h-10 rounded-full border border-white/30 flex items-center justify-center transition-all duration-400 ${openIndex === index
                       ? 'bg-highlight border-highlight rotate-45 scale-120'
                       : 'hover:border-white'
-                  }`}
+                    }`}
                 >
                   <Plus className="w-5 h-5 text-white" />
                 </div>
@@ -121,11 +116,10 @@ export function FAQ() {
 
               {/* Answer */}
               <div
-                className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  openIndex === index
+                className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${openIndex === index
                     ? 'max-h-[500px] opacity-100'
                     : 'max-h-0 opacity-0'
-                }`}
+                  }`}
               >
                 <div className="py-6 lg:py-8">
                   <p className="text-body-lg text-white/70 leading-relaxed">

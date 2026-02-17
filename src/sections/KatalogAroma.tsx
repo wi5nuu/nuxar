@@ -13,6 +13,7 @@ import {
 } from '@/data/perfumes';
 import { fetchPerfumesFromSupabase, SUPABASE_ENABLED } from '@/lib/supabase';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { contactConfig } from '@/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,9 @@ function filterPerfumes(items: PerfumeItem[], query: string): PerfumeItem[] {
   const q = query.trim().toLowerCase();
   return items.filter(
     (p) =>
-      p.name.toLowerCase().includes(q) || p.original.toLowerCase().includes(q)
+      p.name.toLowerCase().includes(q) ||
+      p.brand?.toLowerCase().includes(q) ||
+      p.fullName.toLowerCase().includes(q)
   );
 }
 
@@ -39,20 +42,110 @@ function usePaginatedItems(
   }, [items, isMobile, page]);
 }
 
-function PerfumeCard({ item }: { item: PerfumeItem }) {
+interface PerfumeCardProps {
+  item: PerfumeItem;
+  isExpanded: boolean;
+  onToggle: () => void;
+}
+
+function PerfumeCard({ item, isExpanded, onToggle }: PerfumeCardProps) {
   return (
     <div
-      className="group flex items-start gap-4 rounded-xl border border-black/8 bg-gradient-to-br from-white to-black/[0.02] p-4 transition-all duration-300 hover:border-black/15 hover:shadow-lg hover:shadow-black/5 md:p-5"
+      onClick={onToggle}
+      className={`group cursor-pointer flex flex-col py-5 px-4 rounded-2xl transition-all duration-500 border-b border-black/[0.03] hover:bg-black/[0.02] ${isExpanded ? 'bg-white shadow-lg border-highlight/10 mb-4' : 'hover:border-highlight/20'
+        }`}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-black/5 text-sm font-semibold text-black/60 transition-colors group-hover:bg-highlight/10 group-hover:text-highlight">
-        {item.order}
+      <div className="flex items-center gap-6">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center text-[11px] font-bold tracking-tighter text-black/20 transition-colors group-hover:text-highlight/40">
+          {String(item.order).padStart(2, '0')}.
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h3 className="text-[15px] font-semibold text-black/80 transition-colors group-hover:text-black tracking-tight">
+              {item.name}
+            </h3>
+            {item.is_official && (
+              <Sparkles className="h-3 w-3 text-highlight/40" />
+            )}
+          </div>
+          <p className="text-[12px] text-black/40 group-hover:text-black/60 transition-colors">
+            {item.brand} — {item.category}
+          </p>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className={`transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`}>
+            <ChevronRight className={`w-4 h-4 text-black/20 ${isExpanded ? 'text-highlight' : ''}`} />
+          </div>
+        </div>
       </div>
-      <div className="min-w-0 flex-1">
-        <h3 className="font-semibold text-black transition-colors group-hover:text-highlight">
-          {item.name}
-        </h3>
-        <p className="mt-0.5 text-sm text-black/55">{item.original}</p>
-      </div>
+
+      {/* Expanded Details */}
+      {isExpanded && (
+        <div className="mt-6 pl-14 pr-4 space-y-4 animate-in fade-in slide-in-from-top-2 duration-500">
+          <div className="h-px bg-black/[0.05] w-full" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Full Name</span>
+                <p className="text-sm text-black/70 font-medium">{item.fullName}</p>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Character</span>
+                <p className="text-sm text-black/70">{item.karakter || '-'}</p>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Best Use</span>
+                <p className="text-sm text-black/70">{item.penggunaan || '-'}</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {item.notes && (
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Fragrance Notes</span>
+                  <div className="flex flex-wrap gap-1.5 mt-1">
+                    {item.notes.top?.slice(0, 3).map((n, i) => (
+                      <span key={i} className="px-2 py-0.5 bg-highlight/5 text-highlight text-[10px] rounded-md font-medium border border-highlight/10">
+                        {n}
+                      </span>
+                    ))}
+                    <span className="text-[10px] text-black/20 self-center">...</span>
+                  </div>
+                </div>
+              )}
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Description</span>
+                <p className="text-[13px] text-black/50 leading-relaxed italic">
+                  "{item.description || 'Aroma khas yang memikat dari koleksi terbaik NUXAR.'}"
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {item.note && (
+            <div className="p-3 bg-red-50/50 border border-highlight/5 rounded-xl">
+              <p className="text-[11px] text-highlight/60 font-medium leading-relaxed">
+                {item.note}
+              </p>
+            </div>
+          )}
+
+          <div className="pt-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 text-[11px] rounded-full px-4 border-black/10 hover:bg-black hover:text-white transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(`https://wa.me/${contactConfig.whatsappNumber}?text=Halo NUXAR, saya tertarik dengan aroma ${item.name}`, '_blank');
+              }}
+            >
+              Pesan Sekarang
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -69,6 +162,7 @@ export function KatalogAroma() {
   const [searchQuery, setSearchQuery] = useState('');
   const [pageCowok, setPageCowok] = useState(1);
   const [pageCewek, setPageCewek] = useState(1);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const isMobile = useIsMobile();
 
@@ -161,17 +255,16 @@ export function KatalogAroma() {
     <section
       ref={sectionRef}
       id="katalog"
-      className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-[#fafafa] overflow-hidden"
+      className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-[#fafafa] overflow-hidden"
     >
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full relative z-10 w-full">
         <header className="mb-10 lg:mb-14">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-highlight/10 px-4 py-1.5 text-sm font-medium text-highlight">
-            <Sparkles className="h-4 w-4" />
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/[0.03] border border-black/[0.05] px-4 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-black/40">
             Trend 2026 · Best Seller
           </div>
           <h2
             ref={titleRef}
-            className="text-xl sm:text-2xl md:text-h1 lg:text-display-xl text-black font-semibold mb-3 tracking-tight"
+            className="text-h2 text-black font-semibold mb-3 tracking-tight"
           >
             {titleChars.map((char, i) => (
               <span key={i} className="char inline-block">
@@ -209,15 +302,15 @@ export function KatalogAroma() {
             </TabsList>
 
             <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" />
-            <Input
-              type="search"
-              placeholder="Cari aroma..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-11 rounded-xl border-black/10 bg-white pl-10 shadow-sm placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-highlight/20"
-              aria-label="Cari parfum"
-            />
+              <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" />
+              <Input
+                type="search"
+                placeholder="Cari aroma..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-11 rounded-xl border-black/10 bg-white pl-10 text-black shadow-sm placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-highlight/20"
+                aria-label="Cari parfum"
+              />
             </div>
           </div>
 
@@ -237,10 +330,14 @@ export function KatalogAroma() {
               </p>
             ) : (
               <>
-                <ul className="grid gap-4 sm:grid-cols-2 lg:gap-5">
+                <ul className="grid gap-x-12 sm:grid-cols-2">
                   {paginatedCowok.map((item) => (
                     <li key={item.id}>
-                      <PerfumeCard item={item} />
+                      <PerfumeCard
+                        item={item}
+                        isExpanded={expandedId === item.id}
+                        onToggle={() => setExpandedId(expandedId === item.id ? null : item.id)}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -277,17 +374,21 @@ export function KatalogAroma() {
             )}
           </TabsContent>
 
-            <TabsContent value="cewek" className="mt-0 outline-none">
+          <TabsContent value="cewek" className="mt-0 outline-none">
             {filteredCewek.length === 0 ? (
               <p className="py-16 text-center text-black/50">
                 Tidak ada aroma yang cocok dengan pencarian.
               </p>
             ) : (
               <>
-                <ul className="grid gap-4 sm:grid-cols-2 lg:gap-5">
+                <ul className="grid gap-x-12 sm:grid-cols-2">
                   {paginatedCewek.map((item) => (
                     <li key={item.id}>
-                      <PerfumeCard item={item} />
+                      <PerfumeCard
+                        item={item}
+                        isExpanded={expandedId === item.id}
+                        onToggle={() => setExpandedId(expandedId === item.id ? null : item.id)}
+                      />
                     </li>
                   ))}
                 </ul>

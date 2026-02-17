@@ -96,7 +96,7 @@ export function Footer() {
   return (
     <footer
       ref={sectionRef}
-      className="relative pt-16 sm:pt-20 pb-8 sm:pb-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-black overflow-hidden"
+      className="relative pt-12 sm:pt-16 pb-24 sm:pb-12 bg-black overflow-hidden"
     >
       {/* Marquee section */}
       <div
@@ -144,7 +144,7 @@ export function Footer() {
       />
 
       {/* Footer content */}
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full relative z-10 w-full">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Column 1 - Nav links */}
           <div className="space-y-4">

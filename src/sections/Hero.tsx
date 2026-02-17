@@ -184,15 +184,15 @@ export function Hero() {
 
       {/* Content container */}
       <div
-        className="relative z-20 h-full w-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 lg:px-12"
+        className="container-full relative z-20 h-full flex flex-col justify-center items-center"
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Main title */}
         <h1
           ref={titleRef}
-          className="text-[clamp(2.5rem,8vw,6rem)] font-medium text-white tracking-tight mb-4 preserve-3d text-center leading-[0.9]"
+          className="text-[clamp(2.5rem,7vw,5rem)] font-medium text-white tracking-tight mb-4 preserve-3d text-center leading-[0.95]"
           style={{
-            textShadow: '0 0 60px rgba(220, 38, 38, 0.25)',
+            textShadow: '0 0 60px rgba(220, 38, 38, 0.2)',
             willChange: 'transform',
           }}
         >
@@ -201,7 +201,7 @@ export function Hero() {
               key={i}
               className="char inline-block"
               style={{
-                transform: `translateY(calc(${i % 2 === 0 ? -1 : 1} * clamp(4px, 1vw, 8px)))`,
+                transform: `translateY(0)`, // Removed heavy bounce for more professional feel
               }}
             >
               {char}

@@ -15,15 +15,28 @@ export const SUPABASE_ENABLED = Boolean(supabase);
 export interface PerfumeRow {
   id: string;
   name: string;
-  original: string;
-  category: 'cowok' | 'cewek';
-  order: number;
+  brand: string;
+  full_name: string;
+  year: number | null;
+  gender: 'pria' | 'wanita' | 'unisex';
+  category: string;
+  concentration: string | null;
+  notes: {
+    top?: string[];
+    middle?: string[];
+    base?: string[];
+  } | null;
+  karakter: string | null;
+  penggunaan: string | null;
+  description: string | null;
+  is_official: boolean;
+  note: string | null;
+  display_order: number;
   created_at?: string;
 }
 
 /**
- * Ambil data parfum dari Supabase.
- * Gunakan ini di komponen jika ingin data dari database (set VITE_SUPABASE_* di .env).
+ * Ambil data parfum dari Supabase dengan data lengkap.
  */
 export async function fetchPerfumesFromSupabase(): Promise<{
   cowok: PerfumeItem[];
@@ -33,8 +46,8 @@ export async function fetchPerfumesFromSupabase(): Promise<{
 
   const { data, error } = await supabase
     .from('perfumes')
-    .select('id, name, original, category, order')
-    .order('order', { ascending: true });
+    .select('*')
+    .order('display_order', { ascending: true });
 
   if (error) {
     console.error('Supabase perfumes error:', error);
@@ -42,24 +55,32 @@ export async function fetchPerfumesFromSupabase(): Promise<{
   }
 
   const rows = (data ?? []) as PerfumeRow[];
-  const cowok: PerfumeItem[] = rows
-    .filter((r) => r.category === 'cowok')
-    .map((r) => ({
-      id: r.id,
-      name: r.name,
-      original: r.original,
-      category: 'cowok',
-      order: r.order,
-    }));
-  const cewek: PerfumeItem[] = rows
-    .filter((r) => r.category === 'cewek')
-    .map((r) => ({
-      id: r.id,
-      name: r.name,
-      original: r.original,
-      category: 'cewek',
-      order: r.order,
-    }));
+
+  const mapRowToItem = (r: PerfumeRow): PerfumeItem => ({
+    id: String(r.id),
+    name: r.name,
+    brand: r.brand,
+    fullName: r.full_name,
+    year: r.year ?? undefined,
+    gender: r.gender,
+    category: r.category,
+    concentration: r.concentration ?? undefined,
+    notes: r.notes ?? undefined,
+    karakter: r.karakter ?? undefined,
+    penggunaan: r.penggunaan ?? undefined,
+    description: r.description ?? undefined,
+    is_official: r.is_official,
+    note: r.note ?? undefined,
+    order: r.display_order,
+  });
+
+  const cowok = rows
+    .filter((r) => r.gender === 'pria' || r.gender === 'unisex')
+    .map(mapRowToItem);
+
+  const cewek = rows
+    .filter((r) => r.gender === 'wanita')
+    .map(mapRowToItem);
 
   return { cowok, cewek };
 }

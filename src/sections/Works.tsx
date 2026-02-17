@@ -135,14 +135,14 @@ export function Works() {
     <section
       ref={sectionRef}
       id="works"
-      className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-white overflow-hidden"
+      className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-white overflow-hidden"
       style={{ perspective: '1200px' }}
     >
       {/* Header */}
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto mb-12 sm:mb-16">
+      <div className="container-full relative z-10 w-full mb-12 sm:mb-16">
         <h2
           ref={titleRef}
-          className="text-xl sm:text-2xl md:text-h1 lg:text-display-xl text-black font-semibold mb-4 tracking-tight"
+          className="text-h2 text-black font-semibold mb-3 tracking-tight"
         >
           {titleChars.map((char, i) => (
             <span key={i} className="char inline-block">
@@ -152,14 +152,14 @@ export function Works() {
         </h2>
         <p
           ref={subtitleRef}
-          className="text-sm sm:text-base text-black/60 max-w-2xl"
+          className="text-body-sm text-black/60 max-w-xl"
         >
           {worksConfig.subtitle}
         </p>
       </div>
 
-      {/* Projects Grid - Scattered mosaic */}
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      {/* Projects Grid - Balanced mosaic */}
+      <div className="container-full relative z-10 w-full font-sans">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {worksConfig.projects.map((project, index) => (
             <div
@@ -167,9 +167,8 @@ export function Works() {
               ref={(el) => {
                 cardsRef.current[index] = el;
               }}
-              className={`relative group cursor-pointer preserve-3d ${
-                index === 0 ? 'md:col-span-1 md:row-span-1' : ''
-              } ${index % 2 === 0 ? 'md:-translate-y-8' : 'md:translate-y-8'}`}
+              className={`relative group cursor-pointer preserve-3d ${index === 0 ? 'md:col-span-1 md:row-span-1' : ''
+                } ${index % 2 === 0 ? 'md:-translate-y-4' : 'md:translate-y-4'}`}
               style={{
                 transformStyle: 'preserve-3d',
                 willChange: 'transform',
@@ -187,7 +186,7 @@ export function Works() {
               onMouseLeave={() => handleMouseLeave(index)}
             >
               {/* Card content */}
-              <div className="relative aspect-[4/5] max-h-[320px] sm:max-h-[400px] overflow-hidden rounded-lg bg-dark-gray">
+              <div className="relative aspect-[4/5] max-h-[280px] sm:max-h-[360px] overflow-hidden rounded-lg bg-dark-gray shadow-sm group-hover:shadow-xl transition-shadow duration-500">
                 <img
                   src={project.image}
                   alt={project.title}

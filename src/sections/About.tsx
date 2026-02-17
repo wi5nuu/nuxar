@@ -160,13 +160,13 @@ export function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 overflow-hidden"
+      className="relative py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden"
       style={{ transform: 'rotate(0deg)' }}
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0a0a0a] to-black z-0" />
 
-      <div className="relative z-10 w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full relative z-10 w-full">
         {/* Section layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left column - Images */}
@@ -205,7 +205,7 @@ export function About() {
             {/* Section title */}
             <h2
               ref={titleRef}
-              className="text-h3 lg:text-h2 text-white font-normal leading-tight mb-8"
+              className="text-h2 text-white font-medium leading-tight mb-6"
             >
               <span className="title-line block">
                 {aboutConfig.titleLine1}
@@ -225,7 +225,7 @@ export function About() {
             {/* About text */}
             <p
               ref={textRef}
-              className="text-body-lg text-white/70 leading-relaxed mb-12"
+              className="text-body text-white/70 leading-relaxed mb-10 max-w-xl"
             >
               {aboutConfig.description}
             </p>

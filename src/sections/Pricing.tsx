@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { pricingConfig } from '../config';
+import { pricingConfig, contactConfig } from '../config';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const WHATSAPP = '6281394882490';
 
 export function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -39,9 +37,10 @@ export function Pricing() {
     return () => trigger.kill();
   }, []);
 
-  const handleOrder = (size: string, tier: string, price: number) => {
-    const msg = encodeURIComponent(`Halo NUXAR PERFUMERY, saya ingin pesan parfum:\n- Ukuran: ${size}\n- Tier: ${tier}\n- Harga: Rp ${price.toLocaleString('id-ID')}\n\nTerima kasih!`);
-    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank', 'noopener,noreferrer');
+  const handleOrder = (size: string, tier: string, price: number, originalPrice?: number) => {
+    const discountInfo = originalPrice ? ` (Diskon dari Rp ${originalPrice.toLocaleString('id-ID')})` : '';
+    const msg = encodeURIComponent(`Halo NUXAR PERFUMERY, saya ingin pesan parfum:\n- Ukuran: ${size}\n- Tier: ${tier}\n- Harga: Rp ${price.toLocaleString('id-ID')}${discountInfo}\n\nTerima kasih!`);
+    window.open(`https://wa.me/${contactConfig.whatsappNumber}?text=${msg}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -50,7 +49,7 @@ export function Pricing() {
       id="pricing"
       className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-black overflow-hidden"
     >
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full relative z-10">
         <div className="text-center mb-12 sm:mb-16">
           <h2 ref={titleRef} className="text-h1 lg:text-display-xl text-white font-medium mb-4">
             {pricingConfig.title}
@@ -60,14 +59,23 @@ export function Pricing() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-12">
           {sizes.map((size, index) => (
             <div
               key={size.id}
               ref={(el) => { cardsRef.current[index] = el; }}
-              className="relative bg-dark-gray/80 backdrop-blur-sm p-6 lg:p-8 rounded-xl transition-all duration-300 hover:bg-dark-gray focus:outline-none focus-visible:ring-2 focus-visible:ring-highlight focus-visible:ring-offset-2 focus-visible:ring-offset-black touch-manipulation"
+              className={`relative p-6 lg:p-8 rounded-2xl transition-all duration-500 group focus:outline-none focus-visible:ring-2 focus-visible:ring-highlight touch-manipulation border ${size.isRecommended
+                ? 'bg-gradient-to-b from-white/[0.08] to-transparent border-highlight/50 shadow-[0_0_30px_rgba(255,255,255,0.02)] sm:scale-105 z-10'
+                : 'bg-white/[0.03] border-white/5 hover:border-white/10'
+                }`}
               tabIndex={0}
             >
+              {size.isRecommended && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-highlight text-white text-[10px] font-bold uppercase tracking-widest py-1.5 px-4 rounded-full flex items-center gap-1.5 shadow-lg shadow-highlight/20 whitespace-nowrap">
+                  Paling Recommended
+                </div>
+              )}
+
               <div className="mb-6">
                 <h3 className="text-h4 text-white font-semibold">{size.size}</h3>
                 <p className="text-body-sm text-white/50 mt-1">{size.tagline}</p>
@@ -77,17 +85,27 @@ export function Pricing() {
                 {size.tiers.map((tier) => (
                   <li key={tier.name} className="flex items-center justify-between">
                     <span className="text-body text-white/80">{tier.name}</span>
-                    <span className="text-body font-semibold text-white tabular-nums">
-                      Rp {(tier.price / 1000).toFixed(0)}rb
-                    </span>
+                    <div className="flex flex-col items-end">
+                      {tier.originalPrice && (
+                        <span className="text-[10px] text-white/30 line-through">
+                          Rp {tier.originalPrice.toLocaleString('id-ID')}
+                        </span>
+                      )}
+                      <span className="text-body font-semibold text-white tabular-nums">
+                        Rp {tier.price.toLocaleString('id-ID')}
+                      </span>
+                    </div>
                   </li>
                 ))}
               </ul>
 
               <button
                 type="button"
-                onClick={() => handleOrder(size.size, size.tiers[1].name, size.tiers[1].price)}
-                className="w-full py-3 text-body font-medium bg-highlight text-white rounded-lg hover:bg-highlight/90 transition-colors duration-200 touch-manipulation"
+                onClick={() => handleOrder(size.size, size.tiers[0].name, size.tiers[0].price, size.tiers[0].originalPrice)}
+                className={`w-full py-3 text-body font-medium rounded-xl transition-all duration-300 active:scale-95 touch-manipulation ${size.isRecommended
+                  ? 'bg-white text-black hover:bg-highlight hover:text-white'
+                  : 'bg-white/10 text-white hover:bg-white hover:text-black'
+                  }`}
               >
                 {pricingConfig.ctaButtonText}
               </button>

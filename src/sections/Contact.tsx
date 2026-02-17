@@ -25,6 +25,54 @@ export function Contact() {
     message: '',
   });
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    let widgetId: string | null = null;
+
+    // Function to render turnstile
+    const renderTurnstile = () => {
+      // @ts-ignore
+      if (window.turnstile && !widgetId) {
+        const container = document.getElementById('turnstile-container');
+        if (container) {
+          container.innerHTML = ''; // Clear container to avoid double widgets in React Strict Mode
+          // @ts-ignore
+          widgetId = window.turnstile.render('#turnstile-container', {
+            sitekey: contactConfig.turnstileSiteKey,
+            callback: (token: string) => {
+              setTurnstileToken(token);
+            },
+            'expired-callback': () => {
+              setTurnstileToken(null);
+            },
+          });
+        }
+      }
+    };
+
+    // Try rendering immediately
+    renderTurnstile();
+
+    // If turnstile script isn't loaded yet, it might not be available
+    // We can also listen for the script load if needed, but usually useEffect is late enough
+    const timer = setInterval(() => {
+      // @ts-ignore
+      if (window.turnstile && !widgetId) {
+        renderTurnstile();
+        clearInterval(timer);
+      }
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+      // @ts-ignore
+      if (widgetId && window.turnstile) {
+        // @ts-ignore
+        window.turnstile.remove(widgetId);
+      }
+    };
+  }, []);
 
   if (!contactConfig.title) return null;
 
@@ -124,7 +172,7 @@ export function Contact() {
       id="contact"
       className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-black overflow-hidden"
     >
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 relative">
           <div ref={dividerRef} className="hidden lg:block absolute left-1/2 top-0 w-px bg-white/20" style={{ transform: 'rotate(12deg) translateX(-50%)', transformOrigin: 'top center', willChange: 'height' }} />
 
@@ -159,10 +207,14 @@ export function Contact() {
               </FormField>
             </div>
 
+            {/* Turnstile Widget */}
+            <div id="turnstile-container" className="mt-8"></div>
+
             <button
               ref={buttonRef}
               type="submit"
-              className="mt-12 px-10 py-4 bg-white text-black text-body font-medium flex items-center gap-3 hover:bg-highlight hover:text-white transition-colors duration-300 relative overflow-hidden group"
+              disabled={!turnstileToken}
+              className={`mt-12 px-10 py-4 bg-white text-black text-body font-medium flex items-center gap-3 transition-colors duration-300 relative overflow-hidden group ${!turnstileToken ? 'opacity-50 cursor-not-allowed' : 'hover:bg-highlight hover:text-white cursor-pointer'}`}
             >
               <span className="relative z-10">{contactConfig.submitButtonText}</span>
               <Send className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />

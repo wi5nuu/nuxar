@@ -122,7 +122,7 @@ export function Testimonials() {
       className="relative py-20 sm:py-24 md:py-28 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-dark-gray to-black overflow-hidden"
       style={{ perspective: '1200px' }}
     >
-      <div className="w-full max-w-[min(100%,1920px)] mx-auto">
+      <div className="container-full">
         {/* Section title */}
         <h2
           ref={titleRef}
