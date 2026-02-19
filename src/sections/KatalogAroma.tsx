@@ -285,34 +285,53 @@ export function KatalogAroma() {
           onValueChange={setActiveTab}
           className="w-full"
         >
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <TabsList className="h-11 w-full sm:w-auto grid grid-cols-2 rounded-xl border border-black/10 bg-white p-1 shadow-sm">
-              <TabsTrigger
-                value="cowok"
-                className="rounded-lg data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-md px-5 text-sm font-medium transition-all"
-              >
-                Cowok ({cowok.length})
-              </TabsTrigger>
-              <TabsTrigger
-                value="cewek"
-                className="rounded-lg data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-md px-5 text-sm font-medium transition-all"
-              >
-                Cewek ({cewek.length})
-              </TabsTrigger>
-            </TabsList>
+<div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+ <TabsList className="h-12 w-full sm:w-auto grid grid-cols-2 rounded-2xl border border-black/10 bg-white p-1 shadow-sm relative">
+  
+  <TabsTrigger
+    value="cowok"
+    className="
+      rounded-xl px-6 py-2 text-sm font-semibold
+      text-black
+      transition-all duration-300 ease-in-out
+      data-[state=active]:bg-black
+      data-[state=active]:text-white
+      data-[state=active]:shadow-md
+    "
+  >
+    Parfum Pria ({cowok.length})
+  </TabsTrigger>
 
-            <div className="relative w-full sm:w-72">
-              <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" />
-              <Input
-                type="search"
-                placeholder="Cari aroma..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-11 rounded-xl border-black/10 bg-white pl-10 text-black shadow-sm placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-highlight/20"
-                aria-label="Cari parfum"
-              />
-            </div>
-          </div>
+  <TabsTrigger
+    value="cewek"
+    className="
+      rounded-xl px-6 py-2 text-sm font-semibold
+      text-black
+      transition-all duration-300 ease-in-out
+      data-[state=active]:bg-black
+      data-[state=active]:text-white
+      data-[state=active]:shadow-md
+    "
+  >
+    Parfum Wanita ({cewek.length})
+  </TabsTrigger>
+
+</TabsList>
+
+
+  <div className="relative w-full sm:w-72">
+    <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" />
+    <Input
+      type="search"
+      placeholder="Cari aroma favorit Anda..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="h-12 rounded-2xl border-black/10 bg-white pl-10 text-black shadow-sm placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-highlight/20 transition-all"
+      aria-label="Cari parfum"
+    />
+  </div>
+</div>
+
 
           {loading && (
             <p className="py-12 text-center text-black/50">Memuat katalog...</p>
@@ -341,35 +360,44 @@ export function KatalogAroma() {
                     </li>
                   ))}
                 </ul>
-                {isMobile && totalPagesCowok > 1 && (
-                  <div className="mt-8 flex items-center justify-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setPageCowok((p) => Math.max(1, p - 1))}
-                      disabled={pageCowok <= 1}
-                      className="rounded-lg border-black/15 bg-white"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                      Sebelumnya
-                    </Button>
-                    <span className="px-4 text-sm text-black/60">
-                      Halaman {pageCowok} / {totalPagesCowok}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        setPageCowok((p) => Math.min(totalPagesCowok, p + 1))
-                      }
-                      disabled={pageCowok >= totalPagesCowok}
-                      className="rounded-lg border-black/15 bg-white"
-                    >
-                      Selanjutnya
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                )}
+{isMobile && totalPagesCowok > 1 && (
+  <div className="mt-10 flex items-center justify-center gap-6">
+    
+    {/* Previous */}
+    <span
+      onClick={() => setPageCowok((p) => Math.max(1, p - 1))}
+      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
+        pageCowok <= 1
+          ? "text-black/20 cursor-not-allowed"
+          : "text-black hover:text-black/60 hover:-translate-x-1"
+      }`}
+    >
+      <ChevronLeft className="h-5 w-5" />
+      Sebelumnya
+    </span>
+
+    {/* Page Indicator */}
+    <span className="px-5 py-2 text-sm tracking-wide text-black/60">
+      {pageCowok} / {totalPagesCowok}
+    </span>
+
+    {/* Next */}
+    <span
+      onClick={() =>
+        setPageCowok((p) => Math.min(totalPagesCowok, p + 1))
+      }
+      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
+        pageCowok >= totalPagesCowok
+          ? "text-black/20 cursor-not-allowed"
+          : "text-black hover:text-black/60 hover:translate-x-1"
+      }`}
+    >
+      Selanjutnya
+      <ChevronRight className="h-5 w-5" />
+    </span>
+  </div>
+)}
+
               </>
             )}
           </TabsContent>
@@ -392,35 +420,44 @@ export function KatalogAroma() {
                     </li>
                   ))}
                 </ul>
-                {isMobile && totalPagesCewek > 1 && (
-                  <div className="mt-8 flex items-center justify-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setPageCewek((p) => Math.max(1, p - 1))}
-                      disabled={pageCewek <= 1}
-                      className="rounded-lg border-black/15 bg-white"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                      Sebelumnya
-                    </Button>
-                    <span className="px-4 text-sm text-black/60">
-                      Halaman {pageCewek} / {totalPagesCewek}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        setPageCewek((p) => Math.min(totalPagesCewek, p + 1))
-                      }
-                      disabled={pageCewek >= totalPagesCewek}
-                      className="rounded-lg border-black/15 bg-white"
-                    >
-                      Selanjutnya
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                )}
+{isMobile && totalPagesCewek > 1 && (
+  <div className="mt-10 flex items-center justify-center gap-6">
+    
+    {/* Previous */}
+    <span
+      onClick={() => setPageCewek((p) => Math.max(1, p - 1))}
+      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
+        pageCewek <= 1
+          ? "text-black/20 cursor-not-allowed"
+          : "text-black hover:text-black/60 hover:-translate-x-1"
+      }`}
+    >
+      <ChevronLeft className="h-5 w-5" />
+      Sebelumnya
+    </span>
+
+    {/* Page Indicator */}
+    <span className="px-5 py-2 text-sm tracking-wide text-black/60">
+      {pageCewek} / {totalPagesCewek}
+    </span>
+
+    {/* Next */}
+    <span
+      onClick={() =>
+        setPageCewek((p) => Math.min(totalPagesCewek, p + 1))
+      }
+      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
+        pageCewek >= totalPagesCewek
+          ? "text-black/20 cursor-not-allowed"
+          : "text-black hover:text-black/60 hover:translate-x-1"
+      }`}
+    >
+      Selanjutnya
+      <ChevronRight className="h-5 w-5" />
+    </span>
+  </div>
+)}
+
               </>
             )}
           </TabsContent>

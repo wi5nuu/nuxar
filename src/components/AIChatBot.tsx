@@ -234,8 +234,14 @@ export function AIChatBot() {
                             <div>
                                 <h4 className="text-sm font-bold tracking-tight">NUXAR Assistant</h4>
                                 <div className="flex items-center gap-1.5">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                                    <span className="text-[10px] text-white/60 font-medium uppercase tracking-[0.1em]">Online</span>
+                                    <span className="relative flex h-2 w-2">
+  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
+</span>
+                                    <span className="text-[10px] text-emerald-400 font-semibold uppercase tracking-[0.12em]">
+  Online
+</span>
+
                                 </div>
                             </div>
                         </div>
