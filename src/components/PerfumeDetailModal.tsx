@@ -31,10 +31,12 @@ export function PerfumeDetailModal({ perfume, isOpen, onClose }: PerfumeDetailMo
     useEffect(() => {
         if (isOpen && perfume && (window as any).ttq) {
             (window as any).ttq.track('ViewContent', {
-                content_id: perfume.id,
-                content_name: perfume.name,
-                content_type: 'product',
-                content_category: perfume.category,
+                contents: [{
+                    content_id: perfume.id,
+                    content_name: perfume.name,
+                    content_type: 'product',
+                    content_category: perfume.category,
+                }],
                 value: 65000,
                 currency: 'IDR'
             });
@@ -46,8 +48,10 @@ export function PerfumeDetailModal({ perfume, isOpen, onClose }: PerfumeDetailMo
     const handleOrder = () => {
         if ((window as any).ttq) {
             (window as any).ttq.track('Contact', {
-                content_id: perfume.id,
-                content_name: perfume.name,
+                contents: [{
+                    content_id: perfume.id,
+                    content_name: perfume.name,
+                }],
                 value: 65000,
                 currency: 'IDR'
             });
