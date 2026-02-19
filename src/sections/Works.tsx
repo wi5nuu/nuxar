@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight } from 'lucide-react';
 import { worksConfig } from '../config';
+import { fetchPerfumesFromSupabase, SUPABASE_ENABLED } from '../lib/supabase';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,10 +11,8 @@ export function Works() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const triggersRef = useRef<ScrollTrigger[]>([]);
+  const [projects, setProjects] = useState(worksConfig.projects);
+  const [loading, setLoading] = useState(SUPABASE_ENABLED);
 
   if (!worksConfig.title || worksConfig.projects.length === 0) return null;
 
@@ -49,51 +48,32 @@ export function Works() {
           { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
           '-=0.3'
         );
-
-        cardsRef.current.forEach((card, i) => {
-          if (card) {
-            tl.fromTo(
-              card,
-              { rotateY: i % 2 === 0 ? -180 : 180, opacity: 0 },
-              { rotateY: 0, opacity: 1, duration: 1, ease: 'expo.out' },
-              `-=${0.85 - i * 0.15}`
-            );
-          }
-        });
       },
       once: true,
     });
-    triggersRef.current.push(trigger);
 
     return () => {
-      triggersRef.current.forEach((t) => t.kill());
-      triggersRef.current = [];
+      trigger.kill();
     };
   }, []);
 
-  // Zoom image in on hover/touch
-  const handleImageZoomIn = (index: number) => {
-    const img = imgRefs.current[index];
-    if (!img) return;
-    gsap.to(img, {
-      scale: 1.08,
-      duration: 0.6,
-      ease: 'power2.out',
-    });
-    setHoveredIndex(index);
-  };
+  useEffect(() => {
+    if (SUPABASE_ENABLED) {
+      fetchPerfumesFromSupabase().then(data => {
+        if (data) {
+          const all = [...data.cowok, ...data.cewek].map(p => ({
+            id: p.id,
+            title: p.name,
+            category: p.category,
+            image: (p as any).image || `/product-${(parseInt(p.id) % 8) + 1}.jpg`
+          })).slice(0, 8); // Tampilkan 8 koleksi pilihan di beranda
+          if (all.length > 0) setProjects(all as any);
+        }
+        setLoading(false);
+      }).catch(() => setLoading(false));
+    }
+  }, []);
 
-  // Zoom image back out
-  const handleImageZoomOut = (index: number) => {
-    const img = imgRefs.current[index];
-    if (!img) return;
-    gsap.to(img, {
-      scale: 1,
-      duration: 0.7,
-      ease: 'power2.out',
-    });
-    setHoveredIndex(null);
-  };
 
   const titleChars = worksConfig.title.split('');
 
@@ -123,71 +103,81 @@ export function Works() {
         </p>
       </div>
 
-      {/* Projects Grid */}
-      <div className="container-full relative z-10 w-full font-sans">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 lg:gap-8 px-1 sm:px-0">
-          {worksConfig.projects.map((project, index) => (
-            <div
-              key={project.id}
-              ref={(el) => { cardsRef.current[index] = el; }}
-              className="relative group cursor-pointer"
-              style={{
-                // Hanya preserve-3d untuk entry animation, tapi tidak ada tilt saat hover
-                transformStyle: 'preserve-3d',
-                willChange: 'transform',
-              }}
-              onMouseEnter={() => handleImageZoomIn(index)}
-              onMouseLeave={() => handleImageZoomOut(index)}
-              // Touch support
-              onTouchStart={() => handleImageZoomIn(index)}
-              onTouchEnd={() => handleImageZoomOut(index)}
-            >
-              {/* Card content */}
+      {/* Infinite Horizontal Carousel */}
+      <div className="relative z-10 w-full overflow-hidden font-sans">
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes marquee {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+          }
+          .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 80s linear infinite;
+          }
+          .marquee-track:hover {
+            animation-play-state: paused;
+          }
+        `}} />
+
+        {loading ? (
+          <div className="py-20 text-center text-black/20 italic">Menampilkan koleksi pilihan...</div>
+        ) : (
+          <div className="marquee-track flex gap-4 sm:gap-6 md:gap-8">
+            {/* Double the projects to create seamless loop */}
+            {[...projects, ...projects].map((project, index) => (
               <div
-                className="relative overflow-hidden rounded-lg bg-dark-gray shadow-sm"
+                key={`${project.id}-${index}`}
+                className="relative group cursor-pointer shrink-0"
                 style={{
-                  aspectRatio: '4/5',
-                  minHeight: 'clamp(220px, 40vw, 380px)',
+                  width: 'clamp(200px, 30vw, 320px)',
+                  transformStyle: 'preserve-3d',
+                  willChange: 'transform',
                 }}
+                onMouseEnter={() => { }}
+                onMouseLeave={() => { }}
               >
-                {/* Hanya img yang zoom, bukan seluruh card */}
-                <img
-                  ref={(el) => { imgRefs.current[index] = el; }}
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                  style={{
-                    willChange: 'transform',
-                    transformOrigin: 'center center',
-                  }}
-                />
-
-                {/* Overlay — sedikit lebih gelap saat hover untuk kontras teks */}
+                {/* Card content */}
                 <div
-                  className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent transition-opacity duration-300"
-                  style={{ opacity: hoveredIndex === index ? 0.95 : 0.9 }}
-                />
+                  className="relative overflow-hidden rounded-2xl bg-dark-gray shadow-md transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2"
+                  style={{
+                    aspectRatio: '4/5',
+                  }}
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
 
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 lg:p-5">
-                  <p className="text-[10px] sm:text-xs text-white/60 mb-1 group-hover:text-highlight transition-colors duration-300 tracking-wide">
-                    {project.category}
-                  </p>
-                  <h3 className="text-sm sm:text-base lg:text-xl text-white font-medium tracking-tight leading-snug">
-                    {project.title}
-                  </h3>
-                </div>
+                  {/* Overlay */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500"
+                  />
 
-                {/* Arrow icon */}
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-highlight transition-all duration-300">
-                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                    <p className="text-[9px] sm:text-[10px] text-highlight mb-1 font-black uppercase tracking-[0.2em]">
+                      {project.category}
+                    </p>
+                    <h3 className="text-sm sm:text-base lg:text-lg text-white font-black tracking-tight leading-tight uppercase italic">
+                      {project.title}
+                    </h3>
+                  </div>
+
+                  {/* Arrow icon */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="w-10 h-10 rounded-full bg-highlight flex items-center justify-center shadow-lg">
+                      <ArrowUpRight className="w-5 h-5 text-black" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Decorative elements */}

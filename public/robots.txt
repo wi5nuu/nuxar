@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
 
-Sitemap: https://nuxar.id/sitemap.xml
+Sitemap: https://nuxarperfumery.my.id/sitemap.xml

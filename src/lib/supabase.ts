@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import type { PerfumeItem } from '@/data/perfumes';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY ?? '';
+const supabaseUrl = import.meta.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+const supabaseAnonKey = import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY ?? '';
 
 export const supabase =
   supabaseUrl && supabaseAnonKey
@@ -35,6 +35,19 @@ export interface PerfumeRow {
   created_at?: string;
 }
 
+export interface BlogPostRow {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  read_time: string;
+  date: string;
+  image: string;
+  category: string;
+  created_at?: string;
+}
+
 /**
  * Ambil data parfum dari Supabase dengan data lengkap.
  */
@@ -61,17 +74,47 @@ export async function fetchPerfumesFromSupabase(): Promise<{
     name: r.name,
     brand: r.brand,
     fullName: r.full_name,
-    year: r.year ?? undefined,
-    gender: r.gender,
-    category: r.category,
-    concentration: r.concentration ?? undefined,
-    notes: r.notes ?? undefined,
+    category: (r.gender === 'wanita' ? 'cewek' : 'cowok') as 'cowok' | 'cewek',
+    order: r.display_order,
+    note: r.note ?? undefined,
+    notes: {
+      top: r.notes?.top ?? [],
+      middle: r.notes?.middle ?? [],
+      base: r.notes?.base ?? [],
+    },
+    character: {
+      mainImpression: r.karakter || 'Unknown',
+      family: 'Unknown',
+      intensity: 'Moderate',
+      sweetness: 3,
+      freshness: 3,
+    },
+    personality: {
+      vibe: 'Unknown',
+      scale: r.gender === 'pria' ? 'Masculine' : r.gender === 'wanita' ? 'Feminine' : 'Unisex',
+      uniqueness: 3,
+    },
+    bestFor: {
+      occasion: r.penggunaan || 'Daily',
+      time: 'Anytime',
+      weather: 'Any',
+      ageRange: 'All Ages',
+    },
+    performance: {
+      longevity: '6-8 Hours',
+      projection: 'Moderate',
+      sillage: 'Moderate',
+      complimentFactor: 3,
+    },
+    additional: {
+      concentration: (r.concentration as any) || 'EDP',
+      style: 'Casual',
+      situation: r.penggunaan || 'General',
+    },
+    description: r.description || 'Aroma yang sangat berkesan.',
     karakter: r.karakter ?? undefined,
     penggunaan: r.penggunaan ?? undefined,
-    description: r.description ?? undefined,
     is_official: r.is_official,
-    note: r.note ?? undefined,
-    order: r.display_order,
   });
 
   const cowok = rows
@@ -83,4 +126,33 @@ export async function fetchPerfumesFromSupabase(): Promise<{
     .map(mapRowToItem);
 
   return { cowok, cewek };
+}
+
+/**
+ * Ambil data blog dari Supabase.
+ */
+export async function fetchBlogsFromSupabase() {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Supabase blogs error:', error);
+    return null;
+  }
+
+  return (data ?? []).map((r: BlogPostRow) => ({
+    id: r.id,
+    slug: r.slug,
+    title: r.title,
+    excerpt: r.excerpt,
+    content: r.content,
+    readTime: r.read_time,
+    date: r.date,
+    image: r.image,
+    category: r.category,
+  }));
 }

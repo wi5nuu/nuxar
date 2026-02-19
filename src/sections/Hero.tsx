@@ -146,8 +146,10 @@ export function Hero() {
       >
         <img
           src={heroConfig.backgroundImage}
-          alt="Hero"
+          alt="Hero background"
           className="w-full h-full object-cover"
+          fetchPriority="high"
+          loading="eager"
         />
       </div>
 

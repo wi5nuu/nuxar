@@ -1,151 +1,45 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Search, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import {
   perfumesCowok,
   perfumesCewek,
-  perfumeCatalogConfig,
   type PerfumeItem,
 } from '@/data/perfumes';
-import { fetchPerfumesFromSupabase, SUPABASE_ENABLED } from '@/lib/supabase';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { contactConfig } from '@/config';
+import { PerfumeSideDetail } from '@/components/PerfumeSideDetail';
 
-gsap.registerPlugin(ScrollTrigger);
+function PerfumeCard({ item, index, onOpenDetail, isActive }: { item: PerfumeItem; index: number; onOpenDetail: (i: PerfumeItem) => void, isActive: boolean }) {
+  const imageIndex = (index % 8) + 1;
 
-const ITEMS_PER_PAGE_MOBILE = 10;
-
-function filterPerfumes(items: PerfumeItem[], query: string): PerfumeItem[] {
-  if (!query.trim()) return items;
-  const q = query.trim().toLowerCase();
-  return items.filter(
-    (p) =>
-      p.name.toLowerCase().includes(q) ||
-      p.brand?.toLowerCase().includes(q) ||
-      p.fullName.toLowerCase().includes(q)
-  );
-}
-
-function usePaginatedItems(
-  items: PerfumeItem[],
-  isMobile: boolean,
-  page: number
-) {
-  return useMemo(() => {
-    if (!isMobile) return items;
-    const start = (page - 1) * ITEMS_PER_PAGE_MOBILE;
-    return items.slice(start, start + ITEMS_PER_PAGE_MOBILE);
-  }, [items, isMobile, page]);
-}
-
-interface PerfumeCardProps {
-  item: PerfumeItem;
-  isExpanded: boolean;
-  onToggle: () => void;
-}
-
-function PerfumeCard({ item, isExpanded, onToggle }: PerfumeCardProps) {
   return (
     <div
-      onClick={onToggle}
-      className={`group cursor-pointer flex flex-col py-5 px-4 rounded-2xl transition-all duration-500 border-b border-black/[0.03] hover:bg-black/[0.02] ${isExpanded ? 'bg-white shadow-lg border-highlight/10 mb-4' : 'hover:border-highlight/20'
-        }`}
+      onClick={() => onOpenDetail(item)}
+      className={`group cursor-pointer relative overflow-hidden rounded-xl transition-all duration-500 border ${isActive ? 'border-highlight ring-2 ring-highlight/20 shadow-2xl' : 'border-black/5 hover:border-highlight/30'
+        } bg-white hover:shadow-xl hover:-translate-y-1`}
     >
-      <div className="flex items-center gap-6">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center text-[11px] font-bold tracking-tighter text-black/20 transition-colors group-hover:text-highlight/40">
-          {String(item.order).padStart(2, '0')}.
+      <div className="aspect-[3/4] overflow-hidden relative">
+        <img
+          src={`/product-${imageIndex}.jpg`}
+          alt={item.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+
+        <div className="absolute top-2 left-2">
+          <span className="px-1.5 py-0.5 rounded-md bg-black/40 backdrop-blur-md border border-white/10 text-[7px] font-bold text-white uppercase tracking-tighter">
+            {item.category === 'cowok' ? 'Men' : 'Women'}
+          </span>
         </div>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <h3 className="text-[15px] font-semibold text-black/80 transition-colors group-hover:text-black tracking-tight">
-              {item.name}
-            </h3>
-            {item.is_official && (
-              <Sparkles className="h-3 w-3 text-highlight/40" />
-            )}
-          </div>
-          <p className="text-[12px] text-black/40 group-hover:text-black/60 transition-colors">
-            {item.brand} — {item.category}
-          </p>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className={`transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`}>
-            <ChevronRight className={`w-4 h-4 text-black/20 ${isExpanded ? 'text-highlight' : ''}`} />
-          </div>
+
+        <div className="absolute bottom-2 left-2 right-2 translate-y-1 group-hover:translate-y-0 transition-transform duration-500">
+          <p className="text-[7px] font-black text-highlight uppercase tracking-[0.1em] mb-0.5">Premium</p>
+          <h3 className="text-[10px] md:text-xs font-bold text-white leading-tight line-clamp-1">{item.name}</h3>
+          <p className="text-[8px] text-white/60 line-clamp-1 italic">{item.character.mainImpression}</p>
         </div>
       </div>
-
-      {/* Expanded Details */}
-      {isExpanded && (
-        <div className="mt-6 pl-14 pr-4 space-y-4 animate-in fade-in slide-in-from-top-2 duration-500">
-          <div className="h-px bg-black/[0.05] w-full" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Full Name</span>
-                <p className="text-sm text-black/70 font-medium">{item.fullName}</p>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Character</span>
-                <p className="text-sm text-black/70">{item.karakter || '-'}</p>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Best Use</span>
-                <p className="text-sm text-black/70">{item.penggunaan || '-'}</p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              {item.notes && (
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Fragrance Notes</span>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
-                    {item.notes.top?.slice(0, 3).map((n, i) => (
-                      <span key={i} className="px-2 py-0.5 bg-highlight/5 text-highlight text-[10px] rounded-md font-medium border border-highlight/10">
-                        {n}
-                      </span>
-                    ))}
-                    <span className="text-[10px] text-black/20 self-center">...</span>
-                  </div>
-                </div>
-              )}
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-black/30 block mb-1">Description</span>
-                <p className="text-[13px] text-black/50 leading-relaxed italic">
-                  "{item.description || 'Aroma khas yang memikat dari koleksi terbaik NUXAR.'}"
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {item.note && (
-            <div className="p-3 bg-red-50/50 border border-highlight/5 rounded-xl">
-              <p className="text-[11px] text-highlight/60 font-medium leading-relaxed">
-                {item.note}
-              </p>
-            </div>
-          )}
-
-          <div className="pt-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 text-[11px] rounded-full px-4 border-black/10 hover:bg-black hover:text-white transition-all"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(`https://wa.me/${contactConfig.whatsappNumber}?text=Halo NUXAR, saya tertarik dengan aroma ${item.name}`, '_blank');
-              }}
-            >
-              Pesan Sekarang
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -155,317 +49,205 @@ export function KatalogAroma() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const [activeTab, setActiveTab] = useState('cowok');
-  const [cowok, setCowok] = useState<PerfumeItem[]>(perfumesCowok);
-  const [cewek, setCewek] = useState<PerfumeItem[]>(perfumesCewek);
-  const [loading, setLoading] = useState(SUPABASE_ENABLED);
-  const [error, setError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [pageCowok, setPageCowok] = useState(1);
-  const [pageCewek, setPageCewek] = useState(1);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [selectedPerfume, setSelectedPerfume] = useState<PerfumeItem | null>(null);
+  const [mobilePage, setMobilePage] = useState(1);
+  const itemsPerMobilePage = 8;
 
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    if (!SUPABASE_ENABLED) return;
-    let cancelled = false;
-    setLoading(true);
-    setError(false);
-    fetchPerfumesFromSupabase()
-      .then((data) => {
-        if (cancelled || !data) return;
-        setCowok(data.cowok);
-        setCewek(data.cewek);
-      })
-      .catch(() => {
-        if (!cancelled) setError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Reset page when search or tab changes
-  useEffect(() => {
-    setPageCowok(1);
-    setPageCewek(1);
-  }, [searchQuery, activeTab]);
-
-  const filteredCowok = useMemo(
-    () => filterPerfumes(cowok, searchQuery),
-    [cowok, searchQuery]
-  );
-  const filteredCewek = useMemo(
-    () => filterPerfumes(cewek, searchQuery),
-    [cewek, searchQuery]
+  const filteredCowok = useMemo(() =>
+    perfumesCowok.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.fullName.toLowerCase().includes(searchQuery.toLowerCase())),
+    [searchQuery]
   );
 
-  const paginatedCowok = usePaginatedItems(filteredCowok, isMobile, pageCowok);
-  const paginatedCewek = usePaginatedItems(filteredCewek, isMobile, pageCewek);
-
-  const totalPagesCowok = isMobile
-    ? Math.max(1, Math.ceil(filteredCowok.length / ITEMS_PER_PAGE_MOBILE))
-    : 1;
-  const totalPagesCewek = isMobile
-    ? Math.max(1, Math.ceil(filteredCewek.length / ITEMS_PER_PAGE_MOBILE))
-    : 1;
+  const filteredCewek = useMemo(() =>
+    perfumesCewek.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.fullName.toLowerCase().includes(searchQuery.toLowerCase())),
+    [searchQuery]
+  );
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const trigger = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: section,
       start: 'top 80%',
       onEnter: () => {
         const tl = gsap.timeline();
         if (titleRef.current) {
           const chars = titleRef.current.querySelectorAll('.char');
-          tl.fromTo(
-            chars,
-            { y: 30, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.5,
-              stagger: 0.03,
-              ease: 'power2.out',
-            }
-          );
+          tl.fromTo(chars, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.02, ease: 'power2.out' });
         }
-        tl.fromTo(
-          subtitleRef.current,
-          { y: 15, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-          '-=0.3'
-        );
+        tl.fromTo(subtitleRef.current, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, '-=0.2');
       },
       once: true,
     });
-
-    return () => trigger.kill();
   }, []);
 
-  const titleChars = perfumeCatalogConfig.title.split('');
+  const brandingTitle = "Premium Perfume Catalog";
+  const titleChars = brandingTitle.split('');
 
   return (
-    <section
-      ref={sectionRef}
-      id="katalog"
-      className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-[#fafafa] overflow-hidden"
-    >
-      <div className="container-full relative z-10 w-full">
-        <header className="mb-10 lg:mb-14">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/[0.03] border border-black/[0.05] px-4 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-black/40">
-            Trend 2026 · Best Seller
+    <section ref={sectionRef} id="katalog" className="relative py-12 sm:py-20 bg-[#fafafa] overflow-hidden">
+      <div className="container-full relative z-10 w-full px-4 md:px-8">
+
+        {/* Header Branding & Controls */}
+        <header className="mb-10 lg:mb-16">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-10">
+            <div className="max-w-2xl text-center md:text-left">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/[0.03] border border-black/[0.05] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-black/50">
+                Premium Collection · 2026
+              </div>
+              <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl text-black font-black mb-4 tracking-tighter uppercase italic italic-shadow">
+                {titleChars.map((char, i) => (
+                  <span key={i} className="char inline-block">{char === ' ' ? '\u00A0' : char}</span>
+                ))}
+              </h2>
+              <p ref={subtitleRef} className="text-sm md:text-base text-black/50 max-w-lg font-medium leading-relaxed">
+                Explore our archive of 60+ premium aromas with deep bio-data visualization.
+                Find the perfect match for your signature personality.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+              <div className="relative w-full sm:w-64 lg:w-80">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-black/20" />
+                <Input
+                  type="search"
+                  placeholder="Search by scent..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-12 rounded-xl border-black/5 bg-white pl-12 text-xs shadow-sm focus-visible:ring-highlight/20"
+                />
+              </div>
+
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full sm:w-auto">
+                <TabsList className="h-12 w-full sm:w-fit grid grid-cols-2 rounded-xl border border-black/5 bg-white p-1 shadow-sm">
+                  <TabsTrigger value="cowok" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/40">
+                    Men ({perfumesCowok.length})
+                  </TabsTrigger>
+                  <TabsTrigger value="cewek" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/40">
+                    Women ({perfumesCewek.length})
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
           </div>
-          <h2
-            ref={titleRef}
-            className="text-h2 text-black font-semibold mb-3 tracking-tight"
-          >
-            {titleChars.map((char, i) => (
-              <span key={i} className="char inline-block">
-                {char}
-              </span>
-            ))}
-          </h2>
-          <p
-            ref={subtitleRef}
-            className="text-sm sm:text-base text-black/55 max-w-2xl"
-          >
-            {perfumeCatalogConfig.subtitle}
-          </p>
         </header>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="w-full"
-        >
-<div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
- <TabsList className="h-12 w-full sm:w-auto grid grid-cols-2 rounded-2xl border border-black/10 bg-white p-1 shadow-sm relative">
-  
-  <TabsTrigger
-    value="cowok"
-    className="
-      rounded-xl px-6 py-2 text-sm font-semibold
-      text-black
-      transition-all duration-300 ease-in-out
-      data-[state=active]:bg-black
-      data-[state=active]:text-white
-      data-[state=active]:shadow-md
-    "
-  >
-    Parfum Pria ({cowok.length})
-  </TabsTrigger>
+        <div className="flex flex-col lg:flex-row gap-8 relative items-start">
 
-  <TabsTrigger
-    value="cewek"
-    className="
-      rounded-xl px-6 py-2 text-sm font-semibold
-      text-black
-      transition-all duration-300 ease-in-out
-      data-[state=active]:bg-black
-      data-[state=active]:text-white
-      data-[state=active]:shadow-md
-    "
-  >
-    Parfum Wanita ({cewek.length})
-  </TabsTrigger>
+          {/* Main Content Area */}
+          <div className={`flex-1 transition-all duration-500 ease-in-out ${selectedPerfume ? 'lg:w-2/3' : 'w-full'}`}>
+            <Tabs value={activeTab} onValueChange={(val) => { setActiveTab(val); setMobilePage(1); }} className="w-full">
 
-</TabsList>
-
-
-  <div className="relative w-full sm:w-72">
-    <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" />
-    <Input
-      type="search"
-      placeholder="Cari aroma favorit Anda..."
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      className="h-12 rounded-2xl border-black/10 bg-white pl-10 text-black shadow-sm placeholder:text-black/40 focus-visible:ring-2 focus-visible:ring-highlight/20 transition-all"
-      aria-label="Cari parfum"
-    />
-  </div>
-</div>
-
-
-          {loading && (
-            <p className="py-12 text-center text-black/50">Memuat katalog...</p>
-          )}
-          {error && (
-            <p className="rounded-lg bg-red-50 py-4 text-center text-sm text-red-600">
-              Gagal memuat dari database. Menampilkan data lokal.
-            </p>
-          )}
-
-          <TabsContent value="cowok" className="mt-0 outline-none">
-            {filteredCowok.length === 0 ? (
-              <p className="py-16 text-center text-black/50">
-                Tidak ada aroma yang cocok dengan pencarian.
-              </p>
-            ) : (
-              <>
-                <ul className="grid gap-x-12 sm:grid-cols-2">
-                  {paginatedCowok.map((item) => (
-                    <li key={item.id}>
-                      <PerfumeCard
-                        item={item}
-                        isExpanded={expandedId === item.id}
-                        onToggle={() => setExpandedId(expandedId === item.id ? null : item.id)}
-                      />
-                    </li>
+              <TabsContent value="cowok" className="mt-0 outline-none">
+                <div className={`grid gap-3 sm:gap-4 transition-all duration-500 ${selectedPerfume ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8'}`}>
+                  {filteredCowok.slice(
+                    typeof window !== 'undefined' && window.innerWidth < 640 ? (mobilePage - 1) * itemsPerMobilePage : 0,
+                    typeof window !== 'undefined' && window.innerWidth < 640 ? mobilePage * itemsPerMobilePage : undefined
+                  ).map((item, i) => (
+                    <PerfumeCard
+                      key={item.id}
+                      item={item}
+                      index={i}
+                      onOpenDetail={setSelectedPerfume}
+                      isActive={selectedPerfume?.id === item.id}
+                    />
                   ))}
-                </ul>
-{isMobile && totalPagesCowok > 1 && (
-  <div className="mt-10 flex items-center justify-center gap-6">
-    
-    {/* Previous */}
-    <span
-      onClick={() => setPageCowok((p) => Math.max(1, p - 1))}
-      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
-        pageCowok <= 1
-          ? "text-black/20 cursor-not-allowed"
-          : "text-black hover:text-black/60 hover:-translate-x-1"
-      }`}
-    >
-      <ChevronLeft className="h-5 w-5" />
-      Sebelumnya
-    </span>
+                </div>
 
-    {/* Page Indicator */}
-    <span className="px-5 py-2 text-sm tracking-wide text-black/60">
-      {pageCowok} / {totalPagesCowok}
-    </span>
+                {/* Mobile Numeric Pagination */}
+                {typeof window !== 'undefined' && window.innerWidth < 640 && filteredCowok.length > itemsPerMobilePage && (
+                  <div className="flex flex-wrap justify-center gap-2 mt-8 sm:hidden">
+                    {Array.from({ length: Math.ceil(filteredCowok.length / itemsPerMobilePage) }).map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => {
+                          setMobilePage(i + 1);
+                          const el = document.getElementById('katalog');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all ${mobilePage === i + 1
+                          ? 'bg-highlight text-black'
+                          : 'bg-black/5 text-black/40 hover:bg-black/10'
+                          }`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
 
-    {/* Next */}
-    <span
-      onClick={() =>
-        setPageCowok((p) => Math.min(totalPagesCowok, p + 1))
-      }
-      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
-        pageCowok >= totalPagesCowok
-          ? "text-black/20 cursor-not-allowed"
-          : "text-black hover:text-black/60 hover:translate-x-1"
-      }`}
-    >
-      Selanjutnya
-      <ChevronRight className="h-5 w-5" />
-    </span>
-  </div>
-)}
-
-              </>
-            )}
-          </TabsContent>
-
-          <TabsContent value="cewek" className="mt-0 outline-none">
-            {filteredCewek.length === 0 ? (
-              <p className="py-16 text-center text-black/50">
-                Tidak ada aroma yang cocok dengan pencarian.
-              </p>
-            ) : (
-              <>
-                <ul className="grid gap-x-12 sm:grid-cols-2">
-                  {paginatedCewek.map((item) => (
-                    <li key={item.id}>
-                      <PerfumeCard
-                        item={item}
-                        isExpanded={expandedId === item.id}
-                        onToggle={() => setExpandedId(expandedId === item.id ? null : item.id)}
-                      />
-                    </li>
+              <TabsContent value="cewek" className="mt-0 outline-none">
+                <div className={`grid gap-3 sm:gap-4 transition-all duration-500 ${selectedPerfume ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8'}`}>
+                  {filteredCewek.slice(
+                    typeof window !== 'undefined' && window.innerWidth < 640 ? (mobilePage - 1) * itemsPerMobilePage : 0,
+                    typeof window !== 'undefined' && window.innerWidth < 640 ? mobilePage * itemsPerMobilePage : undefined
+                  ).map((item, i) => (
+                    <PerfumeCard
+                      key={item.id}
+                      item={item}
+                      index={i}
+                      onOpenDetail={setSelectedPerfume}
+                      isActive={selectedPerfume?.id === item.id}
+                    />
                   ))}
-                </ul>
-{isMobile && totalPagesCewek > 1 && (
-  <div className="mt-10 flex items-center justify-center gap-6">
-    
-    {/* Previous */}
-    <span
-      onClick={() => setPageCewek((p) => Math.max(1, p - 1))}
-      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
-        pageCewek <= 1
-          ? "text-black/20 cursor-not-allowed"
-          : "text-black hover:text-black/60 hover:-translate-x-1"
-      }`}
-    >
-      <ChevronLeft className="h-5 w-5" />
-      Sebelumnya
-    </span>
+                </div>
 
-    {/* Page Indicator */}
-    <span className="px-5 py-2 text-sm tracking-wide text-black/60">
-      {pageCewek} / {totalPagesCewek}
-    </span>
+                {/* Mobile Numeric Pagination */}
+                {typeof window !== 'undefined' && window.innerWidth < 640 && filteredCewek.length > itemsPerMobilePage && (
+                  <div className="flex flex-wrap justify-center gap-2 mt-8 sm:hidden">
+                    {Array.from({ length: Math.ceil(filteredCewek.length / itemsPerMobilePage) }).map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => {
+                          setMobilePage(i + 1);
+                          const el = document.getElementById('katalog');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className={`w-10 h-10 rounded-xl text-[10px] font-black transition-all ${mobilePage === i + 1
+                          ? 'bg-highlight text-black'
+                          : 'bg-black/5 text-black/40 hover:bg-black/10'
+                          }`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                )}
 
-    {/* Next */}
-    <span
-      onClick={() =>
-        setPageCewek((p) => Math.min(totalPagesCewek, p + 1))
-      }
-      className={`flex items-center gap-2 cursor-pointer text-base font-medium transition-all duration-300 ${
-        pageCewek >= totalPagesCewek
-          ? "text-black/20 cursor-not-allowed"
-          : "text-black hover:text-black/60 hover:translate-x-1"
-      }`}
-    >
-      Selanjutnya
-      <ChevronRight className="h-5 w-5" />
-    </span>
-  </div>
-)}
+              </TabsContent>
+            </Tabs>
+          </div>
 
-              </>
-            )}
-          </TabsContent>
-        </Tabs>
+          {/* Side Panel Detail (Desktop) */}
+          {selectedPerfume && (
+            <div className="hidden lg:block w-[37.5%] sticky top-28 h-auto rounded-[32px] overflow-hidden border border-black/5 shadow-xl bg-white">
+              <PerfumeSideDetail
+                perfume={selectedPerfume}
+                onClose={() => setSelectedPerfume(null)}
+              />
+            </div>
+          )}
+
+          {/* Mobile Detailed Overlay (Slide up) */}
+          {selectedPerfume && (
+            <div className="lg:hidden fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+              <div className="absolute bottom-32 left-4 right-4 h-auto max-h-[75vh] bg-white rounded-[32px] overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500">
+                <PerfumeSideDetail
+                  perfume={selectedPerfume}
+                  onClose={() => setSelectedPerfume(null)}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-highlight/5 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-black/[0.03] blur-3xl" />
+      {/* Decorative Accents */}
+      <div className="pointer-events-none absolute -right-20 -top-20 h-96 w-96 rounded-full bg-highlight/5 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-black/[0.02] blur-[120px]" />
     </section>
   );
 }

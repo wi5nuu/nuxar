@@ -167,9 +167,9 @@ export function Testimonials() {
 
                 {/* Info */}
                 <div>
-                  <h4 className="text-body text-white font-medium">
+                  <h3 className="text-body text-white font-medium">
                     {testimonial.name}
-                  </h4>
+                  </h3>
                   <p className="text-body-sm text-white/50">
                     {testimonial.title}
                   </p>

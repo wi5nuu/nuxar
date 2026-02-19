@@ -115,11 +115,7 @@ export function AIChatBot() {
             setTimeout(() => {
                 setMessages(prev => [...prev, {
                     role: 'bot',
-                    content: "Tentu Kak! Harga kami sangat bersahabat:\n" +
-                        "- 30ml: Rp35.000 - Rp64.000\n" +
-                        "- 50ml: Rp70.000 - Rp125.000\n" +
-                        "- 100ml: Rp140.000 - Rp250.000\n" +
-                        "Tergantung kualitas (Premium/Original). Ada ukuran yang Kakak minati?"
+                    content: "Tentu Kak! Sekarang semua varian best seller kami tersedia dengan kualitas Premium seharga Rp65.000 saja. Sangat terjangkau untuk aroma mewah yang tahan lama. Ada aroma spesifik yang Kakak cari?"
                 }]);
                 setIsTyping(false);
                 setSuggestions(getContextualSuggestions(userMsg));
@@ -235,12 +231,12 @@ export function AIChatBot() {
                                 <h4 className="text-sm font-bold tracking-tight">NUXAR Assistant</h4>
                                 <div className="flex items-center gap-1.5">
                                     <span className="relative flex h-2 w-2">
-  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
-  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
-</span>
+                                        <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
+                                    </span>
                                     <span className="text-[10px] text-emerald-400 font-semibold uppercase tracking-[0.12em]">
-  Online
-</span>
+                                        Online
+                                    </span>
 
                                 </div>
                             </div>

@@ -1,26 +1,77 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Navigation } from './components/Navigation';
 import { CustomCursor } from './components/CustomCursor';
 import { ParticleField } from './components/ParticleField';
-import { Hero } from './sections/Hero';
-import { About } from './sections/About';
-import { Works } from './sections/Works';
-import { KatalogAroma } from './sections/KatalogAroma';
-import { Services } from './sections/Services';
-import { FAQ } from './sections/FAQ';
-import { Testimonials } from './sections/Testimonials';
-import { Pricing } from './sections/Pricing';
-import { Blog } from './sections/Blog';
-import { Contact } from './sections/Contact';
-import { Footer } from './sections/Footer';
 import { AIChatBot } from './components/AIChatBot';
 import { Preloader } from './components/Preloader';
 import { RamadanPopup } from './components/RamadanPopup';
 import { siteConfig } from './config';
 
+// Lazy load sections/pages for performance
+const Hero = lazy(() => import('./sections/Hero').then(m => ({ default: m.Hero })));
+const About = lazy(() => import('./sections/About').then(m => ({ default: m.About })));
+const Works = lazy(() => import('./sections/Works').then(m => ({ default: m.Works })));
+const KatalogAroma = lazy(() => import('./sections/KatalogAroma').then(m => ({ default: m.KatalogAroma })));
+const Services = lazy(() => import('./sections/Services').then(m => ({ default: m.Services })));
+const FAQ = lazy(() => import('./sections/FAQ').then(m => ({ default: m.FAQ })));
+const Testimonials = lazy(() => import('./sections/Testimonials').then(m => ({ default: m.Testimonials })));
+const Pricing = lazy(() => import('./sections/Pricing').then(m => ({ default: m.Pricing })));
+const Blog = lazy(() => import('./sections/Blog').then(m => ({ default: m.Blog })));
+const Contact = lazy(() => import('./sections/Contact').then(m => ({ default: m.Contact })));
+const Footer = lazy(() => import('./sections/Footer').then(m => ({ default: m.Footer })));
+
+// SEO Pages
+const ProductsPage = lazy(() => import('./pages/ProductsPage').then(m => ({ default: m.ProductsPage })));
+const ProductsMenPage = lazy(() => import('./pages/ProductsMenPage').then(m => ({ default: m.ProductsMenPage })));
+const ProductsWomenPage = lazy(() => import('./pages/ProductsWomenPage').then(m => ({ default: m.ProductsWomenPage })));
+const KatalogPage = lazy(() => import('./pages/KatalogPage').then(m => ({ default: m.KatalogPage })));
+const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.BlogPage })));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+
 gsap.registerPlugin(ScrollTrigger);
+
+function HomePage() {
+  return (
+    <>
+      <div className="relative min-h-screen w-full min-w-0 bg-black text-white overflow-x-hidden">
+        {/* Noise texture overlay */}
+        <div className="noise-overlay" />
+
+        {/* Custom cursor */}
+        <CustomCursor />
+
+        {/* Particle field */}
+        <ParticleField />
+
+        {/* Navigation */}
+        <Navigation />
+
+        {/* Main content */}
+        <main id="main-content" className="w-full min-w-0 overflow-x-hidden" tabIndex={-1}>
+          <Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <Hero />
+            <About />
+            <Works />
+            <KatalogAroma />
+            <Services />
+            <FAQ />
+            <Testimonials />
+            <Pricing />
+            <Blog />
+            <Contact />
+            <Footer />
+          </Suspense>
+        </main>
+        <AIChatBot />
+      </div>
+    </>
+  );
+}
 
 function App() {
   const [loaderDone, setLoaderDone] = useState(false);
@@ -50,37 +101,21 @@ function App() {
       {!loaderDone && <Preloader onComplete={() => setLoaderDone(true)} />}
 
       {/* Ramadan popup — only after loader finishes */}
-      {loaderDone && <RamadanPopup reappearAfterSeconds={30} />}
+      {loaderDone && <RamadanPopup reappearAfterSeconds={60} />}
 
-      <div className="relative min-h-screen w-full min-w-0 bg-black text-white overflow-x-hidden">
-        {/* Noise texture overlay */}
-        <div className="noise-overlay" />
-
-        {/* Custom cursor */}
-        <CustomCursor />
-
-        {/* Particle field */}
-        <ParticleField />
-
-        {/* Navigation */}
-        <Navigation />
-
-        {/* Main content */}
-        <main id="main-content" className="w-full min-w-0 overflow-x-hidden" tabIndex={-1}>
-          <Hero />
-          <About />
-          <Works />
-          <KatalogAroma />
-          <Services />
-          <FAQ />
-          <Testimonials />
-          <Pricing />
-          <Blog />
-          <Contact />
-          <Footer />
-        </main>
-        <AIChatBot />
-      </div>
+      <Suspense fallback={<div className="min-h-screen bg-black" />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/produk" element={<ProductsPage />} />
+          <Route path="/produk/pria" element={<ProductsMenPage />} />
+          <Route path="/produk/wanita" element={<ProductsWomenPage />} />
+          <Route path="/katalog" element={<KatalogPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/tentang-kami" element={<AboutPage />} />
+          <Route path="/kontak" element={<ContactPage />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }

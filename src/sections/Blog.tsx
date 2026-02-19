@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { blogConfig } from '../config';
 import type { BlogPost } from '../config';
+import { fetchBlogsFromSupabase, SUPABASE_ENABLED } from '../lib/supabase';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -63,6 +64,8 @@ export function Blog() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const triggersRef = useRef<ScrollTrigger[]>([]);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [posts, setPosts] = useState(blogConfig.posts);
+  const [loading, setLoading] = useState(SUPABASE_ENABLED);
 
   if (!blogConfig.title || blogConfig.posts.length === 0) return null;
 
@@ -102,6 +105,17 @@ export function Blog() {
     return () => triggersRef.current.forEach((t) => t.kill());
   }, []);
 
+  useEffect(() => {
+    if (SUPABASE_ENABLED) {
+      fetchBlogsFromSupabase().then(data => {
+        if (data && data.length > 0) {
+          setPosts(data as any);
+        }
+        setLoading(false);
+      }).catch(() => setLoading(false));
+    }
+  }, []);
+
   const getArticleUrl = (post: BlogPost) =>
     typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}#blog-${post.slug}` : '';
 
@@ -130,41 +144,45 @@ export function Blog() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {blogConfig.posts.map((post, index) => (
-            <article
-              key={post.id}
-              ref={(el) => { postsRef.current[index] = el; }}
-              id={`blog-${post.slug}`}
-              className="group cursor-pointer"
-              onClick={() => setSelectedPost(post)}
-            >
-              <div className="post-image relative aspect-[16/9] overflow-hidden mb-6 rounded-lg">
-                <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute top-4 left-4 px-4 py-2 bg-black/80 backdrop-blur-sm rounded">
-                  <span className="text-body-sm text-white">{post.category}</span>
+          {loading ? (
+            <div className="col-span-full py-20 text-center text-white/20 italic">Membuka lembaran artikel baru...</div>
+          ) : (
+            posts.slice(0, 2).map((post, index) => (
+              <article
+                key={post.id}
+                ref={(el) => { postsRef.current[index] = el; }}
+                id={`blog-${post.slug}`}
+                className="group cursor-pointer"
+                onClick={() => setSelectedPost(post)}
+              >
+                <div className="post-image relative aspect-[16/9] overflow-hidden mb-6 rounded-lg">
+                  <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute top-4 left-4 px-4 py-2 bg-black/80 backdrop-blur-sm rounded">
+                    <span className="text-body-sm text-white">{post.category}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-highlight/0 group-hover:bg-highlight/10 transition-colors duration-300" />
                 </div>
-                <div className="absolute inset-0 bg-highlight/0 group-hover:bg-highlight/10 transition-colors duration-300" />
-              </div>
-              <div className="post-content">
-                <div className="flex items-center gap-6 mb-4 text-body-sm text-white/50">
-                  <span className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" /> {blogConfig.readTimePrefix}{post.readTime}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" /> {post.date}
-                  </span>
+                <div className="post-content">
+                  <div className="flex items-center gap-6 mb-4 text-body-sm text-white/50">
+                    <span className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" /> {blogConfig.readTimePrefix}{post.readTime}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" /> {post.date}
+                    </span>
+                  </div>
+                  <h3 className="text-h4 lg:text-h3 text-white font-medium mb-3 group-hover:text-highlight transition-colors duration-300">
+                    {post.title}
+                  </h3>
+                  <p className="text-body text-white/60 leading-relaxed">{post.excerpt}</p>
+                  <div className="flex items-center gap-2 mt-4 text-body-sm text-white/40 group-hover:text-white transition-colors duration-300">
+                    {blogConfig.readMoreLabel}
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                  </div>
                 </div>
-                <h3 className="text-h4 lg:text-h3 text-white font-medium mb-3 group-hover:text-highlight transition-colors duration-300">
-                  {post.title}
-                </h3>
-                <p className="text-body text-white/60 leading-relaxed">{post.excerpt}</p>
-                <div className="flex items-center gap-2 mt-4 text-body-sm text-white/40 group-hover:text-white transition-colors duration-300">
-                  {blogConfig.readMoreLabel}
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))
+          )}
         </div>
       </div>
 
@@ -189,6 +207,6 @@ export function Blog() {
           )}
         </DialogContent>
       </Dialog>
-    </section>
+    </section >
   );
 }

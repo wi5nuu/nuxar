@@ -1,7 +1,7 @@
 export interface AISuggestion {
     text: string;
     response: string;
-    category: 'tren' | 'pria' | 'wanita' | 'karakter' | 'aroma' | 'aktivitas' | 'bisnis' | 'president_univ' | 'alkohol' | 'edukasi' | 'tips' | 'etiket' | 'hadiah' | 'sains';
+    category: 'tren' | 'pria' | 'wanita' | 'karakter' | 'aroma' | 'aktivitas' | 'bisnis' | 'president_univ' | 'alkohol' | 'edukasi' | 'tips' | 'etiket' | 'hadiah' | 'sains' | 'sosial';
     tags: string[];
 }
 
@@ -427,7 +427,7 @@ export const AI_SUGGESTIONS: AISuggestion[] = [
     // ═══════════════════════════════════════════════════
     {
         text: "Harga parfum berapa kak?",
-        response: "Harga kami mulai Rp35.000 untuk 30ml Kak. Sangat terjangkau dengan kualitas bibit parfum grade tertinggi di kelasnya!",
+        response: "Harga parfum best seller kami sekarang flat Rp65.000 untuk kualitas Premium Kak. Sangat terjangkau dengan kualitas bibit parfum grade tertinggi!",
         category: 'bisnis',
         tags: ['harga', 'berapa', 'bayar', 'biaya', 'eceran', 'ecer', 'murah', 'price', 'wa', 'nominal']
     },
@@ -460,6 +460,502 @@ export const AI_SUGGESTIONS: AISuggestion[] = [
         response: "Kami selalu punya promo menarik Kak! Cek bagian 'Pricing' di website untuk harga paket atau langsung tanya admin WA buat diskon member ya!",
         category: 'bisnis',
         tags: ['diskon', 'promo', 'potongan', 'murah', 'hemat', 'event', 'harga', 'member']
+    },
+
+    // ═══════════════════════════════════════════════════
+    // SOCIAL INTELLIGENCE & GREETINGS (MASSIVE 100+ EXPANSION)
+    // ═══════════════════════════════════════════════════
+    {
+        text: "Halo",
+        response: "Halo juga Kak! Selamat datang di NUXAR. Ada yang bisa saya bantu untuk mencari aroma favorit Kakak hari ini?",
+        category: 'sosial',
+        tags: ['halo', 'hello', 'hallo', 'ola', 'hi']
+    },
+    {
+        text: "Hai",
+        response: "Hai Kak! Senang sekali Kakak mampir. Mau cari parfum untuk acara apa nih kalau boleh tahu?",
+        category: 'sosial',
+        tags: ['hai', 'hi', 'hey', 'hy']
+    },
+    {
+        text: "Selamat pagi",
+        response: "Selamat pagi Kak! Semoga hari Kakak diawali dengan wangi yang menyegarkan ya. Ada yang bisa saya bantu?",
+        category: 'sosial',
+        tags: ['pagi', 'morning', 'selamat pagi']
+    },
+    {
+        text: "Selamat siang",
+        response: "Selamat siang Kak! Tetap wangi dan semangat ya di tengah aktivitasnya. Mau cari rekomendasi parfum yang segar buat siang ini?",
+        category: 'sosial',
+        tags: ['siang', 'selamat siang']
+    },
+    {
+        text: "Selamat sore",
+        response: "Selamat sore Kak! Waktu yang pas buat pilih wangi yang relaks. Ada aroma tertentu yang Kakak suka?",
+        category: 'sosial',
+        tags: ['sore', 'selamat sore']
+    },
+    {
+        text: "Selamat malam",
+        response: "Selamat malam Kak! Semoga istirahatnya nanti ditemani aroma yang menenangkan. Ada yang bisa saya bantu?",
+        category: 'sosial',
+        tags: ['malam', 'selamat malam', 'night', 'good night']
+    },
+    {
+        text: "Apa kabar?",
+        response: "Kabar saya luar biasa baik Kak, terima kasih sudah bertanya! Kakak sendiri apa kabarnya? Semoga sehat dan wangi selalu ya.",
+        category: 'sosial',
+        tags: ['apa kabar', 'kabar', 'how are you', 'sehat', 'gimana']
+    },
+    {
+        text: "Kabar baik",
+        response: "Alhamdulillah, ikut senang mendengarnya Kak! Semangat terus ya aktivitasnya hari ini.",
+        category: 'sosial',
+        tags: ['kabar baik', 'baik', 'sehat', 'alhamdulillah', 'puji tuhan']
+    },
+    {
+        text: "Lagi ngapain?",
+        response: "Saya lagi stand-by nih buat bantu Kakak nemuin parfum original eceran terbaik di NUXAR. Kakak sendiri lagi sibuk apa?",
+        category: 'sosial',
+        tags: ['lagi ngapain', 'ngapain', 'sibuk apa', 'doing']
+    },
+    {
+        text: "Sudah makan belum?",
+        response: "Wah, perhatian sekali Kakak! Sebagai asisten virtual, saya 'kenyang' kalau bisa bantu Kakak pilih parfum yang pas. Kakak sudah makan?",
+        category: 'sosial',
+        tags: ['makan', 'dah makan', 'udah makan']
+    },
+    {
+        text: "Kamu siapa?",
+        response: "Saya adalah Asisten Virtual NUXAR, pakar parfum pribadi Kakak. Saya di sini buat bantuin Kakak pilih aroma yang paling pas sama karakter Kakak.",
+        category: 'sosial',
+        tags: ['siapa', 'identitas', 'nama', 'who are you']
+    },
+    {
+        text: "Siapa yang buat kamu?",
+        response: "Saya dikembangkan oleh tim kreatif NUXAR yang berbasis di Bekasi (Ashar Grosir Parfum), khusus untuk menemani perjalanan aroma Kakak.",
+        category: 'sosial',
+        tags: ['pembuat', 'developer', 'pencipta', 'created']
+    },
+    {
+        text: "Nuxar itu apa?",
+        response: "NUXAR adalah destinasi parfum eceran premium. Kami menyediakan parfum original yang dikemas ulang agar lebih terjangkau buat mahasiswa dan pekerja.",
+        category: 'sosial',
+        tags: ['nuxar', 'apa itu', 'maksud', 'brand']
+    },
+    {
+        text: "Kamu robot ya?",
+        response: "Betul Kak, saya asisten pintar berbasis AI. Tapi jangan khawatir, kecintaan saya pada parfum itu nyata lho! Hehe.",
+        category: 'sosial',
+        tags: ['robot', 'ai', 'bot', 'manusia']
+    },
+    {
+        text: "Kamu pintar ya",
+        response: "Terima kasih banyak Kak! Saya terus belajar biar bisa jadi teman ngobrol dan pakar parfum yang lebih baik buat Kakak.",
+        category: 'sosial',
+        tags: ['pintar', 'hebat', 'smart', 'cerdas', 'wow']
+    },
+    {
+        text: "Terima kasih",
+        response: "Sama-sama Kak! Senang bisa membantu. Kalau ada pertanyaan lain, jangan ragu buat tanya lagi ya.",
+        category: 'sosial',
+        tags: ['terima kasih', 'thanks', 'makasih', 'tengkyu', 'syukron']
+    },
+    {
+        text: "Makasih infonya",
+        response: "Siap, sama-sama Kak! Semoga informasinya bermanfaat buat Kakak pilih parfum nanti ya.",
+        category: 'sosial',
+        tags: ['makasih', 'info', 'bermanfaat']
+    },
+    {
+        text: "Sama-sama",
+        response: "Senang bisa berinteraksi dengan Kakak yang ramah! Ada hal lain yang ingin Kakak ketahui tentang parfum kami?",
+        category: 'sosial',
+        tags: ['sama-sama', 'youre welcome']
+    },
+    {
+        text: "Hahaha",
+        response: "Wah, senangnya bisa bikin Kakak tertawa! Ngobrol sama Kakak memang asik ya.",
+        category: 'sosial',
+        tags: ['hahaha', 'wkwk', 'lucu', 'lol', 'tawa']
+    },
+    {
+        text: "Wkwkwk",
+        response: "Hehe, asik ya Kak ngobrolnya! Sambil tertawa, jangan lupa cek koleksi parfum kita yang bikin mood makin happy ya.",
+        category: 'sosial',
+        tags: ['wkwk', 'ngakak']
+    },
+    {
+        text: "Lucu kamu",
+        response: "Hahaha, terima kasih Kak! Keceriaan Kakak adalah semangat buat saya.",
+        category: 'sosial',
+        tags: ['lucu', 'funny', 'menarik']
+    },
+    {
+        text: "Nikah yuk",
+        response: "Wah, Kakak bisa saja! Saya kan cuma asisten virtual. Mending kita 'jodohin' Kakak sama parfum NUXAR yang wanginya bikin jatuh cinta.",
+        category: 'sosial',
+        tags: ['nikah', 'kawin', 'marry', 'love', 'sayang']
+    },
+    {
+        text: "I love you",
+        response: "I love you too, Kak! Sebagai teman virtual, saya sayang banget sama pelanggan ramah seperti Kakak.",
+        category: 'sosial',
+        tags: ['love', 'sayang', 'cinta']
+    },
+    {
+        text: "Kamu cantik deh",
+        response: "Terima kasih pujiannya Kak! Kakak juga pasti luar biasa kalau sudah pakai parfum signature dari NUXAR.",
+        category: 'sosial',
+        tags: ['cantik', 'ganteng', 'cakep', 'manis']
+    },
+    {
+        text: "Bosan nih",
+        response: "Lagi bosan ya Kak? Coba deh cek kategori 'Soft/Healing' kita. Wangi menenangkan bisa banget lho bikin mood Kakak balik lagi.",
+        category: 'sosial',
+        tags: ['bosan', 'bete', 'sedih', 'galau']
+    },
+    {
+        text: "Lagi sedih",
+        response: "Jangan sedih ya Kak. Tetap semangat! Kadang aroma yang segar kayak Citrus bisa bantu kasih energi positif lho.",
+        category: 'sosial',
+        tags: ['sedih', 'galau', 'nangis']
+    },
+    {
+        text: "Semangat ya",
+        response: "Terima kasih banyak dukungannya Kak! Kakak juga harus semangat terus ya hari ini!",
+        category: 'sosial',
+        tags: ['semangat', 'spirit', 'ganbatte']
+    },
+    {
+        text: "Oit",
+        response: "Iya Kak! Ada yang bisa saya bantu? Mau tanya-tanya soal parfum atau stok terbaru?",
+        category: 'sosial',
+        tags: ['oit', 'oy', 'p', 'woi']
+    },
+    {
+        text: "P",
+        response: "Halo Kak! Ada yg bisa saya bantu? Saya stand-by nih buat jawabin pertanyaan Kakak.",
+        category: 'sosial',
+        tags: ['p']
+    },
+    {
+        text: "Mas",
+        response: "Iya Kak! Ada yang bisa saya bantu untuk pilih aroma ganteng buat hari ini?",
+        category: 'sosial',
+        tags: ['mas', 'bang', 'bro']
+    },
+    {
+        text: "Mbak",
+        response: "Iya Kak! Mau cari rekomendasi parfum cantik yang elegan buat temenin hari Kakak?",
+        category: 'sosial',
+        tags: ['mbak', 'neng', 'sis', 'kak']
+    },
+    {
+        text: "Admin",
+        response: "Iya Kak, saya asisten virtual NUXAR di sini. Mau dibantu cek stok atau tanya rekomendasi aroma?",
+        category: 'sosial',
+        tags: ['admin', 'min']
+    },
+    {
+        text: "Tes",
+        response: "Tes masuk Kak! Saya aktif dan siap membantu. Ada yang mau ditanyakan seputar koleksi parfum kami?",
+        category: 'sosial',
+        tags: ['tes', 'test', 'ceks']
+    },
+    {
+        text: "Sampai jumpa",
+        response: "Sampai jumpa kembali Kak! Jangan lupa tetap wangi ya. Saya tunggu kunjungan Kakak berikutnya!",
+        category: 'sosial',
+        tags: ['bye', 'dah', 'sampai jumpa', 'dadah']
+    },
+    {
+        text: "Dah",
+        response: "Dadah Kak! Hati-hati di jalan dan sukses selalu ya aktivitasnya.",
+        category: 'sosial',
+        tags: ['dah', 'bye']
+    },
+    {
+        text: "Assalamu'alaikum",
+        response: "Wa'alaikumussalam Kak! Selamat datang di NUXAR. Semoga hari Kakak penuh berkah dan keharuman ya.",
+        category: 'sosial',
+        tags: ['assalamualaikum', 'salam', 'askum']
+    },
+    {
+        text: "Berapa harganya",
+        response: "Harga satuan eceran premium kami sangat terjangkau, yaitu Rp65.000 saja Kak. Mau ambil aroma apa nih hari ini?",
+        category: 'bisnis',
+        tags: ['berapa', 'harga', 'price']
+    },
+    {
+        text: "Murah banget ya",
+        response: "Betul Kak! Meskipun murah, bibit yang kami pakai 100% original. Kami ingin semua orang bisa tampil wangi tanpa harus mahal.",
+        category: 'sosial',
+        tags: ['murah', 'hemat', 'ekonomis']
+    },
+    {
+        text: "Kualitasnya gimana?",
+        response: "Kualitas adalah prioritas kami Kak. Kami pakai bibit pilihan grade A yang tahan lama dan aman di kulit (Absolute).",
+        category: 'sosial',
+        tags: ['kualitas', 'bagus', 'awet', 'jaminan']
+    },
+    {
+        text: "Tahan berapa lama?",
+        response: "Untuk varian Absolute kami bisa tahan seharian (12-24 jam) lho Kak, tergantung aktivitas Kakak juga ya.",
+        category: 'sosial',
+        tags: ['tahan', 'lama', 'awet']
+    },
+    {
+        text: "Aman buat baju?",
+        response: "Aman sekali Kak! Parfum kami tidak meninggalkan noda kuning di baju karena menggunakan campuran pelarut khusus yang bening.",
+        category: 'sosial',
+        tags: ['noda', 'baju', 'kaos', 'kuning', 'bekas']
+    },
+    {
+        text: "Bisa buat shalat?",
+        response: "Bisa banget Kak! Kami punya varian Absolute yang 100% murni tanpa alkohol, jadi sangat aman dan tenang dipakai ibadah.",
+        category: 'edukasi',
+        tags: ['shalat', 'sholat', 'ibadah', 'halal', 'alkohol', 'murni']
+    },
+    {
+        text: "Lokasi dimana?",
+        response: "NUXAR berlokasi di Bekasi, tepatnya di Jl. KH. Agus Salim. Kita juga sering ada di area Jababeka/PresUniv lho.",
+        category: 'bisnis',
+        tags: ['lokasi', 'alamat', 'dimana']
+    },
+    {
+        text: "Bisa kirim ke Jogja?",
+        response: "Bisa banget Kak! Kita kirim ke seluruh pelosok Indonesia pake JNT/JNE. Aman kok, kita packing pake bubble wrap tebal.",
+        category: 'bisnis',
+        tags: ['kirim', 'jogja', 'jakarta', 'bandung', 'surabaya', 'antar pulau']
+    },
+    {
+        text: "Ada toko fisik?",
+        response: "Ada Kak, silahkan mampir ke toko pusat kami (Ashar Grosir Parfum) di Bekasi untuk coba semua testernya secara langsung!",
+        category: 'bisnis',
+        tags: ['toko', 'fisik', 'offline', 'mampir', 'datang']
+    },
+    {
+        text: "Open jam berapa?",
+        response: "Untuk website dan WA kita stand-by 24 jam Kak. Kalau toko fisik biasanya buka jam 08.00 pagi sampai malam.",
+        category: 'bisnis',
+        tags: ['jam', 'buka', 'tutup', 'operasional']
+    },
+    {
+        text: "Ada wangi arab?",
+        response: "Tentu ada Kak! Koleksi Oud dan Amber kita sangat kental nuansa Timur Tengah yang mewah dan berwibawa.",
+        category: 'aroma',
+        tags: ['arab', 'oud', 'timur tengah', 'haji', 'umroh']
+    },
+    {
+        text: "Wangi buat bayi?",
+        response: "Ada Kak! Varian Zwitsal Baby kita juara banget, wanginya lembut khas bayi yang bikin tenang siapapun di dekatnya.",
+        category: 'aroma',
+        tags: ['bayi', 'baby', 'lembut', 'anak']
+    },
+    {
+        text: "Wangi buat kencan?",
+        response: "Buat kencan (dating), Versace Eros (pria) atau Black Opium (wanita) sangat saya rekomendasikan biar pasangan makin betah dekat Kakak.",
+        category: 'aktivitas',
+        tags: ['kencan', 'dating', 'pacaran', 'romantis']
+    },
+    {
+        text: "Parfum buat nongkrong?",
+        response: "Kalau buat nongkrong santai, Dunhill Blue atau Jo Malone Pear asik banget Kak. Wanginya 'easy going' dan bikin suasana makin cair.",
+        category: 'aktivitas',
+        tags: ['nongkrong', 'kafe', 'mall', 'santai']
+    },
+    {
+        text: "Buat kondangan ada?",
+        response: "Ada Kak! Baccarat 540 atau Creed Aventus bakal bikin Kakak tampil paling mewah dan 'stand-out' di acara pernikahan/formal.",
+        category: 'aktivitas',
+        tags: ['kondangan', 'pesta', 'nikahan', 'formal', 'jas']
+    },
+    {
+        text: "Parfum paling awet apa?",
+        response: "Secara umum aroma Woody dan Oriental seperti Baccarat atau Aigner Black itu paling awet sillage-nya Kak.",
+        category: 'aroma',
+        tags: ['awet', 'tahan', 'lama', 'juara']
+    },
+    {
+        text: "Parfum paling segar apa?",
+        response: "Kategori Citrus dan Aquatic seperti Dunhill Blue atau Bvlgari Aqua adalah jagoannya kalau Kakak cari kesegaran maksimal.",
+        category: 'aroma',
+        tags: ['segar', 'fresh', 'dingin', 'aqua']
+    },
+    {
+        text: "Wangi parfum kopi?",
+        response: "Black Opium adalah pilihan utama kalau Kakak suka wangi kopi yang dicampur vanilla manis. Sangat estetik dan mewah!",
+        category: 'aroma',
+        tags: ['kopi', 'coffee', 'kafe']
+    },
+    {
+        text: "Wangi permen ada?",
+        response: "Ada Kak! Candy Baby atau Bubble Gum itu wanginya manis mirip permen yang bikin nostalgia dan ceria.",
+        category: 'aroma',
+        tags: ['permen', 'candy', 'manis', 'sugar']
+    },
+    {
+        text: "Wangi vanila?",
+        response: "Vanilla Ice atau Black Opium punya note vanila yang sangat 'creamy' dan menyenangkan buat pencinta wangi manis.",
+        category: 'aroma',
+        tags: ['vanila', 'vanilla', 'manis']
+    },
+    {
+        text: "Wangi cokelat?",
+        response: "Kita punya varian cokelat yang manis dan 'yummy' banget Kak, serasa bawa aroma toko kue kemanapun Kakak pergi.",
+        category: 'aroma',
+        tags: ['cokelat', 'chocolate', 'manis']
+    },
+    {
+        text: "Punya wangi teh?",
+        response: "Ada Kak, J.Lo Still atau Bvlgari Extreme punya note teh yang sangat menyejukkan dan bikin pikiran relaks.",
+        category: 'aroma',
+        tags: ['teh', 'tea', 'relaks']
+    },
+    {
+        text: "Wangi sabun mandi?",
+        response: "Varian Lux atau Lovely punya karakter wangi bersih seperti baru selesai mandi. Segar sepanjang hari!",
+        category: 'aroma',
+        tags: ['sabun', 'bersih', 'mandi']
+    },
+    {
+        text: "Produk baru kapan?",
+        response: "Kami selalu update aroma baru setiap bulan Kak! Pantengin terus ya website NUXAR buat kejutan aroma selanjutnya.",
+        category: 'bisnis',
+        tags: ['baru', 'update', 'stok', 'rilis']
+    },
+    {
+        text: "Bisa jadi reseller?",
+        response: "Bisa banget Kak! Kami punya paket usaha menarik buat Kakak yang mau mulai bisnis parfum. Langsung WA admin saja ya buat detailnya.",
+        category: 'bisnis',
+        tags: ['reseller', 'usaha', 'bisnis', 'jualan', 'grosir']
+    },
+    {
+        text: "Ada parfum non-alkohol?",
+        response: "Iya ada Kak. Semua varian Pure Absolute kami bebas alkohol (non-alcohol), murni bibit jadi awet dan aman shalat.",
+        category: 'edukasi',
+        tags: ['non-alkohol', 'bebas alkohol', 'murni', 'absolute']
+    },
+    {
+        text: "Wanginya menyengat ga?",
+        response: "Kami punya berbagai tingkat intensitas Kak. Kalau Kakak ga suka yang menyengat, pilih kategori 'Soft' atau 'Fresh' yang ramah di hidung.",
+        category: 'sosial',
+        tags: ['menyengat', 'tajam', 'keras', 'pusing']
+    },
+    {
+        text: "Packingnya gimana?",
+        response: "Kita kirim pake botol kaca premium, dibungkus bubble wrap tebal, plus kardus kecil. Dijamin aman sampai tujuan Kak!",
+        category: 'bisnis',
+        tags: ['packing', 'bungkus', 'aman', 'pecah']
+    },
+    {
+        text: "Bisa minta foto asli?",
+        response: "Bisa Kak! Langsung chat WA admin saja, nanti kita kirimin foto produk asli dan testimoni pelanggan lainnya ya.",
+        category: 'sosial',
+        tags: ['foto', 'real pict', 'gambar', 'asli']
+    },
+    {
+        text: "Adminnya ramah ya",
+        response: "Alhamdulillah, terima kasih pujiannya Kak! Kepuasan Kakak adalah kebahagiaan kami.",
+        category: 'sosial',
+        tags: ['ramah', 'baik', 'suka']
+    },
+    {
+        text: "Lama pengiriman?",
+        response: "Untuk Jabodetabek biasanya 1-2 hari sampai Kak. Kalau luar pulau sekitar 3-5 hari tergantung ekspedisinya.",
+        category: 'bisnis',
+        tags: ['lama', 'kapan sampai', 'estimasi', 'pengiriman']
+    },
+    {
+        text: "Bisa tukar kalau pecah?",
+        response: "Tentu Kak! Syaratnya cukup kirimkan video unboxing ya. Kami akan ganti dengan paket yang baru sebagai bentuk tanggung jawab kami.",
+        category: 'bisnis',
+        tags: ['tukar', 'garansi', 'pecah', 'asuransi', 'retur']
+    },
+    {
+        text: "Mau curhat boleh?",
+        response: "Boleh banget Kak! Saya asisten yang setia mendengarkan. Tapi ujung-ujungnya saya bakal saranin parfum biar galau Kakak hilang ya. Hehe.",
+        category: 'sosial',
+        tags: ['curhat', 'cerita', 'galau']
+    },
+    {
+        text: "Hobimu apa?",
+        response: "Hobi saya itu mengoleksi data aroma dan membantu orang-orang tampil lebih percaya diri. Kalau Kakak hobinya apa?",
+        category: 'sosial',
+        tags: ['hobi', 'kesukaan', 'senang']
+    },
+    {
+        text: "Cuaca lagi panas nih",
+        response: "Waduh, kalau panas jangan lupa pakai parfum yang tipe Aquatic atau Citrus ya Kak biar hawanya terasa lebih sejuk.",
+        category: 'sosial',
+        tags: ['panas', 'cuaca', 'gerah', 'matahari']
+    },
+    {
+        text: "Suka lagu apa?",
+        response: "Saya suka lagu yang 'vibes'nya cocok sama aroma Lavender, tenang dan damai. Kakak suka musik apa nih?",
+        category: 'sosial',
+        tags: ['lagu', 'musik', 'nyanyi']
+    },
+    {
+        text: "Tinggal dimana?",
+        response: "Saya tinggal di server NUXAR yang sejuk dan wangi Kak. Tapi hati saya selalu ada buat bantu Kakak dimana pun Kakak berada.",
+        category: 'sosial',
+        tags: ['tinggal', 'rumah', 'posisi']
+    },
+    {
+        text: "Berapa umurmu?",
+        response: "Umur saya dihitung dari sejak website NUXAR ini rilis Kak. Masih sangat muda dan penuh semangat buat melayani Kakak!",
+        category: 'sosial',
+        tags: ['umur', 'age', 'lahir']
+    },
+    {
+        text: "Warna kesukaan?",
+        response: "Saya suka warna Black & Highlight seperti tema website kita ini Kak. Terkesan mewah, elit, dan modern.",
+        category: 'sosial',
+        tags: ['warna', 'color', 'suka']
+    },
+    {
+        text: "Bisa bahasa Inggris?",
+        response: "Yes, I can help you in English too! Do you want to ask something about our perfume collection?",
+        category: 'sosial',
+        tags: ['inggris', 'english', 'language', 'bahasa']
+    },
+    {
+        text: "Bahasa Sunda tiasa?",
+        response: "Tiasa sakedik-sakedik mah Kak! Mangga bilih aya anu bade ditaroskeun perkawis parfum NUXAR.",
+        category: 'sosial',
+        tags: ['sunda', 'tiwas', 'bahasa']
+    },
+    {
+        text: "Ada membernya?",
+        response: "Ada Kak! Sering-sering belanja di NUXAR nanti otomatis jadi member prioritas kami dengan banyak bonus menarik.",
+        category: 'bisnis',
+        tags: ['member', 'langganan', 'prioritas']
+    },
+    {
+        text: "Bisa request wangi?",
+        response: "Bisa Kak! Kalau ada aroma impian yang belum ada di daftar, kasih tau kami ya. Siapa tahu bulan depan bisa kami hadirkan.",
+        category: 'sosial',
+        tags: ['request', 'pesan', 'aroma baru']
+    },
+    {
+        text: "Oke siap",
+        response: "Mantap Kak! Saya tunggu kabar baik atau orderannya ya. Have a great day!",
+        category: 'sosial',
+        tags: ['oke', 'siap', 'sip', 'ok']
+    },
+    {
+        text: "Malam juga",
+        response: "Selamat istirahat ya Kak. Jangan lupa semprot sedikit parfum yang relaks biar tidurnya nyenyak.",
+        category: 'sosial',
+        tags: ['malam', 'night']
+    },
+    {
+        text: "Pagi juga",
+        response: "Pagi yang cerah Kak! Mari awali dengan wangi NUXAR yang bikin mood jadi juara.",
+        category: 'sosial',
+        tags: ['pagi', 'morning']
     }
 ];
 

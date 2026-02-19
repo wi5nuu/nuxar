@@ -9,7 +9,7 @@ interface RamadanPopupProps {
 
 export function RamadanPopup({
     initialDelay = 500,
-    reappearAfterSeconds = 30,
+    reappearAfterSeconds = 60,
 }: RamadanPopupProps) {
     const [visible, setVisible] = useState(false);
     const [animateIn, setAnimateIn] = useState(false);

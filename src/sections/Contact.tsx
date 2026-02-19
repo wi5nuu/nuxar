@@ -57,7 +57,7 @@ export function Contact() {
     // If turnstile script isn't loaded yet, it might not be available
     // We can also listen for the script load if needed, but usually useEffect is late enough
     const timer = setInterval(() => {
-    
+
       if (window.turnstile && !widgetId) {
         renderTurnstile();
         clearInterval(timer);
@@ -186,16 +186,16 @@ export function Contact() {
 
             <div className="space-y-8">
               <FormField name="name" label={contactConfig.nameLabel} index={0}>
-                <input type="text" name="name" value={formData.name} onChange={handleInputChange} maxLength={100} onFocus={() => setFocusedField('name')} onBlur={() => setFocusedField(null)} className={inputClass} required />
+                <input type="text" name="name" id="contact-name" value={formData.name} onChange={handleInputChange} maxLength={100} onFocus={() => setFocusedField('name')} onBlur={() => setFocusedField(null)} className={inputClass} required aria-label={contactConfig.nameLabel} />
               </FormField>
               <FormField name="email" label={contactConfig.emailLabel} index={1}>
-                <input type="email" name="email" value={formData.email} onChange={handleInputChange} maxLength={150} onFocus={() => setFocusedField('email')} onBlur={() => setFocusedField(null)} className={inputClass} required />
+                <input type="email" name="email" id="contact-email" value={formData.email} onChange={handleInputChange} maxLength={150} onFocus={() => setFocusedField('email')} onBlur={() => setFocusedField(null)} className={inputClass} required aria-label={contactConfig.emailLabel} />
               </FormField>
               <FormField name="whatsapp" label={contactConfig.whatsappLabel} index={2}>
-                <input type="tel" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} maxLength={20} placeholder="08xxxxxxxxxx" onFocus={() => setFocusedField('whatsapp')} onBlur={() => setFocusedField(null)} className={inputClass} required />
+                <input type="tel" name="whatsapp" id="contact-whatsapp" value={formData.whatsapp} onChange={handleInputChange} maxLength={20} placeholder="08xxxxxxxxxx" onFocus={() => setFocusedField('whatsapp')} onBlur={() => setFocusedField(null)} className={inputClass} required aria-label={contactConfig.whatsappLabel} />
               </FormField>
               <FormField name="product" label={contactConfig.productLabel} index={3}>
-                <select name="product" value={formData.product} onChange={handleInputChange} onFocus={() => setFocusedField('product')} onBlur={() => setFocusedField(null)} className={`${inputClass} appearance-none cursor-pointer`}>
+                <select name="product" id="contact-product" value={formData.product} onChange={handleInputChange} onFocus={() => setFocusedField('product')} onBlur={() => setFocusedField(null)} className={`${inputClass} appearance-none cursor-pointer`} aria-label={contactConfig.productLabel}>
                   <option value="" className="bg-black">{contactConfig.productPlaceholder}</option>
                   {contactConfig.productOptions.map((opt) => (
                     <option key={opt.value} value={opt.value} className="bg-black">{opt.label}</option>
@@ -203,7 +203,7 @@ export function Contact() {
                 </select>
               </FormField>
               <FormField name="message" label={contactConfig.messageLabel} index={4}>
-                <textarea name="message" value={formData.message} onChange={handleInputChange} maxLength={2000} rows={4} onFocus={() => setFocusedField('message')} onBlur={() => setFocusedField(null)} className={`${inputClass} resize-none`} />
+                <textarea name="message" id="contact-message" value={formData.message} onChange={handleInputChange} maxLength={2000} rows={4} onFocus={() => setFocusedField('message')} onBlur={() => setFocusedField(null)} className={`${inputClass} resize-none`} aria-label={contactConfig.messageLabel} />
               </FormField>
             </div>
 

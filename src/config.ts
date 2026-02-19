@@ -39,13 +39,13 @@ export const navigationConfig: NavigationConfig = {
   brandTagline: "PERFUMERY",
 
   items: [
-    { label: "Produk", href: "#works" },
-    { label: "Katalog Aroma", href: "#katalog" },
-    { label: "Tentang", href: "#about" },
-    { label: "Layanan", href: "#services" },
-    { label: "Harga", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Kontak", href: "#contact" },
+    { label: "Produk", href: "/produk" },
+    { label: "Katalog", href: "/katalog" },
+    { label: "Tentang Kami", href: "/tentang-kami" },
+    { label: "Blog", href: "/blog" },
+    { label: "Layanan", href: "/#services" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Kontak", href: "/kontak" },
   ],
 };
 
@@ -121,7 +121,6 @@ export const worksConfig: WorksConfig = {
   title: "Koleksi",
   subtitle: "Pilihan aroma terbaik untuk setiap momen dan kepribadianmu.",
   projects: [
-
     {
       id: 1,
       title: "Rose Elegance",
@@ -134,39 +133,30 @@ export const worksConfig: WorksConfig = {
       category: "Woody",
       image: "/product-2.jpg"
     },
-
     {
       id: 3,
       title: "Citrus Radiance",
       category: "Citrus",
       image: "/product-3.jpg"
     },
-
-
     {
       id: 4,
       title: "Amber Royale",
       category: "Oriental",
       image: "/product-4.jpg"
     },
-
-
     {
       id: 5,
       title: "Velvet Blossom",
       category: "Floral",
       image: "/product-5.jpg"
     },
-
-
     {
       id: 6,
       title: "Golden Indulgence",
       category: "Gourmand",
       image: "/product-6.jpg"
     },
-
-
     {
       id: 7,
       title: "Ocean Breeze",
@@ -179,10 +169,6 @@ export const worksConfig: WorksConfig = {
       category: "Woody Oriental",
       image: "/product-8.jpg"
     }
-
-
-
-
   ],
 };
 
@@ -315,9 +301,7 @@ export const pricingConfig: PricingConfig = {
       tagline: "Sempurna untuk Traveling & Mall",
       isRecommended: true,
       tiers: [
-        { name: "Premium", price: 64000, originalPrice: 75000 },
-        { name: "Sedang", price: 50000 },
-        { name: "Standar", price: 35000 },
+        { name: "Premium", price: 65000 },
       ],
     },
     {
@@ -498,6 +482,7 @@ export interface FooterLink {
   label: string;
   href: string;
   icon?: string;
+  isPage?: boolean;
 }
 
 export interface FooterConfig {
@@ -515,14 +500,13 @@ export const footerConfig: FooterConfig = {
   marqueeText: "Temukan Aroma Signaturemu Bersama NUXAR",
   marqueeHighlightChars: ["N", "U", "X", "A", "R"],
   navLinks1: [
-    { label: "Beranda", href: "#hero" },
-    { label: "Produk", href: "#works" },
-    { label: "Katalog Aroma", href: "#katalog" },
-    { label: "Tentang", href: "#about" },
-    { label: "Layanan", href: "#services" },
-    { label: "Harga", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Kontak", href: "#contact" },
+    { label: "Beranda", href: "/" },
+    { label: "Produk", href: "/produk" },
+    { label: "Katalog", href: "/katalog" },
+    { label: "Tentang Kami", href: "/tentang-kami" },
+    { label: "Layanan", href: "/#services" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Kontak", href: "/kontak" },
   ],
   navLinks2: [
     { label: "WhatsApp", href: "https://wa.me/6281394882490", icon: "MessageCircle" },

@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Instagram, MessageCircle, ExternalLink, ArrowUpRight } from 'lucide-react';
-import { footerConfig } from '../config';
+import { Instagram, MessageCircle, ExternalLink, ArrowUpRight, Music2, Linkedin } from 'lucide-react';
+import { footerConfig, type FooterLink } from '../config';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Instagram,
   MessageCircle,
   ExternalLink,
+  Music2,
+  Linkedin,
 };
 
 export function Footer() {
@@ -90,9 +93,6 @@ export function Footer() {
     };
   }, []);
 
-  const marqueeText = footerConfig.marqueeText;
-  const highlightChars = footerConfig.marqueeHighlightChars;
-
   return (
     <footer
       ref={sectionRef}
@@ -109,28 +109,15 @@ export function Footer() {
 
         {/* Marquee content */}
         <div className="marquee-container">
-          <div className="marquee-content flex items-center gap-8 text-[clamp(2.5rem,12vw,7rem)] lg:text-[112px] font-medium whitespace-nowrap">
-            {[...Array(4)].map((_, i) => (
-              <span key={i} className="flex items-center gap-8">
-                {marqueeText.split('').map((char, j) => (
-                  <span
-                    key={j}
-                    className={
-                      highlightChars.includes(char)
-                        ? 'text-highlight animate-pulse-glow'
-                        : 'text-white'
-                    }
-                    style={
-                      highlightChars.includes(char)
-                        ? { textShadow: '0 0 20px var(--highlight)' }
-                        : undefined
-                    }
-                  >
-                    {char}
-                  </span>
-                ))}
-                <span className="text-white/30 mx-4">&bull;</span>
-              </span>
+          <div className="marquee-content inline-flex items-center gap-12 text-[clamp(2.5rem,10vw,6rem)] lg:text-[112px] font-black whitespace-nowrap flex-nowrap">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex items-center gap-12 flex-nowrap whitespace-nowrap">
+                <span className="whitespace-nowrap">
+                  TEMUKAN AROMA SIGNATUREMU BERSAMA{" "}
+                  <span className="text-highlight animate-pulse-glow">NUXAR</span>
+                </span>
+                <span className="text-white/20 mx-4 font-normal text-3xl md:text-6xl select-none">&bull;</span>
+              </div>
             ))}
           </div>
         </div>
@@ -148,22 +135,40 @@ export function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Column 1 - Nav links */}
           <div className="space-y-4">
-            {footerConfig.navLinks1.map((link, i) => (
-              <a
-                key={link.label}
-                ref={(el) => {
-                  linksCol1Ref.current[i] = el;
-                }}
-                href={link.href}
-                className="block text-body text-white/60 hover:text-white transition-colors duration-300 group relative overflow-hidden"
-              >
-                <span className="block group-hover:-translate-y-full transition-transform duration-400">
-                  {link.label}
-                </span>
-                <span className="absolute top-full left-0 block group-hover:-translate-y-full transition-transform duration-400 text-white">
-                  {link.label}
-                </span>
-              </a>
+            {(footerConfig.navLinks1 as FooterLink[]).map((link, i) => (
+              link.isPage ? (
+                <Link
+                  key={link.label}
+                  ref={(el) => {
+                    linksCol1Ref.current[i] = el;
+                  }}
+                  to={link.href}
+                  className="block text-body text-white/60 hover:text-white transition-colors duration-300 group relative overflow-hidden"
+                >
+                  <span className="block group-hover:-translate-y-full transition-transform duration-400">
+                    {link.label}
+                  </span>
+                  <span className="absolute top-full left-0 block group-hover:-translate-y-full transition-transform duration-400 text-white">
+                    {link.label}
+                  </span>
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  ref={(el) => {
+                    linksCol1Ref.current[i] = el;
+                  }}
+                  href={link.href}
+                  className="block text-body text-white/60 hover:text-white transition-colors duration-300 group relative overflow-hidden"
+                >
+                  <span className="block group-hover:-translate-y-full transition-transform duration-400">
+                    {link.label}
+                  </span>
+                  <span className="absolute top-full left-0 block group-hover:-translate-y-full transition-transform duration-400 text-white">
+                    {link.label}
+                  </span>
+                </a>
+              )
             ))}
           </div>
 
@@ -201,15 +206,15 @@ export function Footer() {
 
           {/* Column 3-4 - CTA */}
           <div className="col-span-2 lg:text-right">
-            <a
-              href={footerConfig.ctaHref}
+            <Link
+              to={footerConfig.ctaHref}
               className="inline-flex items-center gap-3 text-h5 lg:text-h4 text-white font-medium group hover:text-highlight transition-colors duration-300"
             >
               {footerConfig.ctaText}
               <span className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group-hover:border-highlight group-hover:shadow-[0_0_15px_var(--highlight)] transition-all duration-300">
                 <ArrowUpRight className="w-5 h-5" />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
 

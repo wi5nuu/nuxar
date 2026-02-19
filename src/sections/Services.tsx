@@ -159,7 +159,7 @@ export function Services() {
           </h2>
           <p
             ref={subtitleRef}
-            className="text-body-lg text-white/60 max-w-2xl"
+            className="text-body-lg text-white/70 max-w-2xl"
           >
             {servicesConfig.subtitle}
           </p>
@@ -188,7 +188,7 @@ export function Services() {
                 <div className="flex items-center gap-8 lg:gap-16">
                   {/* Number */}
                   <span
-                    className="service-number text-h5 lg:text-h4 text-white/30 font-light group-hover:text-highlight group-hover:scale-110 transition-all duration-300"
+                    className="service-number text-h5 lg:text-h4 text-white/50 font-light group-hover:text-highlight group-hover:scale-110 transition-all duration-300"
                     style={{ willChange: 'transform, color' }}
                   >
                     [{service.id}]
@@ -197,8 +197,8 @@ export function Services() {
                   {/* Title */}
                   <h3
                     className={`text-h3 lg:text-h2 text-white font-normal transition-all duration-400 ${activeIndex !== null && activeIndex !== index
-                        ? 'opacity-30'
-                        : 'opacity-100'
+                      ? 'opacity-30'
+                      : 'opacity-100'
                       } ${activeIndex === index
                         ? 'text-shadow-glow'
                         : ''
@@ -217,8 +217,8 @@ export function Services() {
                 {/* Description */}
                 <p
                   className={`hidden lg:block text-body text-white/40 max-w-xs text-right transition-opacity duration-300 ${activeIndex !== null && activeIndex !== index
-                      ? 'opacity-30'
-                      : 'opacity-100'
+                    ? 'opacity-30'
+                    : 'opacity-100'
                     }`}
                 >
                   {service.description}
