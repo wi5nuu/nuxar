@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -27,9 +28,30 @@ interface PerfumeDetailModalProps {
 }
 
 export function PerfumeDetailModal({ perfume, isOpen, onClose }: PerfumeDetailModalProps) {
+    useEffect(() => {
+        if (isOpen && perfume && (window as any).ttq) {
+            (window as any).ttq.track('ViewContent', {
+                content_id: perfume.id,
+                content_name: perfume.name,
+                content_type: 'product',
+                content_category: perfume.category,
+                value: 65000,
+                currency: 'IDR'
+            });
+        }
+    }, [isOpen, perfume]);
+
     if (!perfume) return null;
 
     const handleOrder = () => {
+        if ((window as any).ttq) {
+            (window as any).ttq.track('Contact', {
+                content_id: perfume.id,
+                content_name: perfume.name,
+                value: 65000,
+                currency: 'IDR'
+            });
+        }
         const message = `Halo NUXAR, saya ingin pesan Premium ${perfume.name} (${perfume.additional.concentration}). Mohon info stoknya.`;
         window.open(`https://wa.me/${contactConfig.whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
     };
