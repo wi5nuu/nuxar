@@ -65,7 +65,7 @@ export interface HeroConfig {
 export const heroConfig: HeroConfig = {
   title: "NUXAR",
   subtitle: "Parfum Eceran Premium untuk Setiap Momen Berhargamu",
-  backgroundImage: "/hero-main.jpg",
+  backgroundImage: "/hero-main.png",
   servicesLabel: "Eceran | Original | Premium",
   copyright: "© 2026 NUXAR PERFUMERY",
 };
@@ -91,9 +91,9 @@ export const aboutConfig: AboutConfig = {
   titleLine1: "Aroma Mewah Kini Lebih Dekat",
   titleLine2: "Untuk Mahasiswa, Pekerja, dan Travelers.",
   description: "NUXAR PERFUMERY hadir untuk memberikan akses ke aroma mewah tanpa kompromi. Koleksi parfum original eceran kami dirancang untuk menunjang kepercayaan dirimu di kampus, kantor, saat healing ke mall, hingga petualangan ke luar negeri.",
-  image1: "/about-1.jpg",
+  image1: "/6botol.jpg.webp",
   image1Alt: "Koleksi parfum premium NUXAR PERFUMERY",
-  image2: "/about-2.jpg",
+  image2: "/5botol.jpg.webp",
   image2Alt: "Varian parfum original eceran terbaik",
   authorImage: "/founder.jpg",
   authorName: "Tim NUXAR PERFUMERY",
@@ -118,9 +118,10 @@ export interface WorksConfig {
 }
 
 export const worksConfig: WorksConfig = {
-  title: "Koleksi Parfum",
+  title: "Koleksi",
   subtitle: "Pilihan aroma terbaik untuk setiap momen dan kepribadianmu.",
   projects: [
+
     {
       id: 1,
       title: "Rose Elegance",
@@ -129,24 +130,62 @@ export const worksConfig: WorksConfig = {
     },
     {
       id: 2,
-      title: "Woody Amber",
+      title: "Sandal Noir",
       category: "Woody",
       image: "/product-2.jpg"
     },
+
     {
       id: 3,
-      title: "Citrus Fresh",
+      title: "Citrus Radiance",
       category: "Citrus",
       image: "/product-3.jpg"
     },
+
+
     {
       id: 4,
-      title: "Oriental Oud",
+      title: "Amber Royale",
       category: "Oriental",
       image: "/product-4.jpg"
     },
+
+
+    {
+      id: 5,
+      title: "Velvet Blossom",
+      category: "Floral",
+      image: "/product-5.jpg"
+    },
+
+
+    {
+      id: 6,
+      title: "Golden Indulgence",
+      category: "Gourmand",
+      image: "/product-6.jpg"
+    },
+
+
+    {
+      id: 7,
+      title: "Ocean Breeze",
+      category: "Aquatic",
+      image: "/product-7.jpg"
+    },
+    {
+      id: 8,
+      title: "Imperial Fusion",
+      category: "Woody Oriental",
+      image: "/product-8.jpg"
+    }
+
+
+
+
   ],
 };
+
 
 // ============================================================================
 // Services Section Configuration
@@ -219,22 +258,22 @@ export const testimonialsConfig: TestimonialsConfig = {
     {
       id: 1,
       name: "Dewi Anggraini",
-      title: "Pekerja Kreatif",
-      quote: "NUXAR benar-benar solusi untuk tampil wangi setiap hari. Parfum original dengan harga yang sangat terjangkau. Cocok banget untuk dibawa kerja dan hangout!",
+      title: "Pekerja di JABABEKA",
+      quote: "Awal kenal NUXAR karena teman kantor rekomendasi. Sekarang jadi andalan aku buat daily use ke kantor. Wanginya tahan lama dan bikin percaya diri sepanjang hari!",
       image: "/testimonial-1.jpg"
     },
     {
       id: 2,
       name: "Ahmad Fauzi",
-      title: "Mahasiswa",
-      quote: "Sangat praktis! Pesanannya cepat sampai dan aromanya benar-benar awet. Recommended banget buat yang mobilitasnya tinggi antara kampus dan mall.",
+      title: "Mahasiswa President University",
+      quote: "Sebagai mahasiswa yang aktif di organisasi kampus, aku butuh parfum yang bisa diandalkan untuk berbagai acara. NUXAR selalu jadi pilihan karena kualitasnya yang premium tapi harganya tetap terjangkau.",
       image: "/testimonial-2.jpg"
     },
     {
       id: 3,
-      name: "Rina Susanti",
-      title: "Traveling Enthusiast",
-      quote: "Kemasan 30ml-nya favorit aku buat dibawa traveling ke luar negeri. Wanginya premium dan botolnya sangat travel-friendly.",
+      name: "Widya Putri",
+      title: "influencer & Traveler",
+      quote: "NUXAR jadi teman setia aku selama traveling. Aku suka banget karena bisa bawa parfum favorit tanpa harus bawa botol besar. Wanginya juga tahan lama, cocok banget buat aktivitas seharian di luar rumah!",
       image: "/testimonial-3.jpg"
     },
   ],

@@ -115,7 +115,7 @@ export const perfumesCewek: PerfumeItem[] = aromaCewek.map((p) => ({
 export const allPerfumes: PerfumeItem[] = [...perfumesCowok, ...perfumesCewek];
 
 export const perfumeCatalogConfig = {
-  title: 'Katalog Aroma',
+  title: 'Katalog',
   subtitle: 'Pilihan parfum original dalam kemasan eceran. Temukan aroma yang cocok untukmu.',
   tabCowok: 'Aroma Cowok',
   tabCewek: 'Aroma Cewek',

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Navigation } from './components/Navigation';
@@ -16,11 +16,15 @@ import { Blog } from './sections/Blog';
 import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 import { AIChatBot } from './components/AIChatBot';
+import { Preloader } from './components/Preloader';
+import { RamadanPopup } from './components/RamadanPopup';
 import { siteConfig } from './config';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const [loaderDone, setLoaderDone] = useState(false);
+
   useEffect(() => {
     if (siteConfig.title) {
       document.title = siteConfig.title;
@@ -28,47 +32,56 @@ function App() {
     if (siteConfig.language) {
       document.documentElement.lang = siteConfig.language;
     }
-
-    // Refresh ScrollTrigger after initial render
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
   }, []);
 
+  useEffect(() => {
+    if (loaderDone) {
+      // Refresh ScrollTrigger after loader finishes
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [loaderDone]);
+
   return (
-    <div className="relative min-h-screen w-full min-w-0 bg-black text-white overflow-x-hidden">
-      {/* Noise texture overlay */}
-      <div className="noise-overlay" />
+    <>
+      {/* Preloader — always rendered until complete */}
+      {!loaderDone && <Preloader onComplete={() => setLoaderDone(true)} />}
 
-      {/* Custom cursor */}
-      <CustomCursor />
+      {/* Ramadan popup — only after loader finishes */}
+      {loaderDone && <RamadanPopup reappearAfterSeconds={30} />}
 
-      {/* Particle field */}
-      <ParticleField />
+      <div className="relative min-h-screen w-full min-w-0 bg-black text-white overflow-x-hidden">
+        {/* Noise texture overlay */}
+        <div className="noise-overlay" />
 
-      {/* Navigation */}
-      <Navigation />
+        {/* Custom cursor */}
+        <CustomCursor />
 
-      {/* Main content */}
-      <main id="main-content" className="w-full min-w-0 overflow-x-hidden" tabIndex={-1}>
-        <Hero />
-        <About />
-        <Works />
-        <KatalogAroma />
-        <Services />
-        <FAQ />
-        <Testimonials />
-        <Pricing />
-        <Blog />
-        <Contact />
-        <Footer />
-      </main>
-      <AIChatBot />
-    </div>
+        {/* Particle field */}
+        <ParticleField />
+
+        {/* Navigation */}
+        <Navigation />
+
+        {/* Main content */}
+        <main id="main-content" className="w-full min-w-0 overflow-x-hidden" tabIndex={-1}>
+          <Hero />
+          <About />
+          <Works />
+          <KatalogAroma />
+          <Services />
+          <FAQ />
+          <Testimonials />
+          <Pricing />
+          <Blog />
+          <Contact />
+          <Footer />
+        </main>
+        <AIChatBot />
+      </div>
+    </>
   );
 }
 

@@ -11,6 +11,7 @@ export function Works() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const triggersRef = useRef<ScrollTrigger[]>([]);
 
@@ -27,7 +28,6 @@ export function Works() {
       onEnter: () => {
         const tl = gsap.timeline();
 
-        // Title letter animation
         if (titleRef.current) {
           const chars = titleRef.current.querySelectorAll('.char');
           tl.fromTo(
@@ -43,7 +43,6 @@ export function Works() {
           );
         }
 
-        // Subtitle
         tl.fromTo(
           subtitleRef.current,
           { y: 20, opacity: 0 },
@@ -51,18 +50,12 @@ export function Works() {
           '-=0.3'
         );
 
-        // Cards 3D flip
         cardsRef.current.forEach((card, i) => {
           if (card) {
             tl.fromTo(
               card,
               { rotateY: i % 2 === 0 ? -180 : 180, opacity: 0 },
-              {
-                rotateY: 0,
-                opacity: 1,
-                duration: 1,
-                ease: 'expo.out',
-              },
+              { rotateY: 0, opacity: 1, duration: 1, ease: 'expo.out' },
               `-=${0.85 - i * 0.15}`
             );
           }
@@ -72,59 +65,32 @@ export function Works() {
     });
     triggersRef.current.push(trigger);
 
-    // Scroll depth effect
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: section,
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 1,
-      onUpdate: (self) => {
-        cardsRef.current.forEach((card, i) => {
-          if (card) {
-            const depth = -50 + self.progress * 100;
-            gsap.set(card, {
-              z: depth * (i % 2 === 0 ? 1 : -1) * 0.5,
-            });
-          }
-        });
-      },
-    });
-    triggersRef.current.push(scrollTrigger);
-
     return () => {
       triggersRef.current.forEach((t) => t.kill());
       triggersRef.current = [];
     };
   }, []);
 
-  const handleMouseMove = (
-    e: React.MouseEvent<HTMLDivElement>,
-    index: number
-  ) => {
-    const card = cardsRef.current[index];
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    gsap.to(card, {
-      rotateX: -y * 10,
-      rotateY: x * 16,
-      duration: 0.1,
-      ease: 'none',
+  // Zoom image in on hover/touch
+  const handleImageZoomIn = (index: number) => {
+    const img = imgRefs.current[index];
+    if (!img) return;
+    gsap.to(img, {
+      scale: 1.08,
+      duration: 0.6,
+      ease: 'power2.out',
     });
+    setHoveredIndex(index);
   };
 
-  const handleMouseLeave = (index: number) => {
-    const card = cardsRef.current[index];
-    if (!card) return;
-
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.4,
-      ease: 'expo.out',
+  // Zoom image back out
+  const handleImageZoomOut = (index: number) => {
+    const img = imgRefs.current[index];
+    if (!img) return;
+    gsap.to(img, {
+      scale: 1,
+      duration: 0.7,
+      ease: 'power2.out',
     });
     setHoveredIndex(null);
   };
@@ -136,13 +102,12 @@ export function Works() {
       ref={sectionRef}
       id="works"
       className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-white overflow-hidden"
-      style={{ perspective: '1200px' }}
     >
       {/* Header */}
       <div className="container-full relative z-10 w-full mb-12 sm:mb-16">
         <h2
           ref={titleRef}
-          className="text-h2 text-black font-semibold mb-3 tracking-tight"
+          className="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold text-black mb-4 tracking-[-0.02em] leading-tight"
         >
           {titleChars.map((char, i) => (
             <span key={i} className="char inline-block">
@@ -152,64 +117,71 @@ export function Works() {
         </h2>
         <p
           ref={subtitleRef}
-          className="text-body-sm text-black/60 max-w-xl"
+          className="text-base sm:text-lg text-black/60 max-w-2xl font-light tracking-wide leading-relaxed"
         >
           {worksConfig.subtitle}
         </p>
       </div>
 
-      {/* Projects Grid - Balanced mosaic */}
+      {/* Projects Grid */}
       <div className="container-full relative z-10 w-full font-sans">
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 lg:gap-8 px-1 sm:px-0">
           {worksConfig.projects.map((project, index) => (
             <div
               key={project.id}
-              ref={(el) => {
-                cardsRef.current[index] = el;
-              }}
-              className={`relative group cursor-pointer preserve-3d ${index === 0 ? 'md:col-span-1 md:row-span-1' : ''
-                } ${index % 2 === 0 ? 'md:-translate-y-4' : 'md:translate-y-4'}`}
+              ref={(el) => { cardsRef.current[index] = el; }}
+              className="relative group cursor-pointer"
               style={{
+                // Hanya preserve-3d untuk entry animation, tapi tidak ada tilt saat hover
                 transformStyle: 'preserve-3d',
                 willChange: 'transform',
-                transform:
-                  hoveredIndex !== null && hoveredIndex !== index
-                    ? `translateX(${(index - hoveredIndex) * 15}px)`
-                    : 'translateX(0)',
-                transition:
-                  hoveredIndex !== null
-                    ? 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-                    : 'none',
               }}
-              onMouseMove={(e) => handleMouseMove(e, index)}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => handleMouseLeave(index)}
+              onMouseEnter={() => handleImageZoomIn(index)}
+              onMouseLeave={() => handleImageZoomOut(index)}
+              // Touch support
+              onTouchStart={() => handleImageZoomIn(index)}
+              onTouchEnd={() => handleImageZoomOut(index)}
             >
               {/* Card content */}
-              <div className="relative aspect-[4/5] max-h-[280px] sm:max-h-[360px] overflow-hidden rounded-lg bg-dark-gray shadow-sm group-hover:shadow-xl transition-shadow duration-500">
+              <div
+                className="relative overflow-hidden rounded-lg bg-dark-gray shadow-sm"
+                style={{
+                  aspectRatio: '4/5',
+                  minHeight: 'clamp(220px, 40vw, 380px)',
+                }}
+              >
+                {/* Hanya img yang zoom, bukan seluruh card */}
                 <img
+                  ref={(el) => { imgRefs.current[index] = el; }}
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-110"
+                  className="w-full h-full object-cover"
+                  style={{
+                    willChange: 'transform',
+                    transformOrigin: 'center center',
+                  }}
                 />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300" />
+                {/* Overlay — sedikit lebih gelap saat hover untuk kontras teks */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent transition-opacity duration-300"
+                  style={{ opacity: hoveredIndex === index ? 0.95 : 0.9 }}
+                />
 
                 {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
-                  <p className="text-xs sm:text-sm text-white/60 mb-1 group-hover:text-highlight transition-colors duration-300 tracking-wide">
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 lg:p-5">
+                  <p className="text-[10px] sm:text-xs text-white/60 mb-1 group-hover:text-highlight transition-colors duration-300 tracking-wide">
                     {project.category}
                   </p>
-                  <h3 className="text-base sm:text-lg lg:text-xl text-white font-medium group-hover:-translate-y-0.5 transition-transform duration-300 tracking-tight">
+                  <h3 className="text-sm sm:text-base lg:text-xl text-white font-medium tracking-tight leading-snug">
                     {project.title}
                   </h3>
                 </div>
 
                 {/* Arrow icon */}
-                <div className="absolute top-4 right-4">
-                  <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-highlight transition-all duration-300">
-                    <ArrowUpRight className="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-highlight transition-all duration-300">
+                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
                   </div>
                 </div>
               </div>

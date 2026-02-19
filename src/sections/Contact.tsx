@@ -57,7 +57,7 @@ export function Contact() {
     // If turnstile script isn't loaded yet, it might not be available
     // We can also listen for the script load if needed, but usually useEffect is late enough
     const timer = setInterval(() => {
-      // @ts-ignore
+    
       if (window.turnstile && !widgetId) {
         renderTurnstile();
         clearInterval(timer);
@@ -218,7 +218,9 @@ export function Contact() {
             >
               <span className="relative z-10">{contactConfig.submitButtonText}</span>
               <Send className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-highlight transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <div className="absolute inset-0 bg-highlight transform -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-luxury
+
+" />
             </button>
           </form>
 

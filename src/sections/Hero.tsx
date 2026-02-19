@@ -19,17 +19,14 @@ export function Hero() {
   if (!heroConfig.title) return null;
 
   useEffect(() => {
-    // Entry animation on load
     const tl = gsap.timeline({ delay: 0.2 });
 
-    // Image scale + fade
     tl.fromTo(
       imageRef.current,
       { scale: 1.1, opacity: 0 },
       { scale: 1, opacity: 1, duration: 1.8, ease: 'expo.out' }
     );
 
-    // Title characters animation
     if (titleRef.current) {
       const chars = titleRef.current.querySelectorAll('.char');
       tl.fromTo(
@@ -47,7 +44,6 @@ export function Hero() {
       );
     }
 
-    // Subtitle blur reveal
     tl.fromTo(
       subtitleRef.current,
       { filter: 'blur(20px)', opacity: 0 },
@@ -55,7 +51,6 @@ export function Hero() {
       '-=0.6'
     );
 
-    // Services slide in
     tl.fromTo(
       servicesRef.current,
       { x: -50, opacity: 0 },
@@ -63,7 +58,6 @@ export function Hero() {
       '-=0.4'
     );
 
-    // Line grow
     tl.fromTo(
       lineRef.current,
       { height: 0 },
@@ -71,7 +65,6 @@ export function Hero() {
       '-=0.8'
     );
 
-    // Copyright fade
     tl.fromTo(
       copyrightRef.current,
       { y: 20, opacity: 0 },
@@ -81,7 +74,6 @@ export function Hero() {
 
     setLoaded(true);
 
-    // Scroll effects
     const trigger1 = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: 'top top',
@@ -146,39 +138,16 @@ export function Hero() {
       className="relative h-screen w-full overflow-hidden perspective-container"
       style={{ perspective: '1200px' }}
     >
-      {/* Vignette overlay */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
-        }}
-      />
-
-      {/* Main background image */}
+      {/* Main background image — murni tanpa overlay/filter/efek warna */}
       <div
         ref={imageRef}
         className="absolute inset-0 z-0"
-        style={{
-          willChange: 'transform, opacity',
-        }}
+        style={{ willChange: 'transform, opacity' }}
       >
         <img
           src={heroConfig.backgroundImage}
           alt="Hero"
           className="w-full h-full object-cover"
-          style={{ filter: 'brightness(0.9)' }}
-        />
-        {/* Chromatic aberration effect layers */}
-        <div
-          className="absolute inset-0 mix-blend-multiply opacity-50"
-          style={{
-            backgroundImage: `url(${heroConfig.backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            transform: 'translateX(-2px)',
-            filter: 'url(#red-channel)',
-          }}
         />
       </div>
 
@@ -191,19 +160,10 @@ export function Hero() {
         <h1
           ref={titleRef}
           className="text-[clamp(2.5rem,7vw,5rem)] font-medium text-white tracking-tight mb-4 preserve-3d text-center leading-[0.95]"
-          style={{
-            textShadow: '0 0 60px rgba(220, 38, 38, 0.2)',
-            willChange: 'transform',
-          }}
+          style={{ willChange: 'transform' }}
         >
           {titleChars.map((char, i) => (
-            <span
-              key={i}
-              className="char inline-block"
-              style={{
-                transform: `translateY(0)`, // Removed heavy bounce for more professional feel
-              }}
-            >
+            <span key={i} className="char inline-block">
               {char}
             </span>
           ))}
@@ -247,30 +207,6 @@ export function Hero() {
       >
         <span className="text-body-sm text-white/40">{heroConfig.copyright}</span>
       </div>
-
-      {/* SVG filters for chromatic aberration */}
-      <svg className="absolute w-0 h-0">
-        <defs>
-          <filter id="red-channel">
-            <feColorMatrix
-              type="matrix"
-              values="1 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 1 0"
-            />
-          </filter>
-          <filter id="blue-channel">
-            <feColorMatrix
-              type="matrix"
-              values="0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 1 0 0
-                      0 0 0 1 0"
-            />
-          </filter>
-        </defs>
-      </svg>
     </section>
   );
 }
