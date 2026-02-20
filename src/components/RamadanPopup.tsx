@@ -89,7 +89,7 @@ export function RamadanPopup({
                 >
                     {/* Promo image */}
                     <img
-                        src="/promo-ramadhan.jpg"
+                        src="/promo-ramadhan.webp"
                         alt="Promo Ramadhan"
                         fetchPriority="high"
                         style={{

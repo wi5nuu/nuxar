@@ -137,10 +137,10 @@ export function KatalogAroma() {
                 </div>
 
                 <TabsList className="h-12 w-full sm:w-fit grid grid-cols-2 rounded-xl border border-black/10 bg-white p-1 shadow-sm">
-                  <TabsTrigger value="cowok" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/70 data-[state=active]:opacity-100">
+                  <TabsTrigger value="cowok" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/90 data-[state=active]:opacity-100">
                     Men ({perfumes.cowok.length})
                   </TabsTrigger>
-                  <TabsTrigger value="cewek" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/70 data-[state=active]:opacity-100">
+                  <TabsTrigger value="cewek" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/90 data-[state=active]:opacity-100">
                     Women ({perfumes.cewek.length})
                   </TabsTrigger>
                 </TabsList>

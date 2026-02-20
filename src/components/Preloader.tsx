@@ -13,8 +13,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
     useEffect(() => {
         const assets = [
-            '/logo-nuxar.png',
-            '/hero-main.png',
+            '/logo-nuxar.webp',
+            '/hero-main.webp',
             '/6botol.jpg',
             '/5botol.jpg',
             '/product-1.jpg',
@@ -26,7 +26,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
         let loadedCount = 0;
         const totalAssets = assets.length;
         const startTime = performance.now();
-        const minDuration = 2000; // Minimum duration to keep the premium feel
+        const minDuration = 800; // Minimum duration reduced for better performance
 
         const updateProgress = () => {
             const timeElapsed = performance.now() - startTime;

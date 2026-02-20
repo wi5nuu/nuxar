@@ -32,7 +32,7 @@ export interface NavigationConfig {
 
 export const navigationConfig: NavigationConfig = {
   // path ke folder PUBLIC (bukan src)
-  logoImage: "/logo-nuxar.png",
+  logoImage: "/logo-nuxar.webp",
 
   // teks brand
   brandName: "NUXAR",
@@ -65,7 +65,7 @@ export interface HeroConfig {
 export const heroConfig: HeroConfig = {
   title: "NUXAR",
   subtitle: "Parfum Eceran Premium untuk Setiap Momen Berhargamu",
-  backgroundImage: "/hero-main.png",
+  backgroundImage: "/hero-main.webp",
   servicesLabel: "Eceran | Original | Premium",
   copyright: "© 2026 NUXAR PERFUMERY",
 };
