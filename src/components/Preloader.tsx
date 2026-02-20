@@ -26,7 +26,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
         let loadedCount = 0;
         const totalAssets = assets.length;
         const startTime = performance.now();
-        const minDuration = 800; // Minimum duration reduced for better performance
+        const minDuration = 600; // Minimum duration reduced for better performance
 
         const updateProgress = () => {
             const timeElapsed = performance.now() - startTime;
@@ -59,8 +59,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
             // Fade out
             setTimeout(() => {
                 setVisible(false);
-                setTimeout(onComplete, 600);
-            }, 600);
+                setTimeout(onComplete, 400);
+            }, 400);
         };
 
         // Start preloading
