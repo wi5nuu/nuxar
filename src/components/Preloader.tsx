@@ -15,12 +15,12 @@ export function Preloader({ onComplete }: PreloaderProps) {
         const assets = [
             '/logo-nuxar.webp',
             '/hero-main.webp',
-            '/6botol.jpg',
-            '/5botol.jpg',
-            '/product-1.jpg',
-            '/product-2.jpg',
-            '/product-3.jpg',
-            '/product-4.jpg'
+            '/6botol.webp',
+            '/5botol.webp',
+            '/product-1.webp',
+            '/product-2.webp',
+            '/product-3.webp',
+            '/product-4.webp'
         ];
 
         let loadedCount = 0;
@@ -124,7 +124,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
                 }}
             >
                 <img
-                    src="/logo-nuxar.png"
+                    src="/logo-nuxar.webp"
                     alt="Logo"
                     style={{
                         width: '160px',

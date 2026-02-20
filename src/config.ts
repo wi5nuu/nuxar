@@ -91,9 +91,9 @@ export const aboutConfig: AboutConfig = {
   titleLine1: "Aroma Mewah Kini Lebih Dekat",
   titleLine2: "Untuk Mahasiswa, Pekerja, dan Travelers.",
   description: "NUXAR PERFUMERY hadir untuk memberikan akses ke aroma mewah tanpa kompromi. Koleksi parfum original eceran kami dirancang untuk menunjang kepercayaan dirimu di kampus, kantor, saat healing ke mall, hingga petualangan ke luar negeri.",
-  image1: "/6botol.jpg",
+  image1: "/6botol.webp",
   image1Alt: "Koleksi parfum premium NUXAR PERFUMERY",
-  image2: "/5botol.jpg",
+  image2: "/5botol.webp",
   image2Alt: "Varian parfum original eceran terbaik",
   authorImage: "/founder.jpg",
   authorName: "Tim NUXAR PERFUMERY",
@@ -125,49 +125,49 @@ export const worksConfig: WorksConfig = {
       id: 1,
       title: "Rose Elegance",
       category: "Floral",
-      image: "/product-1.jpg"
+      image: "/product-1.webp"
     },
     {
       id: 2,
       title: "Sandal Noir",
       category: "Woody",
-      image: "/product-2.jpg"
+      image: "/product-2.webp"
     },
     {
       id: 3,
       title: "Citrus Radiance",
       category: "Citrus",
-      image: "/product-3.jpg"
+      image: "/product-3.webp"
     },
     {
       id: 4,
       title: "Amber Royale",
       category: "Oriental",
-      image: "/product-4.jpg"
+      image: "/product-4.webp"
     },
     {
       id: 5,
       title: "Velvet Blossom",
       category: "Floral",
-      image: "/product-5.jpg"
+      image: "/product-5.webp"
     },
     {
       id: 6,
       title: "Golden Indulgence",
       category: "Gourmand",
-      image: "/product-6.jpg"
+      image: "/product-6.webp"
     },
     {
       id: 7,
       title: "Ocean Breeze",
       category: "Aquatic",
-      image: "/product-7.jpg"
+      image: "/product-7.webp"
     },
     {
       id: 8,
       title: "Imperial Fusion",
       category: "Woody Oriental",
-      image: "/product-8.jpg"
+      image: "/product-8.webp"
     }
   ],
 };
@@ -198,25 +198,25 @@ export const servicesConfig: ServicesConfig = {
       id: "01",
       title: "Tester Gratis",
       description: "Coba berbagai aroma sebelum membeli untuk memastikan kecocokan dengan aktivitas harian Anda.",
-      image: "/service-1.jpg"
+      image: "/service-1.webp"
     },
     {
       id: "02",
       title: "Gift Wrapping",
       description: "Layanan pembungkus hadiah eksklusif untuk kado spesial orang tersayang.",
-      image: "/service-2.jpg"
+      image: "/service-2.webp"
     },
     {
       id: "03",
       title: "Konsultasi Aroma",
       description: "Tim ahli kami siap membantu mencarikan aroma yang pas untuk kantor, kuliah, atau hangout.",
-      image: "/service-3.jpg"
+      image: "/service-3.webp"
     },
     {
       id: "04",
       title: "Pengiriman Cepat",
       description: "Layanan pengiriman andalan agar parfum Anda sampai tepat waktu di lokasi manapun.",
-      image: "/service-4.jpg"
+      image: "/service-4.webp"
     },
   ],
 };
@@ -246,21 +246,21 @@ export const testimonialsConfig: TestimonialsConfig = {
       name: "Dewi Anggraini",
       title: "Pekerja di JABABEKA",
       quote: "Awal kenal NUXAR karena teman kantor rekomendasi. Sekarang jadi andalan aku buat daily use ke kantor. Wanginya tahan lama dan bikin percaya diri sepanjang hari!",
-      image: "/testimonial-1.jpg"
+      image: "/testimonial-1.webp"
     },
     {
       id: 2,
       name: "Ahmad Fauzi",
       title: "Mahasiswa President University",
       quote: "Sebagai mahasiswa yang aktif di organisasi kampus, aku butuh parfum yang bisa diandalkan untuk berbagai acara. NUXAR selalu jadi pilihan karena kualitasnya yang premium tapi harganya tetap terjangkau.",
-      image: "/testimonial-2.jpg"
+      image: "/testimonial-2.webp"
     },
     {
       id: 3,
       name: "Widya Putri",
       title: "influencer & Traveler",
       quote: "NUXAR jadi teman setia aku selama traveling. Aku suka banget karena bisa bawa parfum favorit tanpa harus bawa botol besar. Wanginya juga tahan lama, cocok banget buat aktivitas seharian di luar rumah!",
-      image: "/testimonial-3.jpg"
+      image: "/testimonial-3.webp"
     },
   ],
 };
