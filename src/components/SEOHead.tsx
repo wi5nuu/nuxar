@@ -49,7 +49,7 @@ export function SEOHead({ title, description, keywords, canonical, ogImage, robo
 
         return () => {
             // Restore default on unmount
-            document.title = 'NUXAR PERFUMERY | Parfum Eceran Premium Original Terbaik di Indonesia';
+            document.title = 'NUXAR PERFUMERY | Parfum Eceran Premium untuk Setiap Momen Berhargamu';
         };
     }, [title, description, keywords, canonical, ogImage]);
 

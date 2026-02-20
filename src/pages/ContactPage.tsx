@@ -51,10 +51,10 @@ export function ContactPage() {
             {/* Hero */}
             <section className="pt-8 pb-8 px-6 lg:px-16">
                 <div className="max-w-6xl mx-auto">
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4">
+                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
                         Hubungi <span className="text-highlight">Kami</span>
                     </h1>
-                    <p className="text-white/60 text-lg max-w-2xl mb-12">
+                    <p className="text-white text-lg max-w-2xl mb-12">
                         Punya pertanyaan soal parfum? Mau order? Tim NUXAR siap membantu lewat berbagai saluran.
                     </p>
 

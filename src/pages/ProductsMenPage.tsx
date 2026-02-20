@@ -25,23 +25,35 @@ export function ProductsMenPage() {
 
         if (SUPABASE_ENABLED) {
             fetchPerfumesFromSupabase().then(data => {
-                if (data) {
+                if (data && data.cowok.length > 0) {
                     setProducts(data.cowok);
+                } else {
+                    // Fallback to worksConfig filtered
+                    const localPria = worksConfig.projects
+                        .filter(p => PRIA_KATEGORI.includes(p.category))
+                        .map(p => ({
+                            id: String(p.id),
+                            name: p.title,
+                            fullName: p.title,
+                            category: p.category,
+                            gender: 'pria'
+                        } as any));
+                    setProducts(localPria);
                 }
                 setLoading(false);
-            }).catch(() => setLoading(false));
-        } else {
-            const localPria = worksConfig.projects
-                .filter(p => PRIA_KATEGORI.includes(p.category))
-                .map(p => ({
-                    id: String(p.id),
-                    name: p.title,
-                    fullName: p.title,
-                    category: p.category,
-                    gender: 'pria',
-                    image: p.image
-                } as any));
-            setProducts(localPria);
+            }).catch(() => {
+                const localPria = worksConfig.projects
+                    .filter(p => PRIA_KATEGORI.includes(p.category))
+                    .map(p => ({
+                        id: String(p.id),
+                        name: p.title,
+                        fullName: p.title,
+                        category: p.category,
+                        gender: 'pria'
+                    } as any));
+                setProducts(localPria);
+                setLoading(false);
+            });
         }
     }, []);
 
@@ -81,10 +93,10 @@ export function ProductsMenPage() {
                         </Link>
                     </div>
 
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4">
+                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
                         Parfum <span className="text-highlight">Pria</span> Eceran
                     </h1>
-                    <p className="text-white/60 text-lg max-w-2xl mb-10">
+                    <p className="text-white/90 text-lg max-w-2xl mb-10">
                         Aroma maskulin pilihan untuk pria aktif — dari Woody yang elegan, Oriental yang eksotis,
                         hingga Aquatic yang segar. Semua original, semua premium.
                     </p>
@@ -102,7 +114,7 @@ export function ProductsMenPage() {
                                 >
                                     <div className="aspect-[3/4] overflow-hidden">
                                         <img
-                                            src={`/product-${((i + 1) % 8) || 8}.jpg`}
+                                            src={product.image || `/product-${((i + 1) % 8) || 8}.jpg`}
                                             alt={`${product.name} - Parfum Premium Original`}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                             loading="lazy"
@@ -129,7 +141,7 @@ export function ProductsMenPage() {
 
                     {/* Tips Section */}
                     <div className="mt-16 p-8 rounded-3xl bg-white/5 border border-white/10">
-                        <h2 className="text-2xl font-bold mb-4">Tips Memilih Parfum Pria</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-white">Tips Memilih Parfum Pria</h2>
                         <ul className="space-y-3 text-white/70">
                             <li className="flex gap-3"><span className="text-highlight font-bold">01.</span> <span><strong>Woody/Musk</strong> — Cocok untuk kantor dan acara formal. Aroma tahan 6-10 jam.</span></li>
                             <li className="flex gap-3"><span className="text-highlight font-bold">02.</span> <span><strong>Aquatic/Citrus</strong> — Segar untuk aktivitas outdoor dan olahraga.</span></li>

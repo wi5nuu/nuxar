@@ -131,7 +131,7 @@ export function Blog() {
             <h2 ref={titleRef} className="text-h1 lg:text-display-xl text-white font-medium mb-4 opacity-0">
               {blogConfig.title}
             </h2>
-            <p ref={descRef} className="text-body-lg text-white/60 max-w-xl">{blogConfig.subtitle}</p>
+            <p ref={descRef} className="text-body-lg text-white/90 max-w-xl">{blogConfig.subtitle}</p>
           </div>
           <button
             ref={buttonRef}
@@ -163,7 +163,7 @@ export function Blog() {
                   <div className="absolute inset-0 bg-highlight/0 group-hover:bg-highlight/10 transition-colors duration-300" />
                 </div>
                 <div className="post-content">
-                  <div className="flex items-center gap-6 mb-4 text-body-sm text-white/50">
+                  <div className="flex items-center gap-6 mb-4 text-body-sm text-white/80">
                     <span className="flex items-center gap-2">
                       <Clock className="w-4 h-4" /> {blogConfig.readTimePrefix}{post.readTime}
                     </span>
@@ -171,11 +171,11 @@ export function Blog() {
                       <Calendar className="w-4 h-4" /> {post.date}
                     </span>
                   </div>
-                  <h3 className="text-h4 lg:text-h3 text-white font-medium mb-3 group-hover:text-highlight transition-colors duration-300">
+                  <h3 className="text-h4 lg:text-h3 text-white font-bold mb-3 group-hover:text-highlight transition-colors duration-300">
                     {post.title}
                   </h3>
-                  <p className="text-body text-white/60 leading-relaxed">{post.excerpt}</p>
-                  <div className="flex items-center gap-2 mt-4 text-body-sm text-white/40 group-hover:text-white transition-colors duration-300">
+                  <p className="text-body text-white/90 leading-relaxed">{post.excerpt}</p>
+                  <div className="flex items-center gap-2 mt-4 text-body-sm text-white/70 group-hover:text-white transition-colors duration-300">
                     {blogConfig.readMoreLabel}
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                   </div>

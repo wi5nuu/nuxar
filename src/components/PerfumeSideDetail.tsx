@@ -57,7 +57,7 @@ export function PerfumeSideDetail({ perfume, onClose }: PerfumeSideDetailProps) 
             {/* Header Image - Lengthened to h-48 */}
             <div className="relative h-48 shrink-0">
                 <img
-                    src={`/product-${(perfume.order % 8) + 1}.jpg`}
+                    src={perfume.image || `/product-${(perfume.order % 8) + 1}.jpg`}
                     alt={perfume.name}
                     className="w-full h-full object-cover"
                 />

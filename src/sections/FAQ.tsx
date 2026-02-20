@@ -88,8 +88,8 @@ export function FAQ() {
               {/* Question */}
               <button
                 className={`w-full py-6 lg:py-8 flex items-center justify-between text-left border-b transition-all duration-300 ${openIndex === index
-                    ? 'border-white'
-                    : 'border-white/20 hover:border-white/40'
+                  ? 'border-white'
+                  : 'border-white/20 hover:border-white/40'
                   } ${openIndex !== null && openIndex !== index
                     ? 'opacity-50'
                     : 'opacity-100'
@@ -106,8 +106,8 @@ export function FAQ() {
                 {/* Plus icon */}
                 <div
                   className={`flex-shrink-0 w-10 h-10 rounded-full border border-white/30 flex items-center justify-center transition-all duration-400 ${openIndex === index
-                      ? 'bg-highlight border-highlight rotate-45 scale-120'
-                      : 'hover:border-white'
+                    ? 'bg-highlight border-highlight rotate-45 scale-120'
+                    : 'hover:border-white'
                     }`}
                 >
                   <Plus className="w-5 h-5 text-white" />
@@ -124,7 +124,7 @@ export function FAQ() {
                   }`}
               >
                 <div className="py-6 lg:py-8">
-                  <p className="text-body-lg text-white/70 leading-relaxed">
+                  <p className="text-body-lg text-white/90 leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>

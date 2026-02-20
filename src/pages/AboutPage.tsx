@@ -34,31 +34,30 @@ export function AboutPage() {
             {/* Hero */}
             <section className="pt-8 pb-16 px-6 lg:px-16">
                 <div className="max-w-6xl mx-auto">
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-6">
+                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-6 text-white">
                         Tentang <span className="text-highlight">NUXAR</span>
                     </h1>
 
                     <div className="grid lg:grid-cols-2 gap-12 items-center mt-8">
                         <div>
-                            <p className="text-white/70 text-lg leading-relaxed mb-6">
+                            <p className="text-white text-lg leading-relaxed mb-6">
                                 {aboutConfig.description}
                             </p>
-                            <p className="text-white/70 leading-relaxed mb-8">
+                            <p className="text-white leading-relaxed mb-8">
                                 Kami percaya bahwa aroma mewah bukan hak eksklusif kalangan tertentu. Dengan konsep eceran premium,
                                 NUXAR hadir untuk memastikan setiap orang dapat memiliki parfum signature-nya sendiri —
                                 tanpa harus mengorbankan kualitas atau menguras dompet.
                             </p>
                             <div className="flex gap-4">
-                                <Link to="/product" className="px-6 py-3 bg-highlight text-black rounded-full font-bold hover:opacity-90 transition-opacity">
+                                <Link to="/katalog" className="px-6 py-3 bg-highlight text-black rounded-full font-bold hover:opacity-90 transition-opacity">
                                     Lihat Koleksi
                                 </Link>
-                                <a
-                                    href="https://wa.me/6281394882490"
-                                    target="_blank" rel="noopener noreferrer"
+                                <Link
+                                    to="/kontak"
                                     className="px-6 py-3 border border-white/30 rounded-full text-white font-medium hover:border-white transition-colors"
                                 >
                                     Hubungi Kami
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
@@ -84,7 +83,7 @@ export function AboutPage() {
                                     <stat.icon className="text-highlight" size={24} />
                                 </div>
                                 <div className="text-3xl lg:text-4xl font-bold text-white mb-1">{stat.value}</div>
-                                <div className="text-sm text-white/50">{stat.label}</div>
+                                <div className="text-sm text-white/80">{stat.label}</div>
                             </div>
                         ))}
                     </div>
@@ -94,14 +93,14 @@ export function AboutPage() {
             {/* Founder */}
             <section className="py-16 px-6 lg:px-16">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-3xl font-bold mb-12 text-center">Tim Kami</h2>
+                    <h2 className="text-3xl font-bold mb-12 text-center text-white">Tim Kami</h2>
                     <div className="flex flex-col items-center text-center gap-6">
                         <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-highlight/30">
                             <img src={aboutConfig.authorImage} alt={aboutConfig.authorName} className="w-full h-full object-cover" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold mb-1">{aboutConfig.authorName}</h3>
-                            <p className="text-white/60 mb-4">{aboutConfig.authorBio}</p>
+                            <h3 className="text-xl font-bold mb-1 text-white">{aboutConfig.authorName}</h3>
+                            <p className="text-white/80 mb-4">{aboutConfig.authorBio}</p>
                         </div>
                     </div>
                 </div>
@@ -115,10 +114,10 @@ export function AboutPage() {
                         { title: 'Misi', text: 'Menyediakan parfum original berkualitas tinggi dalam kemasan eceran premium dengan harga yang terjangkau.' },
                         { title: 'Nilai', text: 'Kualitas tanpa kompromi, transparansi, dan kepuasan pelanggan adalah pondasi setiap keputusan kami.' },
                     ].map((item) => (
-                        <div key={item.title} className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                        <div key={item.title} className="p-6 rounded-2xl bg-white/10 border border-white/20">
                             <div className="w-8 h-1 bg-highlight rounded mb-4" />
-                            <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                            <p className="text-white/60 leading-relaxed">{item.text}</p>
+                            <h3 className="text-xl font-bold mb-3 text-white">{item.title}</h3>
+                            <p className="text-white/90 leading-relaxed">{item.text}</p>
                         </div>
                     ))}
                 </div>

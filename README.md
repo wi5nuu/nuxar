@@ -14,12 +14,30 @@ A modern, high-end e-commerce platform for perfumes with dramatic animations, 3D
 - ♿ **Accessibility** - Reduced motion support for better user experience
 - 🔄 **Smooth Transitions** - Typewriter, blur-reveal, clip-path, and elastic animations
 
+- 🤖 **AI Chatbot** - Integrated virtual assistant powered by Google Gemini for perfume consultations
+- 🛑 **Rate Limiting** - API protection using Upstash Redis to prevent abuse
+- 🛡️ **Bot Protection** - Cloudflare Turnstile integration for secure contact form submission
+- 🎨 **Premium Dark Theme** - Sophisticated black and red color scheme with glassmorphism effects
+- 🎭 **Advanced Animations** - GSAP-powered scroll animations, 3D transforms, and parallax effects
+- 🛍️ **Hybrid Blog System** - Smart fetching from Supabase with static fallback for reliability
+- 📱 **Fully Responsive** - Optimized for all devices with mobile-first approach
+- 🎬 **Cinematic Experience** - Noise texture overlay and chromatic aberration effects
+
 ## 🚀 Tech Stack
 
 ### Frontend Core
 - **[React 19.2.0](https://react.dev/)** - Modern UI library with latest features
 - **[TypeScript 5.9.3](https://www.typescriptlang.org/)** - Type-safe JavaScript
 - **[Vite 7.2.4](https://vite.dev/)** - Next-generation frontend tooling
+
+### AI & Intelligence
+- **[Google Generative AI](https://ai.google.dev/)** - Gemini Pro model for conversational intelligence
+- **[Vercel AI SDK](https://sdk.vercel.ai/)** - Streaming AI responses for real-time interaction
+
+### Security & Infrastructure
+- **[Upstash Redis](https://upstash.com/)** - Serverless database for rate limiting
+- **[@upstash/ratelimit](https://github.com/upstash/ratelimit)** - Token bucket rate limiting for API protection
+- **[Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/)** - Privacy-friendly bot protection (CAPTCHA alternative)
 
 ### Styling & UI
 - **[Tailwind CSS 3.4.19](https://tailwindcss.com/)** - Utility-first CSS framework

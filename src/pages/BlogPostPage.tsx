@@ -39,7 +39,7 @@ export function BlogPostPage() {
                 <SEOHead title="Artikel Tidak Ditemukan | NUXAR PERFUMERY" description="Artikel yang Anda cari tidak tersedia." canonical="/blog" />
                 <div className="min-h-[50vh] flex items-center justify-center px-6">
                     <div className="text-center">
-                        <h1 className="text-4xl font-bold mb-4">Artikel Tidak Ditemukan</h1>
+                        <h1 className="text-4xl font-bold mb-4 text-white">Artikel Tidak Ditemukan</h1>
                         <p className="text-white/60 mb-6">Artikel yang Anda cari tidak tersedia.</p>
                         <Link to="/blog" className="px-6 py-3 bg-highlight text-black rounded-full font-bold">Kembali ke Blog</Link>
                     </div>
@@ -79,7 +79,7 @@ export function BlogPostPage() {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-3xl lg:text-5xl font-bold tracking-tight mb-8 leading-tight">
+                    <h1 className="text-3xl lg:text-5xl font-bold tracking-tight mb-8 leading-tight text-white">
                         {post.title}
                     </h1>
 
@@ -118,7 +118,7 @@ export function BlogPostPage() {
 
                     {/* Related / CTA */}
                     <div className="mt-12 p-8 rounded-3xl bg-highlight/5 border border-highlight/20">
-                        <h2 className="text-xl font-bold mb-2">Mau Coba Parfum Terbaik?</h2>
+                        <h2 className="text-xl font-bold mb-2 text-white">Mau Coba Parfum Terbaik?</h2>
                         <p className="text-white/60 mb-4 text-sm">Temukan aroma yang cocok dengan kepribadianmu di NUXAR PERFUMERY.</p>
                         <div className="flex gap-3">
                             <Link to="/produk" className="flex items-center gap-2 px-8 py-3 bg-highlight text-black rounded-full font-bold hover:opacity-90 transition-opacity">

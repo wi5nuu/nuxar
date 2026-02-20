@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
-import { Home, Search, Sparkles } from 'lucide-react';
+import { Home, Search } from 'lucide-react';
 
 export function NotFoundPage() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -75,9 +75,6 @@ export function NotFoundPage() {
 
             {/* Content */}
             <div className="relative z-10 text-center max-w-2xl">
-                <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-highlight/10 border border-highlight/20 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-highlight">
-                    <Sparkles className="h-3 w-3" /> Error 404 · Lost in Aroma
-                </div>
 
                 <h1 ref={titleRef} className="text-[120px] md:text-[200px] font-black leading-none tracking-tighter italic italic-shadow mb-4">
                     404

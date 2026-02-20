@@ -117,6 +117,30 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const { name, email, whatsapp, product, message } = formData;
+
+    // TikTok Advanced Matching - Normalization
+    const normalizedEmail = email.trim().toLowerCase();
+    // Simple conversion to E.164 if it starts with 0
+    let normalizedPhone = whatsapp.trim().replace(/\D/g, '');
+    if (normalizedPhone.startsWith('0')) {
+      normalizedPhone = '62' + normalizedPhone.slice(1);
+    }
+    if (!normalizedPhone.startsWith('+')) {
+      normalizedPhone = '+' + normalizedPhone;
+    }
+
+    if ((window as any).ttq) {
+      (window as any).ttq.track('Contact', {
+        email: normalizedEmail,
+        phone_number: normalizedPhone,
+        contents: [{
+          content_name: product || 'General Inquiry',
+        }],
+        value: 0,
+        currency: 'IDR'
+      });
+    }
+
     const productLabel = contactConfig.productOptions.find((o) => o.value === product)?.label || product || '-';
     const text = [
       `*Pesan dari Website NUXAR PERFUMERY*`,

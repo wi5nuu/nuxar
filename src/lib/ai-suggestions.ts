@@ -859,7 +859,7 @@ export const AI_SUGGESTIONS: AISuggestion[] = [
         text: "Adminnya ramah ya",
         response: "Alhamdulillah, terima kasih pujiannya Kak! Kepuasan Kakak adalah kebahagiaan kami.",
         category: 'sosial',
-        tags: ['ramah', 'baik', 'suka']
+        tags: ['ramah', 'baik', 'admin']
     },
     {
         text: "Lama pengiriman?",
@@ -1026,8 +1026,8 @@ export function getSystemResponse(query: string): string | null {
             });
         }
 
-        // Match by contained strings
-        if (q.includes(normalizedS)) score += 5;
+        // Match by contained strings (Only if text is long enough to be unique)
+        if (normalizedS.length > 2 && q.includes(normalizedS)) score += 5;
         if (normalizedS.includes(q)) score += 3;
 
         return { suggestion: s, score };

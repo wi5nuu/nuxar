@@ -9,8 +9,8 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  title: "NUXAR PERFUMERY - Parfum Eceran Premium Mahasiswa & Pekerja",
-  description: "NUXAR PERFUMERY menyediakan parfum original eceran berkualitas tinggi. Aroma mewah yang cocok untuk kuliah, kerja, healing, hingga keluar negeri dengan harga terjangkau.",
+  title: "NUXAR PERFUMERY | Parfum Eceran Premium untuk Setiap Momen Berhargamu",
+  description: "NUXAR PERFUMERY menghadirkan parfum eceran premium yang dirancang untuk menemani setiap momen berhargamu. Aroma mewah, tahan lama, dan terjangkau untuk mahasiswa, pekerja, hingga traveler.",
   language: "id",
 };
 
@@ -510,6 +510,7 @@ export const footerConfig: FooterConfig = {
   ],
   navLinks2: [
     { label: "WhatsApp", href: "https://wa.me/6281394882490", icon: "MessageCircle" },
+    { label: "Facebook", href: "https://www.facebook.com/nuxarperfumery", icon: "Facebook" },
     { label: "Ashar Grosir Parfum", href: "https://www.ashargrosirparfum.com", icon: "ExternalLink" },
   ],
   ctaText: "Pesan Sekarang",

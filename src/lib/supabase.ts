@@ -17,20 +17,16 @@ export interface PerfumeRow {
   name: string;
   brand: string;
   full_name: string;
-  year: number | null;
   gender: 'pria' | 'wanita' | 'unisex';
   category: string;
-  concentration: string | null;
-  notes: {
-    top?: string[];
-    middle?: string[];
-    base?: string[];
-  } | null;
-  karakter: string | null;
-  penggunaan: string | null;
+  notes: any | null;
+  character: any | null;
+  personality: any | null;
+  best_for: any | null;
+  performance: any | null;
+  additional: any | null;
   description: string | null;
-  is_official: boolean;
-  note: string | null;
+  image_url: string | null;
   display_order: number;
   created_at?: string;
 }
@@ -74,47 +70,47 @@ export async function fetchPerfumesFromSupabase(): Promise<{
     name: r.name,
     brand: r.brand,
     fullName: r.full_name,
-    category: (r.gender === 'wanita' ? 'cewek' : 'cowok') as 'cowok' | 'cewek',
+    category: (r.category === 'cewek' ? 'cewek' : 'cowok') as 'cowok' | 'cewek',
     order: r.display_order,
-    note: r.note ?? undefined,
     notes: {
       top: r.notes?.top ?? [],
       middle: r.notes?.middle ?? [],
       base: r.notes?.base ?? [],
     },
     character: {
-      mainImpression: r.karakter || 'Unknown',
-      family: 'Unknown',
-      intensity: 'Moderate',
-      sweetness: 3,
-      freshness: 3,
+      mainImpression: r.character?.mainImpression || 'Unknown',
+      family: r.character?.family || 'Unknown',
+      intensity: r.character?.intensity || 'Moderate',
+      sweetness: r.character?.sweetness || 3,
+      freshness: r.character?.freshness || 3,
     },
     personality: {
-      vibe: 'Unknown',
-      scale: r.gender === 'pria' ? 'Masculine' : r.gender === 'wanita' ? 'Feminine' : 'Unisex',
-      uniqueness: 3,
+      vibe: r.personality?.vibe || 'Unknown',
+      scale: r.personality?.scale || (r.gender === 'pria' ? 'Masculine' : 'Feminine'),
+      uniqueness: r.personality?.uniqueness || 3,
     },
     bestFor: {
-      occasion: r.penggunaan || 'Daily',
-      time: 'Anytime',
-      weather: 'Any',
-      ageRange: 'All Ages',
+      occasion: r.best_for?.occasion || 'Daily',
+      time: r.best_for?.time || 'Anytime',
+      weather: r.best_for?.weather || 'Any',
+      ageRange: r.best_for?.ageRange || 'All Ages',
     },
     performance: {
-      longevity: '6-8 Hours',
-      projection: 'Moderate',
-      sillage: 'Moderate',
-      complimentFactor: 3,
+      longevity: r.performance?.longevity || '6-8 Hours',
+      projection: r.performance?.projection || 'Moderate',
+      sillage: r.performance?.sillage || 'Moderate',
+      complimentFactor: r.performance?.complimentFactor || 3,
     },
     additional: {
-      concentration: (r.concentration as any) || 'EDP',
-      style: 'Casual',
-      situation: r.penggunaan || 'General',
+      concentration: r.additional?.concentration || 'EDP',
+      style: r.additional?.style || 'Casual',
+      situation: r.additional?.situation || 'General',
     },
     description: r.description || 'Aroma yang sangat berkesan.',
-    karakter: r.karakter ?? undefined,
-    penggunaan: r.penggunaan ?? undefined,
-    is_official: r.is_official,
+    image: r.image_url || undefined,
+    karakter: r.character?.mainImpression,
+    penggunaan: r.best_for?.occasion,
+    is_official: false,
   });
 
   const cowok = rows
@@ -136,15 +132,17 @@ export async function fetchBlogsFromSupabase() {
 
   const { data, error } = await supabase
     .from('blogs')
-    .select('*')
-    .order('created_at', { ascending: false });
+    .select('id, slug, title, excerpt, content, read_time, date, image, category, created_at')
+    .order('created_at', { ascending: false, nullsFirst: false });
 
   if (error) {
     console.error('Supabase blogs error:', error);
     return null;
   }
 
-  return (data ?? []).map((r: BlogPostRow) => ({
+  if (!data || data.length === 0) return null;
+
+  return data.map((r: BlogPostRow) => ({
     id: r.id,
     slug: r.slug,
     title: r.title,

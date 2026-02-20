@@ -159,7 +159,7 @@ export function Services() {
           </h2>
           <p
             ref={subtitleRef}
-            className="text-body-lg text-white/70 max-w-2xl"
+            className="text-body-lg text-white/90 max-w-2xl"
           >
             {servicesConfig.subtitle}
           </p>

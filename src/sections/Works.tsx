@@ -61,12 +61,12 @@ export function Works() {
     if (SUPABASE_ENABLED) {
       fetchPerfumesFromSupabase().then(data => {
         if (data) {
-          const all = [...data.cowok, ...data.cewek].map(p => ({
+          const all = [...data.cowok, ...data.cewek].slice(0, 8).map((p, idx) => ({
             id: p.id,
             title: p.name,
             category: p.category,
-            image: (p as any).image || `/product-${(parseInt(p.id) % 8) + 1}.jpg`
-          })).slice(0, 8); // Tampilkan 8 koleksi pilihan di beranda
+            image: p.image || `/product-${(idx % 8) + 1}.jpg`
+          }));
           if (all.length > 0) setProjects(all as any);
         }
         setLoading(false);
@@ -181,6 +181,7 @@ export function Works() {
       </div>
 
       {/* Decorative elements */}
+
       <div className="absolute top-20 left-0 w-32 h-32 bg-highlight/5 -translate-x-1/2" />
       <div className="absolute bottom-20 right-0 w-48 h-48 bg-black/5 translate-x-1/3" />
     </section>

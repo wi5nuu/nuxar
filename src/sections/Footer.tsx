@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Instagram, MessageCircle, ExternalLink, ArrowUpRight, Music2, Linkedin } from 'lucide-react';
+import { Instagram, MessageCircle, ExternalLink, ArrowUpRight, Music2, Linkedin, Facebook } from 'lucide-react';
 import { footerConfig, type FooterLink } from '../config';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +13,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   ExternalLink,
   Music2,
   Linkedin,
+  Facebook,
 };
 
 export function Footer() {

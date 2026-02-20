@@ -4,6 +4,7 @@ import { getAIKnowledgeBase } from '../lib/ai-knowledge';
 import { fetchPerfumesFromSupabase, SUPABASE_ENABLED } from '../lib/supabase';
 import { allPerfumes as localPerfumes, type PerfumeItem } from '../data/perfumes';
 import { getRandomSuggestions, getSystemResponse, getContextualSuggestions, type AISuggestion } from '../lib/ai-suggestions';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface Message {
     role: 'user' | 'bot';
@@ -109,9 +110,12 @@ export function AIChatBot() {
         // 2. Cek Dynamic Local Database & Config
         const lowerCaseMsg = userMsg.toLowerCase();
 
-        // Handler Harga (Price)
-        const isAskingPrice = lowerCaseMsg.includes('harga') || lowerCaseMsg.includes('biaya') || lowerCaseMsg.includes('price') || lowerCaseMsg.includes('bayar');
-        if (isAskingPrice) {
+        // Handler Harga (Price) - LEBIH PINTAR
+        // Hanya trigger jika ada kata kunci tambahan atau konteks parfum
+        const isAskingPrice = (lowerCaseMsg.includes('harga') || lowerCaseMsg.includes('biaya') || lowerCaseMsg.includes('price')) &&
+            (lowerCaseMsg.includes('parfum') || lowerCaseMsg.includes('nuxar') || lowerCaseMsg.includes('minyak') || lowerCaseMsg.includes('botol') || lowerCaseMsg.length < 20);
+
+        if (isAskingPrice && !lowerCaseMsg.includes('ikan') && !lowerCaseMsg.includes('pasar') && !lowerCaseMsg.includes('baju')) {
             setTimeout(() => {
                 setMessages(prev => [...prev, {
                     role: 'bot',
@@ -157,17 +161,10 @@ export function AIChatBot() {
             }
         }
 
-        // 3. Call AI API (Gemini) - Only for general conversation
+        // 3. Call AI API (Internal Proxy) - Only for general conversation
         try {
-            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-            if (!apiKey) {
-                setMessages(prev => [...prev, { role: 'bot', content: 'Maaf ya Kak, layanan AI kami sedang tidak tersedia saat ini. Kakak bisa klik pertanyaan di bawah ini atau langsung hubungi WhatsApp kami untuk respon cepat!' }]);
-                setIsTyping(false);
-                return;
-            }
-
             const knowledge = getAIKnowledgeBase(perfumes);
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -175,7 +172,7 @@ export function AIChatBot() {
                         parts: [{ text: `${knowledge}\n\nUSER: ${userMsg}\nAI (MAKSIMAL 1-2 KALIMAT PENDEK, RAMAH):` }]
                     }],
                     generationConfig: {
-                        maxOutputTokens: 100,
+                        maxOutputTokens: 80, // Hemat token
                         temperature: 0.7
                     }
                 })
@@ -197,7 +194,58 @@ export function AIChatBot() {
             setMessages(prev => [...prev, { role: 'bot', content: botReply.trim() }]);
             setSuggestions(getContextualSuggestions(userMsg));
         } catch (error) {
-            setMessages(prev => [...prev, { role: 'bot', content: 'Maaf ya Kak, kami tidak bisa menjawab pertanyaan tersebut saat ini. Silakan pilih salah satu pertanyaan di bawah ini atau hubungi kami via WhatsApp ya kak!' }]);
+            console.warn("Backend API failed, trying Client-Side Fallback:", error);
+
+            // 4. Client-Side Fallback (Direct to Gemini)
+            try {
+                const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+                if (!apiKey) throw new Error("API Key Missing");
+
+                const genAI = new GoogleGenerativeAI(apiKey);
+
+                // Retry Logic Wrapper (Enhanced for Free Tier)
+                const generateWithRetry = async (retryCount = 0): Promise<string> => {
+                    try {
+                        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+                        const knowledge = getAIKnowledgeBase(perfumes);
+                        const prompt = `${knowledge}\n\nUSER: ${userMsg}\nAI (MAKSIMAL 1-2 KALIMAT PENDEK, RAMAH):`;
+
+                        const result = await model.generateContent({
+                            contents: [{ role: "user", parts: [{ text: prompt }] }],
+                            generationConfig: {
+                                maxOutputTokens: 80,
+                                temperature: 0.7,
+                            }
+                        });
+                        return result.response.text();
+                    } catch (error: any) {
+                        const isRateLimit = error?.message?.includes('429') || error?.status === 429 || error?.status === 503;
+                        // Retry up to 3 times (Total wait ~20s)
+                        if (isRateLimit && retryCount < 3) {
+                            const waitTime = 3000 * (retryCount + 1); // 3s, 6s, 9s
+                            console.warn(`API Rate Limited (429). Retrying in ${waitTime / 1000}s... (Attempt ${retryCount + 1})`);
+                            await new Promise(resolve => setTimeout(resolve, waitTime));
+                            return generateWithRetry(retryCount + 1);
+                        }
+                        throw error;
+                    }
+                };
+
+                const text = await generateWithRetry();
+
+                setMessages(prev => [...prev, { role: 'bot', content: text.trim() }]);
+                setSuggestions(getContextualSuggestions(userMsg));
+
+            } catch (clientError: any) {
+                console.error("Client-Side AI also failed:", clientError);
+                // 429 = Server Busy / Quota Exceeded
+                if (clientError?.message?.includes('429') || clientError?.status === 429) {
+                    setMessages(prev => [...prev, { role: 'bot', content: 'Maaf Kak, server Google Gemini sedang sangat penuh. Mohon tunggu 1-2 menit sebelum bertanya lagi ya! 🙏' }]);
+                } else {
+                    const errorMsg = clientError?.message || JSON.stringify(clientError);
+                    setMessages(prev => [...prev, { role: 'bot', content: `[DEBUG 3] Gagal: ${errorMsg}` }]);
+                }
+            }
         } finally {
             setIsTyping(false);
         }

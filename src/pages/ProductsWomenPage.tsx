@@ -25,23 +25,35 @@ export function ProductsWomenPage() {
 
         if (SUPABASE_ENABLED) {
             fetchPerfumesFromSupabase().then(data => {
-                if (data) {
+                if (data && data.cewek.length > 0) {
                     setProducts(data.cewek);
+                } else {
+                    // Fallback to local
+                    const localWanita = worksConfig.projects
+                        .filter(p => WANITA_KATEGORI.includes(p.category))
+                        .map(p => ({
+                            id: String(p.id),
+                            name: p.title,
+                            fullName: p.title,
+                            category: p.category,
+                            gender: 'wanita'
+                        } as any));
+                    setProducts(localWanita);
                 }
                 setLoading(false);
-            }).catch(() => setLoading(false));
-        } else {
-            const localWanita = worksConfig.projects
-                .filter(p => WANITA_KATEGORI.includes(p.category))
-                .map(p => ({
-                    id: String(p.id),
-                    name: p.title,
-                    fullName: p.title,
-                    category: p.category,
-                    gender: 'wanita',
-                    image: p.image
-                } as any));
-            setProducts(localWanita);
+            }).catch(() => {
+                const localWanita = worksConfig.projects
+                    .filter(p => WANITA_KATEGORI.includes(p.category))
+                    .map(p => ({
+                        id: String(p.id),
+                        name: p.title,
+                        fullName: p.title,
+                        category: p.category,
+                        gender: 'wanita'
+                    } as any));
+                setProducts(localWanita);
+                setLoading(false);
+            });
         }
     }, []);
 
@@ -81,10 +93,10 @@ export function ProductsWomenPage() {
                         </Link>
                     </div>
 
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4">
+                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
                         Parfum <span className="text-highlight">Wanita</span> Eceran
                     </h1>
-                    <p className="text-white/60 text-lg max-w-2xl mb-10">
+                    <p className="text-white/90 text-lg max-w-2xl mb-10">
                         Aroma feminin pilihan untuk wanita modern — dari Floral yang elegan, Gourmand yang manis,
                         hingga Citrus yang menyegarkan. Semua original, semua premium.
                     </p>
@@ -102,7 +114,7 @@ export function ProductsWomenPage() {
                                 >
                                     <div className="aspect-[3/4] overflow-hidden">
                                         <img
-                                            src={`/product-${((i + 1) % 8) || 8}.jpg`}
+                                            src={product.image || `/product-${((i + 1) % 8) || 8}.jpg`}
                                             alt={`${product.name} - Parfum Premium Original`}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                             loading="lazy"
@@ -129,7 +141,7 @@ export function ProductsWomenPage() {
 
                     {/* Tips Section */}
                     <div className="mt-16 p-8 rounded-3xl bg-white/5 border border-white/10">
-                        <h2 className="text-2xl font-bold mb-4">Tips Memilih Parfum Wanita</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-white">Tips Memilih Parfum Wanita</h2>
                         <ul className="space-y-3 text-white/70">
                             <li className="flex gap-3"><span className="text-highlight font-bold">01.</span> <span><strong>Floral</strong> — Elegan dan feminin untuk kantor, campus, dan acara formal.</span></li>
                             <li className="flex gap-3"><span className="text-highlight font-bold">02.</span> <span><strong>Gourmand</strong> — Manis dan playful untuk hangout dan kencan.</span></li>

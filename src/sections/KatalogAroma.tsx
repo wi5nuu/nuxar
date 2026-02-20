@@ -5,11 +5,12 @@ import { Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import {
-  perfumesCowok,
-  perfumesCewek,
+  perfumesCowok as localCowok,
+  perfumesCewek as localCewek,
   type PerfumeItem,
 } from '@/data/perfumes';
 import { PerfumeSideDetail } from '@/components/PerfumeSideDetail';
+import { fetchPerfumesFromSupabase, SUPABASE_ENABLED } from '@/lib/supabase';
 
 function PerfumeCard({ item, index, onOpenDetail, isActive }: { item: PerfumeItem; index: number; onOpenDetail: (i: PerfumeItem) => void, isActive: boolean }) {
   const imageIndex = (index % 8) + 1;
@@ -22,7 +23,7 @@ function PerfumeCard({ item, index, onOpenDetail, isActive }: { item: PerfumeIte
     >
       <div className="aspect-[3/4] overflow-hidden relative">
         <img
-          src={`/product-${imageIndex}.jpg`}
+          src={item.image || `/product-${imageIndex}.jpg`}
           alt={item.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
@@ -52,17 +53,30 @@ export function KatalogAroma() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPerfume, setSelectedPerfume] = useState<PerfumeItem | null>(null);
   const [mobilePage, setMobilePage] = useState(1);
+  const [perfumes, setPerfumes] = useState({ cowok: localCowok, cewek: localCewek });
+  const [loading, setLoading] = useState(SUPABASE_ENABLED);
   const itemsPerMobilePage = 8;
 
   const filteredCowok = useMemo(() =>
-    perfumesCowok.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.fullName.toLowerCase().includes(searchQuery.toLowerCase())),
-    [searchQuery]
+    perfumes.cowok.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.fullName.toLowerCase().includes(searchQuery.toLowerCase())),
+    [searchQuery, perfumes.cowok]
   );
 
   const filteredCewek = useMemo(() =>
-    perfumesCewek.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.fullName.toLowerCase().includes(searchQuery.toLowerCase())),
-    [searchQuery]
+    perfumes.cewek.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.fullName.toLowerCase().includes(searchQuery.toLowerCase())),
+    [searchQuery, perfumes.cewek]
   );
+
+  useEffect(() => {
+    if (SUPABASE_ENABLED) {
+      fetchPerfumesFromSupabase().then(data => {
+        if (data) {
+          setPerfumes(data);
+        }
+        setLoading(false);
+      }).catch(() => setLoading(false));
+    }
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -116,17 +130,17 @@ export function KatalogAroma() {
                   placeholder="Search by scent..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-12 rounded-xl border-black/5 bg-white pl-12 text-xs shadow-sm focus-visible:ring-highlight/20"
+                  className="h-12 rounded-xl border-black/5 bg-white pl-12 text-xs text-black placeholder:text-black/40 shadow-sm focus-visible:ring-highlight/20"
                 />
               </div>
 
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full sm:w-auto">
                 <TabsList className="h-12 w-full sm:w-fit grid grid-cols-2 rounded-xl border border-black/5 bg-white p-1 shadow-sm">
                   <TabsTrigger value="cowok" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/40">
-                    Men ({perfumesCowok.length})
+                    Men ({perfumes.cowok.length})
                   </TabsTrigger>
                   <TabsTrigger value="cewek" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/40">
-                    Women ({perfumesCewek.length})
+                    Women ({perfumes.cewek.length})
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
@@ -141,20 +155,24 @@ export function KatalogAroma() {
             <Tabs value={activeTab} onValueChange={(val) => { setActiveTab(val); setMobilePage(1); }} className="w-full">
 
               <TabsContent value="cowok" className="mt-0 outline-none">
-                <div className={`grid gap-3 sm:gap-4 transition-all duration-500 ${selectedPerfume ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8'}`}>
-                  {filteredCowok.slice(
-                    typeof window !== 'undefined' && window.innerWidth < 640 ? (mobilePage - 1) * itemsPerMobilePage : 0,
-                    typeof window !== 'undefined' && window.innerWidth < 640 ? mobilePage * itemsPerMobilePage : undefined
-                  ).map((item, i) => (
-                    <PerfumeCard
-                      key={item.id}
-                      item={item}
-                      index={i}
-                      onOpenDetail={setSelectedPerfume}
-                      isActive={selectedPerfume?.id === item.id}
-                    />
-                  ))}
-                </div>
+                {loading ? (
+                  <div className="py-20 text-center text-black/20 italic">Membuka lembaran aroma maskulin...</div>
+                ) : (
+                  <div className={`grid gap-3 sm:gap-4 transition-all duration-500 ${selectedPerfume ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8'}`}>
+                    {filteredCowok.slice(
+                      typeof window !== 'undefined' && window.innerWidth < 640 ? (mobilePage - 1) * itemsPerMobilePage : 0,
+                      typeof window !== 'undefined' && window.innerWidth < 640 ? mobilePage * itemsPerMobilePage : undefined
+                    ).map((item, i) => (
+                      <PerfumeCard
+                        key={item.id}
+                        item={item}
+                        index={i}
+                        onOpenDetail={setSelectedPerfume}
+                        isActive={selectedPerfume?.id === item.id}
+                      />
+                    ))}
+                  </div>
+                )}
 
                 {/* Mobile Numeric Pagination */}
                 {typeof window !== 'undefined' && window.innerWidth < 640 && filteredCowok.length > itemsPerMobilePage && (
@@ -180,20 +198,24 @@ export function KatalogAroma() {
               </TabsContent>
 
               <TabsContent value="cewek" className="mt-0 outline-none">
-                <div className={`grid gap-3 sm:gap-4 transition-all duration-500 ${selectedPerfume ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8'}`}>
-                  {filteredCewek.slice(
-                    typeof window !== 'undefined' && window.innerWidth < 640 ? (mobilePage - 1) * itemsPerMobilePage : 0,
-                    typeof window !== 'undefined' && window.innerWidth < 640 ? mobilePage * itemsPerMobilePage : undefined
-                  ).map((item, i) => (
-                    <PerfumeCard
-                      key={item.id}
-                      item={item}
-                      index={i}
-                      onOpenDetail={setSelectedPerfume}
-                      isActive={selectedPerfume?.id === item.id}
-                    />
-                  ))}
-                </div>
+                {loading ? (
+                  <div className="py-20 text-center text-black/20 italic">Membuka koleksi aroma elegan...</div>
+                ) : (
+                  <div className={`grid gap-3 sm:gap-4 transition-all duration-500 ${selectedPerfume ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8'}`}>
+                    {filteredCewek.slice(
+                      typeof window !== 'undefined' && window.innerWidth < 640 ? (mobilePage - 1) * itemsPerMobilePage : 0,
+                      typeof window !== 'undefined' && window.innerWidth < 640 ? mobilePage * itemsPerMobilePage : undefined
+                    ).map((item, i) => (
+                      <PerfumeCard
+                        key={item.id}
+                        item={item}
+                        index={i}
+                        onOpenDetail={setSelectedPerfume}
+                        isActive={selectedPerfume?.id === item.id}
+                      />
+                    ))}
+                  </div>
+                )}
 
                 {/* Mobile Numeric Pagination */}
                 {typeof window !== 'undefined' && window.innerWidth < 640 && filteredCewek.length > itemsPerMobilePage && (

@@ -150,7 +150,7 @@ export function Testimonials() {
               <Quote className="quote-mark absolute top-6 right-6 w-12 h-12 text-white opacity-10" />
 
               {/* Quote text */}
-              <p className="text-body-lg text-white/80 leading-relaxed mb-8 relative z-10">
+              <p className="text-body-lg text-white/95 leading-relaxed mb-8 relative z-10">
                 "{testimonial.quote}"
               </p>
 
@@ -170,7 +170,7 @@ export function Testimonials() {
                   <h3 className="text-body text-white font-medium">
                     {testimonial.name}
                   </h3>
-                  <p className="text-body-sm text-white/50">
+                  <p className="text-body-sm text-white/80">
                     {testimonial.title}
                   </p>
                 </div>

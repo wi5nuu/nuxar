@@ -54,7 +54,7 @@ export function Pricing() {
           <h2 ref={titleRef} className="text-h1 lg:text-display-xl text-white font-medium mb-4">
             {pricingConfig.title}
           </h2>
-          <p ref={subtitleRef} className="text-body-lg text-white/60 max-w-2xl mx-auto">
+          <p ref={subtitleRef} className="text-body-lg text-white/90 max-w-2xl mx-auto">
             {pricingConfig.subtitle}
           </p>
         </div>

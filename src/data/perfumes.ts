@@ -56,6 +56,7 @@ export interface PerfumeItem {
   description: string;
   karakter?: string;
   penggunaan?: string;
+  image?: string;
   is_official?: boolean;
 }
 

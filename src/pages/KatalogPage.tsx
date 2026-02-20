@@ -35,7 +35,7 @@ function PerfumeGridCard({ item, index, onOpenDetail, isActive }: { item: Perfum
                 <div className="absolute bottom-2 left-2 right-2 translate-y-1 group-hover:translate-y-0 transition-transform duration-500 text-left">
                     <p className="text-[7px] font-black text-highlight uppercase tracking-[0.1em] mb-0.5">Premium Scents</p>
                     <h3 className="text-[10px] md:text-xs font-bold text-white leading-tight line-clamp-1">{item.name}</h3>
-                    <p className="text-[8px] text-white/60 line-clamp-1 italic">{item.character.mainImpression}</p>
+                    <p className="text-[8px] text-white/80 line-clamp-1 italic">{item.character.mainImpression}</p>
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@ export function KatalogPage() {
                             <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-white uppercase italic">
                                 Scent <span className="text-highlight">Inventory</span>
                             </h1>
-                            <p className="text-white/40 text-xs md:text-sm max-w-lg leading-relaxed">
+                            <p className="text-white/80 text-xs md:text-sm max-w-lg leading-relaxed">
                                 Our comprehensive library of <span className="text-white font-bold">{allProducts.length}+ distinctive personalities</span>.
                                 Select an aroma to reveal its deep bio-data in the side panel.
                             </p>
