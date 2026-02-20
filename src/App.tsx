@@ -9,6 +9,7 @@ import { AIChatBot } from './components/AIChatBot';
 import { Preloader } from './components/Preloader';
 import { RamadanPopup } from './components/RamadanPopup';
 import { siteConfig } from './config';
+import { usePageView } from './hooks/usePageView';
 
 // Lazy load sections/pages for performance
 const Hero = lazy(() => import('./sections/Hero').then(m => ({ default: m.Hero })));
@@ -32,6 +33,7 @@ const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.B
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,6 +76,7 @@ function HomePage() {
 }
 
 function App() {
+  usePageView();
   const [loaderDone, setLoaderDone] = useState(false);
 
   useEffect(() => {
@@ -114,6 +117,7 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/tentang-kami" element={<AboutPage />} />
           <Route path="/kontak" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </>

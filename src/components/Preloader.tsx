@@ -12,23 +12,41 @@ export function Preloader({ onComplete }: PreloaderProps) {
     const completedRef = useRef(false);
 
     useEffect(() => {
-        // Simulate smooth progress up to 90% while page loads
-        const startTime = performance.now();
-        const fakeDuration = 2500; // ms to reach ~90%
+        const assets = [
+            '/logo-nuxar.png',
+            '/hero-main.png',
+            '/6botol.jpg.webp',
+            '/5botol.jpg.webp',
+            '/product-1.jpg',
+            '/product-2.jpg',
+            '/product-3.jpg',
+            '/product-4.jpg'
+        ];
 
-        const tick = (now: number) => {
-            const elapsed = now - startTime;
-            const fakeProgress = Math.min((elapsed / fakeDuration) * 90, 90);
-            if (fakeProgress > progressRef.current) {
-                progressRef.current = fakeProgress;
-                setProgress(Math.floor(fakeProgress));
+        let loadedCount = 0;
+        const totalAssets = assets.length;
+        const startTime = performance.now();
+        const minDuration = 2000; // Minimum duration to keep the premium feel
+
+        const updateProgress = () => {
+            const timeElapsed = performance.now() - startTime;
+            const timeProgress = Math.min((timeElapsed / minDuration) * 100, 100);
+            const loadProgress = (loadedCount / totalAssets) * 100;
+
+            // Real progress is the minimum of time-based (for smoothness) and load-based
+            const currentProgress = Math.min(timeProgress, loadProgress);
+
+            if (currentProgress > progressRef.current) {
+                progressRef.current = currentProgress;
+                setProgress(Math.floor(currentProgress));
             }
-            if (fakeProgress < 90) {
-                animFrameRef.current = requestAnimationFrame(tick);
+
+            if (currentProgress < 100) {
+                animFrameRef.current = requestAnimationFrame(updateProgress);
+            } else {
+                finalize();
             }
         };
-
-        animFrameRef.current = requestAnimationFrame(tick);
 
         const finalize = () => {
             if (completedRef.current) return;
@@ -36,39 +54,36 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
 
-            // Animate to 100%
-            const start = progressRef.current;
-            const startTime2 = performance.now();
-            const fillDuration = 400;
+            setProgress(100);
 
-            const fill = (now: number) => {
-                const t = Math.min((now - startTime2) / fillDuration, 1);
-                const val = start + (100 - start) * t;
-                progressRef.current = val;
-                setProgress(Math.floor(val));
-                if (t < 1) {
-                    requestAnimationFrame(fill);
-                } else {
-                    // Fade out
-                    setTimeout(() => {
-                        setVisible(false);
-                        setTimeout(onComplete, 600);
-                    }, 400);
-                }
-            };
-
-            requestAnimationFrame(fill);
+            // Fade out
+            setTimeout(() => {
+                setVisible(false);
+                setTimeout(onComplete, 600);
+            }, 600);
         };
 
-        window.addEventListener('load', finalize);
+        // Start preloading
+        assets.forEach(src => {
+            const img = new Image();
+            img.onload = () => {
+                loadedCount++;
+            };
+            img.onerror = () => {
+                loadedCount++; // Count as "processed" even if error to avoid getting stuck
+            };
+            img.src = src;
+        });
 
-        // Fallback: if load already fired or takes too long
-        if (document.readyState === 'complete') {
-            setTimeout(finalize, 200);
-        }
+        animFrameRef.current = requestAnimationFrame(updateProgress);
+
+        // Safety fallback
+        window.addEventListener('load', () => {
+            // If window load fires, we can speed up or jump to 100 if images are also done
+            // But usually the Image objects are safer for specific assets
+        });
 
         return () => {
-            window.removeEventListener('load', finalize);
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
         };
     }, [onComplete]);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { type PerfumeItem } from '@/data/perfumes';
 import {
     Wind,
@@ -19,9 +19,35 @@ interface PerfumeSideDetailProps {
 
 export function PerfumeSideDetail({ perfume, onClose }: PerfumeSideDetailProps) {
     const [activeSlide, setActiveSlide] = useState(0);
+
+    useEffect(() => {
+        if (perfume && (window as any).ttq) {
+            (window as any).ttq.track('ViewContent', {
+                contents: [{
+                    content_id: perfume.id,
+                    content_name: perfume.name,
+                    content_type: 'product',
+                    content_category: perfume.category,
+                }],
+                value: 65000,
+                currency: 'IDR'
+            });
+        }
+    }, [perfume]);
+
     if (!perfume) return null;
 
     const handleOrder = () => {
+        if ((window as any).ttq) {
+            (window as any).ttq.track('Contact', {
+                contents: [{
+                    content_id: perfume.id,
+                    content_name: perfume.name,
+                }],
+                value: 65000,
+                currency: 'IDR'
+            });
+        }
         const message = `Halo NUXAR, saya ingin pesan Premium ${perfume.name} (${perfume.additional.concentration}). Mohon info stoknya.`;
         window.open(`https://wa.me/${contactConfig.whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
     };

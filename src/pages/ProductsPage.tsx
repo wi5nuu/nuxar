@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { PageLayout } from '../components/PageLayout';
 import { SEOHead } from '../components/SEOHead';
 import { worksConfig, contactConfig } from '../config';
@@ -56,12 +57,12 @@ export function ProductsPage() {
                     {/* Simple CTA */}
                     <div className="mt-16 text-center">
                         <p className="text-white/40 text-xs mb-6 uppercase tracking-[0.2em]">Masih belum menemukan yang cocok?</p>
-                        <a
-                            href="/katalog"
+                        <Link
+                            to="/katalog"
                             className="inline-flex items-center gap-2 text-sm md:text-xl font-bold text-white hover:text-highlight border-b-2 border-highlight pb-1 transition-all"
                         >
                             Lihat 60+ Aroma di Katalog Lengkap <ArrowUpRight size={20} className="md:w-6 md:h-6" />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
