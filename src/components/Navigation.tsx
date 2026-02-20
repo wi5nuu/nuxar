@@ -77,7 +77,9 @@ export function Navigation() {
 
     // Case 3: Internal page link (e.g. /product)
     navigate(href);
-    window.scrollTo(0, 0);
+    if (!href.includes('#')) {
+      window.scrollTo(0, 0);
+    }
   };
 
   const mobileNavItems = [

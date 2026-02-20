@@ -20,7 +20,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
             '/product-1.webp',
             '/product-2.webp',
             '/product-3.webp',
-            '/product-4.webp'
+            '/product-4.webp',
+            '/promo-ramadhan.webp'
         ];
 
         let loadedCount = 0;
