@@ -25,6 +25,8 @@ function PerfumeCard({ item, index, onOpenDetail, isActive }: { item: PerfumeIte
         <img
           src={item.image || `/product-${imageIndex}.jpg`}
           alt={item.name}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
@@ -103,57 +105,52 @@ export function KatalogAroma() {
   return (
     <section ref={sectionRef} id="katalog" className="relative py-12 sm:py-20 bg-[#fafafa] overflow-hidden">
       <div className="container-full relative z-10 w-full px-4 md:px-8">
-
-        {/* Header Branding & Controls */}
-        <header className="mb-10 lg:mb-16">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-10">
-            <div className="max-w-2xl text-center md:text-left">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/[0.03] border border-black/[0.05] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-black/50">
-                Premium Collection · 2026
-              </div>
-              <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl text-black font-black mb-4 tracking-tighter uppercase italic italic-shadow">
-                {titleChars.map((char, i) => (
-                  <span key={i} className="char inline-block">{char === ' ' ? '\u00A0' : char}</span>
-                ))}
-              </h2>
-              <p ref={subtitleRef} className="text-sm md:text-base text-black/50 max-w-lg font-medium leading-relaxed">
-                Explore our archive of 60+ premium aromas with deep bio-data visualization.
-                Find the perfect match for your signature personality.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
-              <div className="relative w-full sm:w-64 lg:w-80">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-black/20" />
-                <Input
-                  type="search"
-                  placeholder="Search by scent..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-12 rounded-xl border-black/5 bg-white pl-12 text-xs text-black placeholder:text-black/40 shadow-sm focus-visible:ring-highlight/20"
-                />
+        <Tabs value={activeTab} onValueChange={(val) => { setActiveTab(val); setMobilePage(1); }} className="w-full">
+          {/* Header Branding & Controls */}
+          <header className="mb-10 lg:mb-16">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-10">
+              <div className="max-w-2xl text-center md:text-left">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/[0.03] border border-black/[0.1] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-black/70">
+                  Premium Collection · 2026
+                </div>
+                <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl text-black font-black mb-4 tracking-tighter uppercase italic italic-shadow">
+                  {titleChars.map((char, i) => (
+                    <span key={i} className="char inline-block">{char === ' ' ? '\u00A0' : char}</span>
+                  ))}
+                </h2>
+                <p ref={subtitleRef} className="text-sm md:text-base text-black/70 max-w-lg font-medium leading-relaxed">
+                  Explore our archive of 60+ premium aromas with deep bio-data visualization.
+                  Find the perfect match for your signature personality.
+                </p>
               </div>
 
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full sm:w-auto">
-                <TabsList className="h-12 w-full sm:w-fit grid grid-cols-2 rounded-xl border border-black/5 bg-white p-1 shadow-sm">
-                  <TabsTrigger value="cowok" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/40">
+              <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+                <div className="relative w-full sm:w-64 lg:w-80">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-black/30" />
+                  <Input
+                    type="search"
+                    placeholder="Search by scent..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-12 rounded-xl border-black/10 bg-white pl-12 text-xs text-black placeholder:text-black/50 shadow-sm focus-visible:ring-highlight/20"
+                  />
+                </div>
+
+                <TabsList className="h-12 w-full sm:w-fit grid grid-cols-2 rounded-xl border border-black/10 bg-white p-1 shadow-sm">
+                  <TabsTrigger value="cowok" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/70 data-[state=active]:opacity-100">
                     Men ({perfumes.cowok.length})
                   </TabsTrigger>
-                  <TabsTrigger value="cewek" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/40">
+                  <TabsTrigger value="cewek" className="rounded-lg px-6 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all data-[state=active]:bg-highlight data-[state=active]:text-black text-black/70 data-[state=active]:opacity-100">
                     Women ({perfumes.cewek.length})
                   </TabsTrigger>
                 </TabsList>
-              </Tabs>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <div className="flex flex-col lg:flex-row gap-8 relative items-start">
-
-          {/* Main Content Area */}
-          <div className={`flex-1 transition-all duration-500 ease-in-out ${selectedPerfume ? 'lg:w-2/3' : 'w-full'}`}>
-            <Tabs value={activeTab} onValueChange={(val) => { setActiveTab(val); setMobilePage(1); }} className="w-full">
-
+          <div className="flex flex-col lg:flex-row gap-8 relative items-start">
+            {/* Main Content Area */}
+            <div className={`flex-1 transition-all duration-500 ease-in-out ${selectedPerfume ? 'lg:w-2/3' : 'w-full'}`}>
               <TabsContent value="cowok" className="mt-0 outline-none">
                 {loading ? (
                   <div className="py-20 text-center text-black/20 italic">Membuka lembaran aroma maskulin...</div>
@@ -238,33 +235,32 @@ export function KatalogAroma() {
                     ))}
                   </div>
                 )}
-
               </TabsContent>
-            </Tabs>
-          </div>
-
-          {/* Side Panel Detail (Desktop) */}
-          {selectedPerfume && (
-            <div className="hidden lg:block w-[37.5%] sticky top-28 h-auto rounded-[32px] overflow-hidden border border-black/5 shadow-xl bg-white">
-              <PerfumeSideDetail
-                perfume={selectedPerfume}
-                onClose={() => setSelectedPerfume(null)}
-              />
             </div>
-          )}
 
-          {/* Mobile Detailed Overlay (Slide up) */}
-          {selectedPerfume && (
-            <div className="lg:hidden fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
-              <div className="absolute bottom-32 left-4 right-4 h-auto max-h-[75vh] bg-white rounded-[32px] overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500">
+            {/* Side Panel Detail (Desktop) */}
+            {selectedPerfume && (
+              <div className="hidden lg:block w-[37.5%] sticky top-28 h-auto rounded-[32px] overflow-hidden border border-black/5 shadow-xl bg-white">
                 <PerfumeSideDetail
                   perfume={selectedPerfume}
                   onClose={() => setSelectedPerfume(null)}
                 />
               </div>
+            )}
+          </div>
+        </Tabs>
+
+        {/* Mobile Detailed Overlay (Slide up) */}
+        {selectedPerfume && (
+          <div className="lg:hidden fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className="absolute bottom-32 left-4 right-4 h-auto max-h-[75vh] bg-white rounded-[32px] overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-500">
+              <PerfumeSideDetail
+                perfume={selectedPerfume}
+                onClose={() => setSelectedPerfume(null)}
+              />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Decorative Accents */}
@@ -273,3 +269,4 @@ export function KatalogAroma() {
     </section>
   );
 }
+

@@ -103,8 +103,19 @@
 
   <!-- FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;200;300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@100;300;400;500;600;700;900&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;300;400;500;600;700;900&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;300;400;500;600;700;900&display=swap"
+      rel="stylesheet">
+  </noscript>
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.googletagmanager.com https://analytics.tiktok.com https://www.google-analytics.com https://connect.facebook.net https://www.facebook.com; connect-src 'self' https://xdwacnlfgasjeiktoyeb.supabase.co wss://xdwacnlfgasjeiktoyeb.supabase.co https://generativelanguage.googleapis.com https://www.google-analytics.com https://analytics.tiktok.com https://*.tiktok.com https://*.tiktokw.us https://connect.facebook.net https://www.facebook.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co https://nuxarperfumery.my.id https://*.google-analytics.com https://*.analytics.tiktok.com https://www.facebook.com https://connect.facebook.net; frame-src 'self' https://challenges.cloudflare.com https://www.facebook.com;" />
+
 
   <!-- STRUCTURED DATA – Store/LocalBusiness -->
   <script type="application/ld+json">

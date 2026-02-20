@@ -161,6 +161,7 @@ export function Navigation() {
         </Link>
         <Link
           to="/kontak"
+          aria-label="Hubungi kami via WhatsApp"
           className="text-white p-2 active:scale-95 transition-transform bg-white/10 rounded-full"
         >
           <MessageCircle size={18} />
@@ -180,6 +181,7 @@ export function Navigation() {
                 return (
                   <button
                     key="logo"
+                    aria-label="Kembali ke Beranda"
                     onClick={() => {
                       navigate('/');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -189,7 +191,7 @@ export function Navigation() {
                     <div className="w-14 h-14 bg-black rounded-full p-1 shadow-2xl border border-white/20 flex items-center justify-center">
                       <img
                         src={navigationConfig.logoImage}
-                        alt="Home"
+                        alt="NUXAR"
                         className="w-10 h-10 object-contain"
                       />
                     </div>
@@ -200,6 +202,7 @@ export function Navigation() {
               return (
                 <button
                   key={item.label}
+                  aria-label={item.label}
                   onClick={(e) => {
                     if ((item as any).isAI) {
                       handleAIClick(e);
@@ -212,7 +215,7 @@ export function Navigation() {
                   <div className={`${isActive ? 'text-highlight' : 'text-white/40'} group-hover:text-white transition-colors duration-300`}>
                     {Icon && <Icon size={20} strokeWidth={2} />}
                   </div>
-                  <span className={`text-[9px] mt-1 font-semibold uppercase tracking-wider ${isActive ? 'text-white' : 'text-white/40'} group-hover:text-white transition-colors`}>
+                  <span className={`text-[9px] mt-1 font-semibold uppercase tracking-wider ${isActive ? 'text-white' : 'text-white/60'} group-hover:text-white transition-colors`}>
                     {item.label}
                   </span>
                 </button>

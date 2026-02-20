@@ -91,6 +91,7 @@ export function RamadanPopup({
                     <img
                         src="/promo-ramadhan.jpg"
                         alt="Promo Ramadhan"
+                        fetchPriority="high"
                         style={{
                             width: '100%',
                             height: '100%',

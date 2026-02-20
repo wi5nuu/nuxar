@@ -15,8 +15,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
         const assets = [
             '/logo-nuxar.png',
             '/hero-main.png',
-            '/6botol.jpg.webp',
-            '/5botol.jpg.webp',
+            '/6botol.jpg',
+            '/5botol.jpg',
             '/product-1.jpg',
             '/product-2.jpg',
             '/product-3.jpg',

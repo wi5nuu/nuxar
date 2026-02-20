@@ -87,7 +87,7 @@ export function Pricing() {
                     <span className="text-body text-white/80">{tier.name}</span>
                     <div className="flex flex-col items-end">
                       {tier.originalPrice && (
-                        <span className="text-[10px] text-white/30 line-through">
+                        <span className="text-[10px] text-white/50 line-through">
                           Rp {tier.originalPrice.toLocaleString('id-ID')}
                         </span>
                       )}

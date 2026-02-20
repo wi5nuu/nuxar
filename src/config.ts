@@ -91,9 +91,9 @@ export const aboutConfig: AboutConfig = {
   titleLine1: "Aroma Mewah Kini Lebih Dekat",
   titleLine2: "Untuk Mahasiswa, Pekerja, dan Travelers.",
   description: "NUXAR PERFUMERY hadir untuk memberikan akses ke aroma mewah tanpa kompromi. Koleksi parfum original eceran kami dirancang untuk menunjang kepercayaan dirimu di kampus, kantor, saat healing ke mall, hingga petualangan ke luar negeri.",
-  image1: "/6botol.jpg.webp",
+  image1: "/6botol.jpg",
   image1Alt: "Koleksi parfum premium NUXAR PERFUMERY",
-  image2: "/5botol.jpg.webp",
+  image2: "/5botol.jpg",
   image2Alt: "Varian parfum original eceran terbaik",
   authorImage: "/founder.jpg",
   authorName: "Tim NUXAR PERFUMERY",
@@ -471,7 +471,7 @@ export const contactConfig: ContactConfig = {
   submitButtonText: "Kirim ke WhatsApp",
   image: "/contact.jpg",
   whatsappNumber: "6281394882490",
-  turnstileSiteKey: import.meta.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACetik_WhyDkqdOo",
+  turnstileSiteKey: import.meta.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACf_YUB-76i94BFo",
 };
 
 // ============================================================================

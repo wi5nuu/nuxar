@@ -187,6 +187,7 @@ export function Footer() {
                   href={link.href}
                   target={isExternal ? '_blank' : undefined}
                   rel={isExternal ? 'noopener noreferrer' : undefined}
+                  aria-label={link.label}
                   className="flex items-center gap-2 text-body text-white/60 hover:text-white transition-colors duration-300 group"
                 >
                   {IconComponent && (
@@ -224,10 +225,10 @@ export function Footer() {
           ref={copyrightRef}
           className="mt-20 pt-8 border-t border-white/10 flex flex-col lg:flex-row justify-between items-center gap-4"
         >
-          <p className="text-body-sm text-white/40">
+          <p className="text-body-sm text-white/60">
             {footerConfig.copyright}
           </p>
-          <p className="text-body-sm text-white/30">
+          <p className="text-body-sm text-white/50">
             {footerConfig.tagline}
           </p>
         </div>

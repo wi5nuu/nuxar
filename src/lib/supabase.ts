@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import type { PerfumeItem } from '@/data/perfumes';
+import { redis } from './redis';
 
 const supabaseUrl = import.meta.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
 const supabaseAnonKey = import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY ?? '';
@@ -53,6 +54,16 @@ export async function fetchPerfumesFromSupabase(): Promise<{
 } | null> {
   if (!supabase) return null;
 
+  // 1. Check Redis Cache First
+  const CACHE_KEY = 'perfumes_data';
+  const cachedData = await redis.get(CACHE_KEY);
+  if (cachedData) {
+    console.log('[Phase 3] Using Redis Cache for Perfumes');
+    return cachedData;
+  }
+
+  // 2. Fetch from Supabase if not cached
+  console.log('[Phase 3] Redis Cache Miss - Fetching from Supabase');
   const { data, error } = await supabase
     .from('perfumes')
     .select('*')
@@ -121,7 +132,12 @@ export async function fetchPerfumesFromSupabase(): Promise<{
     .filter((r) => r.gender === 'wanita')
     .map(mapRowToItem);
 
-  return { cowok, cewek };
+  const result = { cowok, cewek };
+
+  // 3. Store in Redis (24 Hours TTL)
+  await redis.set(CACHE_KEY, result, 86400);
+
+  return result;
 }
 
 /**

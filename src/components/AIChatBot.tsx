@@ -291,6 +291,7 @@ export function AIChatBot() {
                         </div>
                         <button
                             onClick={toggleChat}
+                            aria-label="Tutup chat"
                             className="p-2 hover:bg-white/10 rounded-full transition-colors"
                         >
                             <X className="w-5 h-5" />
@@ -382,6 +383,7 @@ export function AIChatBot() {
             {/* Floating Button - Hidden on Mobile */}
             <button
                 onClick={toggleChat}
+                aria-label="Buka Chat AI"
                 className="pointer-events-auto hidden md:flex group relative w-14 h-14 rounded-full bg-black shadow-2xl items-center justify-center overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95 active:rotate-12"
             >
                 <div className="absolute inset-0 bg-gradient-to-tr from-highlight/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
