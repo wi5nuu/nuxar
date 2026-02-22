@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Sparkles } from 'lucide-react';
 import { PageLayout } from '../components/PageLayout';
 import { SEOHead } from '../components/SEOHead';
 import { worksConfig } from '../config';
@@ -21,7 +21,7 @@ export function ProductsMenPage() {
     const [loading, setLoading] = useState(SUPABASE_ENABLED);
 
     useEffect(() => {
-        gsap.from(headingRef.current, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.from(headingRef.current, { y: 40, duration: 0.8, ease: 'power3.out' });
 
         if (SUPABASE_ENABLED) {
             fetchPerfumesFromSupabase().then(data => {
@@ -62,7 +62,7 @@ export function ProductsMenPage() {
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
                 gsap.from(card, {
-                    y: 50, opacity: 0, duration: 0.6, delay: i * 0.1, ease: 'power2.out',
+                    y: 50, duration: 0.6, delay: i * 0.1, ease: 'power2.out',
                     scrollTrigger: { trigger: card, start: 'top 90%', once: true },
                 });
             });
@@ -72,10 +72,10 @@ export function ProductsMenPage() {
     return (
         <PageLayout breadcrumbs={[{ label: 'Produk', href: '/product' }, { label: 'Pria' }]}>
             <SEOHead
-                title="Parfum Pria Eceran Original | NUXAR PERFUMERY – Woody, Oriental, Aquatic"
-                description="Koleksi parfum pria eceran original NUXAR. Aroma Woody, Oriental, Aquatic, Citrus yang maskulin dan tahan lama. Harga mulai Rp35.000. Cocok untuk kantor, kuliah, dan traveling."
-                keywords="parfum pria eceran, parfum cowok original, parfum pria murah, parfum woody eceran, parfum oriental pria, parfum aquatic eceran, nuxar pria"
-                canonical="/product/pria"
+                title="Parfum Pria Eceran Original & Tahan Lama | NUXAR PERFUMERY"
+                description="Koleksi eksklusif parfum pria eceran original NUXAR. Aroma Woody, Oriental, Aquatic, dan Citrus yang maskulin, mewah, dan tahan lama. Harga mulai Rp35.000."
+                keywords="parfum pria eceran original, parfum cowok tahan lama, parfum pria premium murah, nuxar pria, parfum maskulin bekasi"
+                canonical="/produk/pria"
             />
 
             <section className="pt-8 pb-16 px-6 lg:px-16">
@@ -93,13 +93,18 @@ export function ProductsMenPage() {
                         </Link>
                     </div>
 
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
-                        Parfum <span className="text-highlight">Pria</span> Eceran
-                    </h1>
-                    <p className="text-white/90 text-lg max-w-2xl mb-10">
-                        Aroma maskulin pilihan untuk pria aktif — dari Woody yang elegan, Oriental yang eksotis,
-                        hingga Aquatic yang segar. Semua original, semua premium.
-                    </p>
+                    <div className="mb-12 relative z-20">
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                            <Sparkles className="h-3 w-3" /> Masculine Collection · 2026
+                        </div>
+                        <h1 ref={headingRef} className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 text-white uppercase italic">
+                            Men <span className="text-highlight">Series</span>
+                        </h1>
+                        <p className="text-white/80 text-xs md:text-sm max-w-lg leading-relaxed">
+                            Aroma maskulin pilihan untuk pria aktif — dari Woody yang elegan, Oriental yang eksotis,
+                            hingga Aquatic yang segar. Semua original, semua premium.
+                        </p>
+                    </div>
 
                     {/* Product Grid */}
                     {loading ? (

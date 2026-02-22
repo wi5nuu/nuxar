@@ -83,9 +83,9 @@ export function KatalogPage() {
     return (
         <PageLayout breadcrumbs={[{ label: 'Produk', href: '/produk' }, { label: 'Katalog' }]}>
             <SEOHead
-                title="Premium Aromas Catalog | NUXAR PERFUMERY"
-                description="Explore our massive collection of 60+ premium aromas. Master-Detail design for deeper exploration."
-                keywords="nuxar catalog, perfume list, premium scents, fragrance inventory"
+                title="Katalog Lengkap 60+ Aroma Parfum Premium | NUXAR PERFUMERY"
+                description="Lihat katalog lengkap NUXAR PERFUMERY. Lebih dari 60 pilihan aroma parfum premium original tersedia untuk pria dan wanita. Temukan karakter aromamu sekarang."
+                keywords="katalog parfum nuxar, daftar aroma parfum eceran, pilihan parfum premium, koleksi lengkap nuxar bekasi"
                 canonical="/katalog"
             />
 

@@ -70,9 +70,10 @@ export function Pricing() {
                 }`}
               tabIndex={0}
             >
-              {size.isRecommended && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-highlight text-white text-[10px] font-bold uppercase tracking-widest py-1.5 px-4 rounded-full flex items-center gap-1.5 shadow-lg shadow-highlight/20 whitespace-nowrap">
-                  Paling Recommended
+              {size.badge && (
+                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-widest py-1.5 px-4 rounded-full flex items-center gap-1.5 shadow-lg whitespace-nowrap ${size.isRecommended ? 'bg-highlight text-white shadow-highlight/20' : 'bg-white/10 text-white border border-white/10'
+                  }`}>
+                  {size.badge}
                 </div>
               )}
 
@@ -81,7 +82,7 @@ export function Pricing() {
                 <p className="text-body-sm text-white/50 mt-1">{size.tagline}</p>
               </div>
 
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-6">
                 {size.tiers.map((tier) => (
                   <li key={tier.name} className="flex items-center justify-between">
                     <span className="text-body text-white/80">{tier.name}</span>
@@ -98,6 +99,14 @@ export function Pricing() {
                   </li>
                 ))}
               </ul>
+
+              {size.description && (
+                <div className="mb-8 pt-4 border-t border-white/5">
+                  <p className="text-[11px] leading-relaxed text-white/40 italic">
+                    {size.description}
+                  </p>
+                </div>
+              )}
 
               <button
                 type="button"

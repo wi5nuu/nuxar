@@ -23,8 +23,8 @@ export function Hero() {
 
     tl.fromTo(
       imageRef.current,
-      { scale: 1.1, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1.8, ease: 'expo.out' }
+      { scale: 1.05, opacity: 0.5 },
+      { scale: 1, opacity: 1, duration: 1.4, ease: 'expo.out' }
     );
 
     if (titleRef.current) {

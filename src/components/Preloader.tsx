@@ -76,16 +76,19 @@ export function Preloader({ onComplete }: PreloaderProps) {
             img.src = src;
         });
 
-        animFrameRef.current = requestAnimationFrame(updateProgress);
+        // Safety timeout to ensure preloader always finishes even if window load or images fail
+        const safetyTimeout = setTimeout(() => {
+            if (!completedRef.current) {
+                console.warn('Preloader safety timeout triggered');
+                finalize();
+            }
+        }, 5000);
 
-        // Safety fallback
-        window.addEventListener('load', () => {
-            // If window load fires, we can speed up or jump to 100 if images are also done
-            // But usually the Image objects are safer for specific assets
-        });
+        animFrameRef.current = requestAnimationFrame(updateProgress);
 
         return () => {
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+            clearTimeout(safetyTimeout);
         };
     }, [onComplete]);
 
@@ -122,31 +125,65 @@ export function Preloader({ onComplete }: PreloaderProps) {
                     position: 'relative',
                     marginBottom: '3rem',
                     animation: 'preloaderFadeIn 0.8s ease forwards',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
                 }}
             >
-                <img
-                    src="/logo-nuxar.webp"
-                    alt="Logo"
-                    style={{
-                        width: '160px',
-                        height: 'auto',
-                        objectFit: 'contain',
-                        filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.15))',
-                    }}
-                    onError={(e) => {
-                        // Fallback text if logo not found
-                        const target = e.currentTarget;
-                        target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent) {
-                            const fallback = document.createElement('div');
-                            fallback.textContent = 'NUXAR';
-                            fallback.style.cssText =
-                                'color:#fff;font-size:2.5rem;font-weight:700;letter-spacing:0.3em;';
-                            parent.appendChild(fallback);
-                        }
-                    }}
-                />
+                <div style={{ position: 'relative' }}>
+                    <img
+                        src="/logo-nuxar.webp"
+                        alt="Logo"
+                        style={{
+                            width: '160px',
+                            height: 'auto',
+                            objectFit: 'contain',
+                            filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.15))',
+                        }}
+                        onError={(e) => {
+                            // Fallback text if logo not found
+                            const target = e.currentTarget;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                                const fallback = document.createElement('div');
+                                fallback.textContent = 'NUXAR';
+                                fallback.style.cssText =
+                                    'color:#fff;font-size:2.5rem;font-weight:700;letter-spacing:0.3em;';
+                                parent.appendChild(fallback);
+                            }
+                        }}
+                    />
+                    {/* Professional Verified Badge */}
+                    <div
+                        style={{
+                            position: 'absolute',
+                            bottom: '2px',
+                            right: '-6px',
+                            background: 'linear-gradient(135deg, #0064e0 0%, #1d9bf0 100%)',
+                            borderRadius: '50%',
+                            width: '28px',
+                            height: '28px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: '1.5px solid #fff',
+                            boxShadow: '0 0 15px rgba(29, 155, 240, 0.4)',
+                            animation: 'badgePulse 2s infinite ease-in-out',
+                            zIndex: 2
+                        }}
+                        title="Official Verified"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="white"
+                        >
+                            <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.9-.2-3.91.81s-1.27 2.52-.81 3.91c-1.31.67-2.19 1.91-2.19 3.34s.88 2.67 2.19 3.33c-.46 1.4-.2 2.9.81 3.91s2.52 1.27 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.67-.88 3.34-2.19c1.39.46 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.66 2.19-1.91 2.19-3.33zM9.9 16.8L6.4 13.3l1.41-1.41 2.09 2.09 5.69-5.69 1.41 1.41-7.1 7.1z" />
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             {/* Progress container */}
@@ -217,6 +254,11 @@ export function Preloader({ onComplete }: PreloaderProps) {
         @keyframes preloaderFadeIn {
           from { opacity: 0; transform: translateY(12px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes badgePulse {
+          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(29, 155, 240, 0.4); }
+          50% { transform: scale(1.1); box-shadow: 0 0 20px 4px rgba(29, 155, 240, 0.2); }
+          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(29, 155, 240, 0.4); }
         }
       `}</style>
         </div>

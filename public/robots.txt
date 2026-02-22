@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://nuxarperfumery.my.id/sitemap.xml
+Sitemap: https://www.nuxarperfumery.my.id/sitemap.xml

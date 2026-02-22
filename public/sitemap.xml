@@ -2,71 +2,85 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <!--  Halaman Utama  -->
 <url>
-<loc>https://nuxarperfumery.my.id/</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>weekly</changefreq>
 <priority>1.0</priority>
 </url>
 <!--  Halaman Produk  -->
 <url>
-<loc>https://nuxarperfumery.my.id/produk</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/produk</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.95</priority>
 </url>
 <!--  Katalog Lengkap (New)  -->
 <url>
-<loc>https://nuxarperfumery.my.id/katalog</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/katalog</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.98</priority>
 </url>
 <!--  Parfum Pria  -->
 <url>
-<loc>https://nuxarperfumery.my.id/produk/pria</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/produk/pria</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.90</priority>
 </url>
 <!--  Parfum Wanita  -->
 <url>
-<loc>https://nuxarperfumery.my.id/produk/wanita</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/produk/wanita</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.90</priority>
 </url>
 <!--  Blog  -->
 <url>
-<loc>https://nuxarperfumery.my.id/blog</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/blog</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.85</priority>
 </url>
 <!--  Artikel Blog: Cara Memilih Parfum  -->
 <url>
-<loc>https://nuxarperfumery.my.id/blog/cara-memilih-parfum-sesuai-kepribadian</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/blog/cara-memilih-parfum-sesuai-kepribadian</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.80</priority>
 </url>
 <!--  Artikel Blog: Rahasia Parfum Tahan Lama  -->
 <url>
-<loc>https://nuxarperfumery.my.id/blog/rahasia-parfum-tahan-lama</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/blog/rahasia-parfum-tahan-lama</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.80</priority>
 </url>
 <!--  Tentang Kami  -->
 <url>
-<loc>https://nuxarperfumery.my.id/tentang-kami</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/tentang-kami</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.75</priority>
 </url>
+<!--  Layanan  -->
+<url>
+<loc>https://www.nuxarperfumery.my.id/layanan</loc>
+<lastmod>2026-02-22</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.80</priority>
+</url>
+<!--  FAQ  -->
+<url>
+<loc>https://www.nuxarperfumery.my.id/faq</loc>
+<lastmod>2026-02-22</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.80</priority>
+</url>
 <!--  Kontak  -->
 <url>
-<loc>https://nuxarperfumery.my.id/kontak</loc>
-<lastmod>2026-02-20</lastmod>
+<loc>https://www.nuxarperfumery.my.id/kontak</loc>
+<lastmod>2026-02-22</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.75</priority>
 </url>

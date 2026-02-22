@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import { MessageCircle, Instagram, Linkedin } from 'lucide-react';
+import { MessageCircle, Instagram, Linkedin, Sparkles } from 'lucide-react';
 import { PageLayout } from '../components/PageLayout';
 import { SEOHead } from '../components/SEOHead';
 import { Contact } from '../sections/Contact';
@@ -9,7 +9,7 @@ export function ContactPage() {
     const headingRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
-        gsap.from(headingRef.current, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.from(headingRef.current, { y: 40, duration: 0.8, ease: 'power3.out' });
     }, []);
 
     const channels = [
@@ -42,21 +42,26 @@ export function ContactPage() {
     return (
         <PageLayout breadcrumbs={[{ label: 'Kontak' }]}>
             <SEOHead
-                title="Kontak NUXAR PERFUMERY – WhatsApp, Instagram, LinkedIn"
-                description="Hubungi NUXAR PERFUMERY untuk pemesanan parfum eceran, konsultasi aroma, atau pertanyaan lainnya. Tersedia via WhatsApp, Instagram @nuxar_perfumery, dan LinkedIn."
-                keywords="kontak nuxar perfumery, pesan parfum eceran, whatsapp nuxar, instagram nuxar perfumery, konsultasi parfum"
+                title="Hubungi NUXAR PERFUMERY | Konsultasi Aroma & Pemesanan WhatsApp"
+                description="Butuh bantuan memilih aroma? Hubungi tim NUXAR PERFUMERY via WhatsApp untuk konsultasi gratis dan pemesanan cepat. Ikuti kami juga di Instagram @nuxar_perfumery untuk update promo terbaru."
+                keywords="hubungi nuxar bekasi, nomor whatsapp nuxar perfumery, pemesanan parfum eceran, konsultasi parfum gratis, lokasi nuxar jababeka"
                 canonical="/kontak"
             />
 
             {/* Hero */}
             <section className="pt-8 pb-8 px-6 lg:px-16">
                 <div className="max-w-6xl mx-auto">
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
-                        Hubungi <span className="text-highlight">Kami</span>
-                    </h1>
-                    <p className="text-white text-lg max-w-2xl mb-12">
-                        Punya pertanyaan soal parfum? Mau order? Tim NUXAR siap membantu lewat berbagai saluran.
-                    </p>
+                    <div className="mb-12 relative z-20">
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-highlight/10 border border-highlight/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-highlight">
+                            <Sparkles className="h-3 w-3" /> Let's Connect · 2026
+                        </div>
+                        <h1 ref={headingRef} className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 text-white uppercase italic">
+                            Say <span className="text-highlight">Hello</span>
+                        </h1>
+                        <p className="text-white/80 text-xs md:text-sm max-w-lg leading-relaxed">
+                            Punya pertanyaan soal parfum? Mau order? Tim NUXAR siap membantu lewat berbagai saluran.
+                        </p>
+                    </div>
 
                     {/* Contact Channels */}
                     <div className="grid md:grid-cols-3 gap-6 mb-12">

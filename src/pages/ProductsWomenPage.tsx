@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Sparkles } from 'lucide-react';
 import { PageLayout } from '../components/PageLayout';
 import { SEOHead } from '../components/SEOHead';
 import { worksConfig } from '../config';
@@ -21,7 +21,7 @@ export function ProductsWomenPage() {
     const [loading, setLoading] = useState(SUPABASE_ENABLED);
 
     useEffect(() => {
-        gsap.from(headingRef.current, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.from(headingRef.current, { y: 40, duration: 0.8, ease: 'power3.out' });
 
         if (SUPABASE_ENABLED) {
             fetchPerfumesFromSupabase().then(data => {
@@ -62,7 +62,7 @@ export function ProductsWomenPage() {
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
                 gsap.from(card, {
-                    y: 50, opacity: 0, duration: 0.6, delay: i * 0.1, ease: 'power2.out',
+                    y: 50, duration: 0.6, delay: i * 0.1, ease: 'power2.out',
                     scrollTrigger: { trigger: card, start: 'top 90%', once: true },
                 });
             });
@@ -72,10 +72,10 @@ export function ProductsWomenPage() {
     return (
         <PageLayout breadcrumbs={[{ label: 'Produk', href: '/product' }, { label: 'Wanita' }]}>
             <SEOHead
-                title="Parfum Wanita Eceran Original | NUXAR PERFUMERY – Floral, Gourmand, Citrus"
-                description="Koleksi parfum wanita eceran original NUXAR. Aroma Floral elegan, Gourmand manis, Citrus segar. Harga mulai Rp35.000. Sempurna untuk kuliah, kantor, dan hangout."
-                keywords="parfum wanita eceran, parfum cewek original, parfum wanita murah, parfum floral eceran, parfum gourmand wanita, parfum cewek premium, nuxar wanita"
-                canonical="/product/wanita"
+                title="Parfum Wanita Eceran Original & Wangi Mewah | NUXAR PERFUMERY"
+                description="Jelajahi koleksi parfum wanita eceran original NUXAR. Aroma Floral, Gourmand, dan Citrus yang elegan, manis, dan menyegarkan. Premium dan terjangkau."
+                keywords="parfum wanita eceran original, parfum cewek wangi mewah, parfum cewek tahan lama, nuxar wanita, parfum elegan bekasi"
+                canonical="/produk/wanita"
             />
 
             <section className="pt-8 pb-16 px-6 lg:px-16">
@@ -93,13 +93,18 @@ export function ProductsWomenPage() {
                         </Link>
                     </div>
 
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
-                        Parfum <span className="text-highlight">Wanita</span> Eceran
-                    </h1>
-                    <p className="text-white/90 text-lg max-w-2xl mb-10">
-                        Aroma feminin pilihan untuk wanita modern — dari Floral yang elegan, Gourmand yang manis,
-                        hingga Citrus yang menyegarkan. Semua original, semua premium.
-                    </p>
+                    <div className="mb-12 relative z-20">
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-pink-500/10 border border-pink-500/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-pink-400">
+                            <Sparkles className="h-3 w-3" /> Feminine Collection · 2026
+                        </div>
+                        <h1 ref={headingRef} className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 text-white uppercase italic">
+                            Women <span className="text-highlight">Series</span>
+                        </h1>
+                        <p className="text-white/80 text-xs md:text-sm max-w-lg leading-relaxed">
+                            Aroma feminin pilihan untuk wanita modern — dari Floral yang elegan, Gourmand yang manis,
+                            hingga Citrus yang menyegarkan. Semua original, semua premium.
+                        </p>
+                    </div>
 
                     {/* Product Grid */}
                     {loading ? (

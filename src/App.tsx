@@ -33,6 +33,8 @@ const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.B
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })));
+const FAQPage = lazy(() => import('./pages/FAQPage').then(m => ({ default: m.FAQPage })));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -54,8 +56,12 @@ function HomePage() {
         <Navigation />
 
         {/* Main content */}
-        <main id="main-content" className="w-full min-w-0 overflow-x-hidden" tabIndex={-1}>
-          <Suspense fallback={<div className="min-h-screen bg-black" />}>
+        <main id="main-content" className="w-full min-w-0 overflow-x-hidden relative z-20" tabIndex={-1}>
+          <Suspense fallback={
+            <div className="min-h-screen bg-black flex items-center justify-center">
+              <div className="w-12 h-12 border-2 border-highlight/20 border-t-highlight rounded-full animate-spin" />
+            </div>
+          }>
             <Hero />
             <About />
             <Works />
@@ -106,7 +112,11 @@ function App() {
       {/* Ramadan popup — only after loader finishes */}
       {loaderDone && <RamadanPopup reappearAfterSeconds={60} />}
 
-      <Suspense fallback={<div className="min-h-screen bg-black" />}>
+      <Suspense fallback={
+        <div className="min-h-screen bg-black flex items-center justify-center">
+          <div className="w-12 h-12 border-2 border-highlight/20 border-t-highlight rounded-full animate-spin" />
+        </div>
+      }>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/produk" element={<ProductsPage />} />
@@ -116,6 +126,8 @@ function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/tentang-kami" element={<AboutPage />} />
+          <Route path="/layanan" element={<ServicesPage />} />
+          <Route path="/faq" element={<FAQPage />} />
           <Route path="/kontak" element={<ContactPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

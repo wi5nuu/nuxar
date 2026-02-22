@@ -50,7 +50,7 @@ export function RamadanPopup({
                     position: 'fixed',
                     inset: 0,
                     zIndex: 8888,
-                    backgroundColor: 'rgba(0,0,0,0.75)',
+                    backgroundColor: 'rgba(0,0,0,0.4)',
                     backdropFilter: 'blur(4px)',
                     WebkitBackdropFilter: 'blur(4px)',
                     transition: 'opacity 0.4s ease',

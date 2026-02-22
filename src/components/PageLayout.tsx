@@ -36,7 +36,7 @@ export function PageLayout({ children, breadcrumbs }: PageLayoutProps) {
 
             {/* Breadcrumb */}
             {breadcrumbs && breadcrumbs.length > 0 && (
-                <div className="pt-20 lg:pt-28 pb-2 px-6 lg:px-16">
+                <div className="pt-20 lg:pt-28 pb-2 px-6 lg:px-16 relative z-10">
                     <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-white/40">
                         <Link to="/" className="hover:text-white/70 transition-colors">Beranda</Link>
                         {breadcrumbs.map((crumb, idx) => (
@@ -53,11 +53,13 @@ export function PageLayout({ children, breadcrumbs }: PageLayoutProps) {
                 </div>
             )}
 
-            <main id="main-content" className="w-full min-w-0 overflow-x-hidden" tabIndex={-1}>
+            <main id="main-content" className="w-full min-w-0 overflow-x-hidden relative z-20" tabIndex={-1}>
                 {children}
             </main>
 
-            <Footer />
+            <div className="relative z-20">
+                <Footer />
+            </div>
             <AIChatBot />
         </div>
     );

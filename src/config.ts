@@ -9,8 +9,8 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  title: "NUXAR PERFUMERY | Parfum Eceran Premium untuk Setiap Momen Berhargamu",
-  description: "NUXAR PERFUMERY menghadirkan parfum eceran premium yang dirancang untuk menemani setiap momen berhargamu. Aroma mewah, tahan lama, dan terjangkau untuk mahasiswa, pekerja, hingga traveler.",
+  title: "NUXAR PERFUMERY | Parfum Eceran Premium Bekasi – Murah & Tahan Lama",
+  description: "Brand parfum eceran premium nomor 1 di Bekasi & Jababeka. NUXAR PERFUMERY menyediakan koleksi aroma mewah, original, dan tahan lama dengan kemasan praktis yang ramah di kantong.",
   language: "id",
 };
 
@@ -43,8 +43,8 @@ export const navigationConfig: NavigationConfig = {
     { label: "Katalog", href: "/katalog" },
     { label: "Tentang Kami", href: "/tentang-kami" },
     { label: "Blog", href: "/blog" },
-    { label: "Layanan", href: "/#services" },
-    { label: "FAQ", href: "/#faq" },
+    { label: "Layanan", href: "/layanan" },
+    { label: "FAQ", href: "/faq" },
     { label: "Kontak", href: "/kontak" },
   ],
 };
@@ -246,21 +246,35 @@ export const testimonialsConfig: TestimonialsConfig = {
       name: "Dewi Anggraini",
       title: "Pekerja di JABABEKA",
       quote: "Awal kenal NUXAR karena teman kantor rekomendasi. Sekarang jadi andalan aku buat daily use ke kantor. Wanginya tahan lama dan bikin percaya diri sepanjang hari!",
-      image: "/testimonial-1.webp"
+      image: "/testimonial-1.jpg"
     },
     {
       id: 2,
       name: "Ahmad Fauzi",
       title: "Mahasiswa President University",
       quote: "Sebagai mahasiswa yang aktif di organisasi kampus, aku butuh parfum yang bisa diandalkan untuk berbagai acara. NUXAR selalu jadi pilihan karena kualitasnya yang premium tapi harganya tetap terjangkau.",
-      image: "/testimonial-2.webp"
+      image: "/testimonial-2.jpg"
     },
     {
       id: 3,
       name: "Widya Putri",
-      title: "influencer & Traveler",
+      title: "Influencer & Traveler",
       quote: "NUXAR jadi teman setia aku selama traveling. Aku suka banget karena bisa bawa parfum favorit tanpa harus bawa botol besar. Wanginya juga tahan lama, cocok banget buat aktivitas seharian di luar rumah!",
-      image: "/testimonial-3.webp"
+      image: "/testimonial-3.jpg"
+    },
+    {
+      id: 4,
+      name: "Budi Santoso",
+      title: "Driver Ojek Online",
+      quote: "Semprot dikit pas mau narik, wanginya awet banget sampe sore biarpun kena panas matahari. Penumpang sering nanya pake parfum apa, soalnya seger banget katanya!",
+      image: "https://ui-avatars.com/api/?name=Budi+Santoso&background=random"
+    },
+    {
+      id: 5,
+      name: "Siti Aminah",
+      title: "Ibu Rumah Tangga",
+      quote: "Coba yang 30ml buat dipake pas arisan sama pengajian. Aromanya lembut, nggak bikin pusing, dan harganya bener-bener ramah di kantong buat ibu-ibu kayak saya.",
+      image: "https://ui-avatars.com/api/?name=Siti+Aminah&background=random"
     },
   ],
 };
@@ -281,6 +295,8 @@ export interface PricingSize {
   tagline: string;
   tiers: PricingTier[];
   isRecommended?: boolean;
+  badge?: string;
+  description?: string;
 }
 
 export interface PricingConfig {
@@ -298,16 +314,22 @@ export const pricingConfig: PricingConfig = {
     {
       id: "30ml",
       size: "30ml",
-      tagline: "Sempurna untuk Traveling & Mall",
+      tagline: "Hemat, Praktis & Portabel",
+      badge: "Paling Recommended",
       isRecommended: true,
+      description: "Botol parfum 30ml umumnya berisi 240-360 semprotan. Dengan rata-rata 2-3 semprot per hari, paket ini bisa bertahan 3-5 bulan. Sangat cocok untuk harian, traveling, atau mencoba aroma baru tanpa menyengat.",
       tiers: [
-        { name: "Premium", price: 65000 },
+        { name: "Premium", price: 65000, originalPrice: 85000 },
+        { name: "Sedang", price: 50000 },
+        { name: "Standar", price: 35000 },
       ],
     },
     {
       id: "50ml",
       size: "50ml",
       tagline: "Pas untuk Kuliah & Kerja",
+      badge: "Best Seller",
+      description: "Ukuran 50ml menghasilkan 500-750 semprotan. Untuk pemakaian normal (3-5 semprot/hari) bisa tahan 3-6 bulan. Pemakaian ringan bisa awet hingga 1 tahun. Pilihan paling seimbang untuk rutinitas harian Anda.",
       tiers: [
         { name: "Premium", price: 125000, originalPrice: 150000 },
         { name: "Sedang", price: 100000 },
@@ -318,6 +340,8 @@ export const pricingConfig: PricingConfig = {
       id: "100ml",
       size: "100ml",
       tagline: "Stok Bulanan Paling Hemat",
+      badge: "Best Value Pack",
+      description: "Ukuran jumbo 100ml menghasilkan 800-1.200 semprotan. Dengan rata-rata 3-4 semprot sehari, paket ini bisa bertahan 7-12 bulan. Solusi paling ekonomis bagi Anda yang ingin tampil wangi setiap saat.",
       tiers: [
         { name: "Premium", price: 250000, originalPrice: 300000 },
         { name: "Sedang", price: 200000 },
@@ -504,8 +528,8 @@ export const footerConfig: FooterConfig = {
     { label: "Produk", href: "/produk" },
     { label: "Katalog", href: "/katalog" },
     { label: "Tentang Kami", href: "/tentang-kami" },
-    { label: "Layanan", href: "/#services" },
-    { label: "FAQ", href: "/#faq" },
+    { label: "Layanan", href: "/layanan" },
+    { label: "FAQ", href: "/faq" },
     { label: "Kontak", href: "/kontak" },
   ],
   navLinks2: [
@@ -517,4 +541,24 @@ export const footerConfig: FooterConfig = {
   ctaHref: "#contact",
   copyright: "© 2026 NUXAR. Solusi parfum premium untuk setiap kalangan.",
   tagline: "Aroma Signature untuk Setiap Momen",
+};
+// ============================================================================
+// Promo Configuration
+// ============================================================================
+
+export interface PromoConfig {
+  messages: string[];
+  speed: number; // seconds for transitions or animation speed
+}
+
+export const promoConfig: PromoConfig = {
+  messages: [
+    "PROMO GRATIS DI BULAN RAMADHAN!",
+    "HANYA DI JABABEKABEKASI!",
+    "DAPATKAN POTONGAN HARGA 40%!",
+    "BELI 1 GRATIS 1 UNTUK VARIAN TERTENTU",
+    "BELI 1 GRATIS 3 AROMA PREMIUM (S&K BERLAKU)",
+    "LAYANAN PENGANTARAN KHUSUS AREA JABABEKABEKASI SAJA",
+  ],
+  speed: 50, // durasi satu putaran penuh
 };

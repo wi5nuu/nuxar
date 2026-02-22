@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../components/PageLayout';
 import { SEOHead } from '../components/SEOHead';
@@ -34,20 +34,26 @@ export function ProductsPage() {
     return (
         <PageLayout breadcrumbs={[{ label: 'Produk' }]}>
             <SEOHead
-                title="Koleksi Parfum Unggulan | NUXAR PERFUMERY"
-                description="Pilihan aroma terbaik untuk setiap momen dan kepribadianmu. Temukan signature scent harianmu di sini."
-                keywords="koleksi parfum nuxar, parfum pilihan, best seller nuxar"
+                title="Koleksi Parfum Unggulan & Signature Scents | NUXAR PERFUMERY"
+                description="Temukan koleksi parfum unggulan NUXAR PERFUMERY. Pilihan aroma premium, tahan lama, dan terjangkau untuk pria dan wanita. Dapatkan signature scent harianmu di sini."
+                keywords="koleksi parfum nuxar, parfum pilihan bekasi, best seller nuxar perfumery, parfum eceran premium, signature scents indonesia"
                 canonical="/produk"
             />
 
             <section className="pt-2 pb-20 px-4 md:px-8 lg:px-16 bg-black text-white">
                 <div className="max-w-6xl mx-auto">
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold tracking-tighter mb-4 text-white">
-                        {worksConfig.title}
-                    </h1>
-                    <p className="text-white/90 text-base md:text-lg max-w-2xl mb-8">
-                        {worksConfig.subtitle}
-                    </p>
+                    {/* Header */}
+                    <div className="mb-12 relative z-20">
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-highlight/10 border border-highlight/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-highlight">
+                            <Sparkles className="h-3 w-3" /> Premium Collection · 2026
+                        </div>
+                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 text-white uppercase italic">
+                            Featured <span className="text-highlight">Scents</span>
+                        </h1>
+                        <p className="text-white/80 text-xs md:text-sm max-w-lg leading-relaxed">
+                            {worksConfig.subtitle}
+                        </p>
+                    </div>
 
                     {loading ? (
                         <div className="py-20 text-center text-white/20 italic">Menyusun koleksi aroma terbaik...</div>

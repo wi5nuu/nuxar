@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
-import { Clock, ArrowRight, BookOpen, Calendar } from 'lucide-react';
+import { Clock, ArrowRight, Calendar, Sparkles } from 'lucide-react';
 import { PageLayout } from '../components/PageLayout';
 import { SEOHead } from '../components/SEOHead';
 import { blogConfig } from '../config';
@@ -15,7 +15,7 @@ export function BlogPage() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        gsap.from(headingRef.current, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.from(headingRef.current, { y: 40, duration: 0.8, ease: 'power3.out' });
 
         if (SUPABASE_ENABLED) {
             fetchBlogsFromSupabase().then(data => {
@@ -32,7 +32,7 @@ export function BlogPage() {
             cardsRef.current.forEach((card, i) => {
                 if (!card) return;
                 gsap.from(card, {
-                    y: 50, opacity: 0, duration: 0.6, delay: i * 0.15, ease: 'power2.out',
+                    y: 50, duration: 0.6, delay: i * 0.15, ease: 'power2.out',
                 });
             });
         }
@@ -41,26 +41,27 @@ export function BlogPage() {
     return (
         <PageLayout breadcrumbs={[{ label: 'Blog' }]}>
             <SEOHead
-                title="Blog Parfum – Tips & Panduan Aroma | NUXAR PERFUMERY"
-                description="Tips memilih parfum, cara merawat aroma, panduan lengkap parfum eceran original. Baca artikel terbaru dari NUXAR PERFUMERY untuk tampil wangi dan percaya diri setiap hari."
-                keywords="tips parfum, cara memilih parfum, parfum tahan lama, panduan parfum eceran, blog parfum indonesia, artikel parfum original"
+                title="Blog & Tips Parfum Premium Indonesia | NUXAR PERFUMERY"
+                description="Panduan lengkap memilih parfum, cara agar wangi tahan lama, dan rahasia aroma premium. Baca artikel terbaru dari NUXAR PERFUMERY untuk meningkatkan rasa percaya diri Anda setiap hari."
+                keywords="tips parfum premium, panduan memilih parfum, rahasia parfum tahan lama, nuxar blog, wawasan parfum indonesia, cara pakai parfum yang benar"
                 canonical="/blog"
             />
 
             <section className="pt-8 pb-16 px-6 lg:px-16">
                 <div className="max-w-5xl mx-auto">
-                    <div className="flex items-center gap-3 mb-6">
-                        <BookOpen size={24} className="text-highlight" />
-                        <span className="text-highlight font-semibold uppercase tracking-widest text-sm">Tips & Artikel</span>
+                    <div className="mb-12 relative z-20">
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-highlight/10 border border-highlight/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-highlight">
+                            <Sparkles className="h-3 w-3" /> Scent Stories · 2026
+                        </div>
+                        <h1 ref={headingRef} className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 text-white uppercase italic">
+                            Fragrance <span className="text-highlight">Insights</span>
+                        </h1>
+                        <p className="text-white/80 text-xs md:text-sm max-w-lg leading-relaxed">
+                            Wawasan mendalam tentang dunia wewangian, tips perawatan parfum, dan panduan memilih aroma signature Anda.
+                        </p>
                     </div>
-                    <h1 ref={headingRef} className="text-4xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
-                        Blog <span className="text-highlight">Parfum</span>
-                    </h1>
-                    <p className="text-white text-lg max-w-2xl mb-12">
-                        Wawasan mendalam tentang dunia wewangian, tips perawatan parfum, dan panduan memilih aroma signature Anda.
-                    </p>
 
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid md:grid-cols-2 gap-8 relative z-20">
                         {loading ? (
                             <div className="col-span-2 py-20 text-center text-white/40 italic">Mencari artikel menarik...</div>
                         ) : (
